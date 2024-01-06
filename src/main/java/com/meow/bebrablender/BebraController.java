@@ -1,6 +1,6 @@
 package com.meow.bebrablender;
 
-import com.meow.bebrablender.math.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector3f;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.objreader.ObjReader;
 import com.meow.bebrablender.render_engine.Camera;
@@ -11,7 +11,6 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;

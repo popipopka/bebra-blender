@@ -2,7 +2,6 @@ package com.meow.bebrablender.render_engine;
 
 import java.util.ArrayList;
 
-import com.meow.bebrablender.math.Vector3f;
 import javafx.scene.canvas.GraphicsContext;
 import com.meow.bebrablender.model.Model;
 import static com.meow.bebrablender.render_engine.GraphicConveyor.*;

@@ -1,5 +1,4 @@
 package com.meow.bebrablender.render_engine;
-import com.meow.bebrablender.math.Vector3f;
 import com.meow.bebrablender.math.Matrix4f;
 
 public class Camera {

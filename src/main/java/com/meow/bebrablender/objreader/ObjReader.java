@@ -1,7 +1,6 @@
 package com.meow.bebrablender.objreader;
 
 import com.meow.bebrablender.math.Vector2f;
-import com.meow.bebrablender.math.Vector3f;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.model.Polygon;
 

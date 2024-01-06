@@ -1,7 +1,6 @@
 package com.meow.bebrablender.model;
 
 import com.meow.bebrablender.math.Vector2f;
-import com.meow.bebrablender.math.Vector3f;
 
 import java.util.ArrayList;
 
