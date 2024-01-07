@@ -1,6 +1,6 @@
 package com.meow.bebrablender.math.matrices;
 
-import com.meow.vectors.Vector4f;
+import com.meow.bebrablender.math.vectors.Vector4f;
 
 public class Matrix4f extends AbstractSquareMatrix<Matrix4f, Vector4f> {
     protected Matrix4f(double[][] data) {
@@ -8,8 +8,8 @@ public class Matrix4f extends AbstractSquareMatrix<Matrix4f, Vector4f> {
     }
 
     @Override
-    protected Matrix4f initialCreateMatrix(double[][] data) {
-        return new Matrix4f(data);
+    protected Matrix4f initialReturnThis() {
+        return this;
     }
 
     @Override

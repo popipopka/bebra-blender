@@ -10,8 +10,8 @@ public class Matrix3f extends AbstractSquareMatrix<Matrix3f, Vector3f> {
     }
 
     @Override
-    protected Matrix3f initialCreateMatrix(double[][] data) {
-        return new Matrix3f(data);
+    protected Matrix3f initialReturnThis() {
+        return this;
     }
 
     @Override

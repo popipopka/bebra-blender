@@ -7,17 +7,19 @@ package com.meow.bebrablender.math.vectors;
 public interface Vector<T> {
     double[] getCoords();
 
-    void add(T v);
+    T add(T v);
 
-    void subtract(T v);
+    T subtract(T v);
 
-    void multiply(double number);
+    T multiply(double number);
 
-    void divide(double number);
+    T divide(double number);
 
     double length();
 
     double scalarProduct(T v);
 
-    void normalize();
+    T normalize();
+
+    boolean isOrthogonal(T v);
 }
