@@ -28,8 +28,15 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T> {
         if (o == null || getClass() != o.getClass()) return false;
 
         AbstractVector<?> that = (AbstractVector<?>) o;
+        if (size != that.size) return false;
 
-        return Arrays.equals(coords, that.coords);
+        for (int i = 0; i < size; i++) {
+            if (Double.compare(coords[i], that.coords[i]) != 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override

@@ -25,6 +25,22 @@ public class Vector4f extends AbstractVector<Vector4f> {
         return coords[3];
     }
 
+    public void setX(double x) {
+        coords[0] = x;
+    }
+
+    public void setY(double y) {
+        coords[1] = y;
+    }
+
+    public void setZ(double z) {
+        coords[2] = z;
+    }
+
+    public void setW(double w) {
+        coords[3] = w;
+    }
+
     @Override
     protected Vector4f initialReturnThis() {
         return this;
