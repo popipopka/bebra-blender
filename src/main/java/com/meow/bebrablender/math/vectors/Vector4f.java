@@ -5,6 +5,10 @@ public class Vector4f extends AbstractVector<Vector4f> {
         super(2, new double[]{x, y, z, w});
     }
 
+    public Vector4f(double[] coords) {
+        super(4, coords);
+    }
+
     public double x() {
         return coords[0];
     }

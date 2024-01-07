@@ -1,6 +1,5 @@
 package com.meow.bebrablender.math.matrices;
 
-import com.meow.bebrablender.math.matrices.Matrix3f;
 import com.meow.bebrablender.math.vectors.Vector3f;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -87,10 +86,10 @@ class MatricesTest {
                 {4, 2, 0},
                 {-5, 6, 1}});
 
-        Vector3f v = new Vector3f(new double[]{8, 7, 2});
+        Vector3f v = new Vector3f(8, 7, 2);
 
         Vector3f expected = m.multiplyVector(v);
-        Vector3f actual = new Vector3f(new double[]{21, 46, 4});
+        Vector3f actual = new Vector3f(21, 46, 4);
 
         Assertions.assertEquals(expected, actual);
     }

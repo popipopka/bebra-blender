@@ -5,6 +5,10 @@ public class Vector3f extends AbstractVector<Vector3f> {
         super(2, new double[]{x, y, z});
     }
 
+    public Vector3f(double[] coords) {
+        super(3, coords);
+    }
+
     public double x() {
         return coords[0];
     }
@@ -24,4 +28,5 @@ public class Vector3f extends AbstractVector<Vector3f> {
 
         return new Vector3f(x, y, z);
     }
+
 }
