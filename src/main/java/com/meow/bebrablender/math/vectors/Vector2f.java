@@ -26,6 +26,10 @@ public class Vector2f extends AbstractVector<Vector2f> {
         coords[1] = y;
     }
 
+    public double crossMagnitude(Vector2f v) {
+        return coords[0] * v.y() - coords[1] * v.x();
+    }
+
     @Override
     protected Vector2f initialReturnThis() {
         return this;
