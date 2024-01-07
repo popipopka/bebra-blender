@@ -21,6 +21,18 @@ public class Vector3f extends AbstractVector<Vector3f> {
         return coords[2];
     }
 
+    public void setX(double x) {
+        coords[0] = x;
+    }
+
+    public void setY(double y) {
+        coords[1] = y;
+    }
+
+    public void setZ(double z) {
+        coords[2] = z;
+    }
+
     public Vector3f product(Vector3f v) {
         double x = this.y() * v.z() - this.z() * v.y();
         double y = this.z() * v.x() - this.x() * v.z();

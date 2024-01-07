@@ -18,6 +18,14 @@ public class Vector2f extends AbstractVector<Vector2f> {
         return coords[1];
     }
 
+    public void setX(double x) {
+        coords[0] = x;
+    }
+
+    public void setY(double y) {
+        coords[1] = y;
+    }
+
     @Override
     protected Vector2f initialReturnThis() {
         return this;

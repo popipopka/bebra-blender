@@ -28,8 +28,15 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T> {
         if (o == null || getClass() != o.getClass()) return false;
 
         AbstractVector<?> that = (AbstractVector<?>) o;
+        if (size != that.size) return false;
 
-        return Arrays.equals(coords, that.coords);
+        for (int i = 0; i < size; i++) {
+            if (Double.compare(coords[i], that.coords[i]) != 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -107,6 +114,15 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T> {
     @Override
     public boolean isOrthogonal(T v) {
         return scalarProduct(v) == 0;
+    }
+
+    @Override
+    public T to(T v) {
+        double[] vCoords = v.getCoords();
+        for (int i = 0; i < size; i++) {
+            coords[i] = vCoords[i] - coords[i];
+        }
+        return initialReturnThis();
     }
 
     protected abstract T initialReturnThis();

@@ -26,9 +26,17 @@ public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vec
         if (o == null || getClass() != o.getClass()) return false;
 
         AbstractSquareMatrix<?, ?> that = (AbstractSquareMatrix<?, ?>) o;
-
         if (size != that.size) return false;
-        return Arrays.deepEquals(data, that.data);
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if(Double.compare(data[i][j], that.data[i][j]) != 0) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     @Override
