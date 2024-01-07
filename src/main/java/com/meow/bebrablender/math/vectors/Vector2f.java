@@ -17,4 +17,9 @@ public class Vector2f extends AbstractVector<Vector2f> {
     public double y() {
         return coords[1];
     }
+
+    @Override
+    protected Vector2f initialReturnThis() {
+        return this;
+    }
 }

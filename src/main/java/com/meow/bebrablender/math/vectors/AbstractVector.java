@@ -43,35 +43,39 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T> {
     }
 
     @Override
-    public void add(T v) {
+    public T add(T v) {
         double[] vCoord = v.getCoords();
         for (int i = 0; i < this.coords.length; i++) {
             this.coords[i] += vCoord[i];
         }
+        return initialReturnThis();
     }
 
     @Override
-    public void subtract(T v) {
+    public T subtract(T v) {
         double[] vCoord = v.getCoords();
         for (int i = 0; i < this.coords.length; i++) {
             this.coords[i] -= vCoord[i];
         }
+        return initialReturnThis();
     }
 
     @Override
-    public void multiply(double number) {
+    public T multiply(double number) {
         for (int i = 0; i < this.coords.length; i++) {
             this.coords[i] *= number;
         }
+        return initialReturnThis();
     }
 
     @Override
-    public void divide(double number) {
+    public T divide(double number) {
         if (number == 0) throw new ArithmeticException("Деление на ноль запрещено");
 
         for (int i = 0; i < this.coords.length; i++) {
             this.coords[i] /= number;
         }
+        return initialReturnThis();
     }
 
     @Override
@@ -84,10 +88,11 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T> {
     }
 
     @Override
-    public void normalize() {
+    public T normalize() {
         double length = length();
 
         if (length != 0) divide(length);
+        return initialReturnThis();
     }
 
     @Override
@@ -98,4 +103,11 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T> {
         }
         return result;
     }
+
+    @Override
+    public boolean isOrthogonal(T v) {
+        return scalarProduct(v) == 0;
+    }
+
+    protected abstract T initialReturnThis();
 }

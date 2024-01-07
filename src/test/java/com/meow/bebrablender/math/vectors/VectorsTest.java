@@ -117,4 +117,14 @@ class VectorsTest {
 
         Assertions.assertEquals(0, Double.compare(expected, actual));
     }
+
+    @Test
+    void isOrthogonal() {
+        Vector3f v1 = new Vector3f(0, 0, 1);
+        Vector3f v2 = new Vector3f(0, 1, 0);
+
+        boolean expected = v1.isOrthogonal(v2);
+
+        Assertions.assertTrue(expected);
+    }
 }

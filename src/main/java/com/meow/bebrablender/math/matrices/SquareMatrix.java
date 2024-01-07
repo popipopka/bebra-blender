@@ -21,5 +21,5 @@ public interface SquareMatrix<T, V> {
 
     T multiply(T m);
 
-    void transpose();
+    T transpose();
 }

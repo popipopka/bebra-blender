@@ -29,4 +29,8 @@ public class Vector3f extends AbstractVector<Vector3f> {
         return new Vector3f(x, y, z);
     }
 
+    @Override
+    protected Vector3f initialReturnThis() {
+        return this;
+    }
 }

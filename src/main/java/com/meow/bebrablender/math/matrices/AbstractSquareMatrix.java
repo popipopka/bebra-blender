@@ -58,34 +58,30 @@ public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vec
         }
     }
 
-    protected abstract T initialCreateMatrix(double[][] data);
+    protected abstract T initialReturnThis();
 
     protected abstract V initialCreateVector(double[] data);
 
     @Override
     public T add(T m) {
-        double[][] newData = new double[size][size];
-
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                newData[i][j] = this.data[i][j] + m.getData()[i][j];
+                this.data[i][j] = this.data[i][j] + m.getData()[i][j];
             }
         }
 
-        return initialCreateMatrix(newData);
+        return initialReturnThis();
     }
 
     @Override
     public T subtract(T m) {
-        double[][] newData = new double[size][size];
-
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                newData[i][j] = this.data[i][j] - m.getData()[i][j];
+                this.data[i][j] = this.data[i][j] - m.getData()[i][j];
             }
         }
 
-        return initialCreateMatrix(newData);
+        return initialReturnThis();
     }
 
     @Override
@@ -103,21 +99,19 @@ public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vec
 
     @Override
     public T multiply(T m) {
-        double[][] newData = new double[size][size];
-
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
 
                 for (int k = 0; k < size; k++) {
-                    newData[i][j] += this.data[i][k] * m.getData()[k][j];
+                    this.data[i][j] += this.data[i][k] * m.getData()[k][j];
                 }
             }
         }
-        return initialCreateMatrix(newData);
+        return initialReturnThis();
     }
 
     @Override
-    public void transpose() {
+    public T transpose() {
         double[][] newData = new double[size][size];
 
         for (int i = 0; i < size; i++) {
@@ -126,6 +120,8 @@ public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vec
             }
         }
         this.data = newData;
+
+        return initialReturnThis();
     }
 
     @Override

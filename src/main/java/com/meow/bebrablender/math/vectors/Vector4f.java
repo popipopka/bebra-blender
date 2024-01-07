@@ -24,4 +24,9 @@ public class Vector4f extends AbstractVector<Vector4f> {
     public double w() {
         return coords[3];
     }
+
+    @Override
+    protected Vector4f initialReturnThis() {
+        return this;
+    }
 }

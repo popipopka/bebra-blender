@@ -8,8 +8,8 @@ public class Matrix4f extends AbstractSquareMatrix<Matrix4f, Vector4f> {
     }
 
     @Override
-    protected Matrix4f initialCreateMatrix(double[][] data) {
-        return new Matrix4f(data);
+    protected Matrix4f initialReturnThis() {
+        return this;
     }
 
     @Override
