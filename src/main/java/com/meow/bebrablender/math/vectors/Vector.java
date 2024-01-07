@@ -22,4 +22,6 @@ public interface Vector<T> {
     T normalize();
 
     boolean isOrthogonal(T v);
+
+    T to(T v);
 }

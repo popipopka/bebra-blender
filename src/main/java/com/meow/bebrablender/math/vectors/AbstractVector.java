@@ -116,5 +116,14 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T> {
         return scalarProduct(v) == 0;
     }
 
+    @Override
+    public T to(T v) {
+        double[] vCoords = v.getCoords();
+        for (int i = 0; i < size; i++) {
+            coords[i] = vCoords[i] - coords[i];
+        }
+        return initialReturnThis();
+    }
+
     protected abstract T initialReturnThis();
 }
