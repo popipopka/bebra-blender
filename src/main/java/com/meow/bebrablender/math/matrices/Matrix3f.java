@@ -1,6 +1,6 @@
 package com.meow.bebrablender.math.matrices;
 
-import com.meow.vectors.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector3f;
 
 public class Matrix3f extends AbstractSquareMatrix<Matrix3f, Vector3f> {
 

@@ -1,6 +1,9 @@
 package com.meow.bebrablender.math.vectors;
 
 public class Vector4f extends AbstractVector<Vector4f> {
+    public Vector4f(double x, double y, double z, double w) {
+        super(2, new double[]{x, y, z, w});
+    }
 
     public Vector4f(double[] coords) {
         super(4, coords);

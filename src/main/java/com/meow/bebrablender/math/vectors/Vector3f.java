@@ -1,6 +1,10 @@
 package com.meow.bebrablender.math.vectors;
 
 public class Vector3f extends AbstractVector<Vector3f> {
+    public Vector3f(double x, double y, double z) {
+        super(3, new double[]{x, y, z});
+    }
+
     public Vector3f(double[] coords) {
         super(3, coords);
     }
@@ -22,6 +26,6 @@ public class Vector3f extends AbstractVector<Vector3f> {
         double y = this.z() * v.x() - this.x() * v.z();
         double z = this.x() * v.y() - this.y() * v.x();
 
-        return new Vector3f(new double[]{x, y, z});
+        return new Vector3f(x, y, z);
     }
 }
