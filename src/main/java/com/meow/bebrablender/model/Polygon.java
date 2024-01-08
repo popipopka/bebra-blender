@@ -1,44 +1,66 @@
 package com.meow.bebrablender.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Polygon {
+    private List<Integer> vertexIndices;
+    private List<Integer> normalIndices;
+    private List<Integer> textureVertexIndices;
 
-    private ArrayList<Integer> vertexIndices;
-    private ArrayList<Integer> textureVertexIndices;
-    private ArrayList<Integer> normalIndices;
-
-
-    public Polygon() {
-        vertexIndices = new ArrayList<Integer>();
-        textureVertexIndices = new ArrayList<Integer>();
-        normalIndices = new ArrayList<Integer>();
-    }
-
-    public void setVertexIndices(ArrayList<Integer> vertexIndices) {
-        assert vertexIndices.size() >= 3;
+    public Polygon(List<Integer> vertexIndices, List<Integer> normalIndices, List<Integer> textureVertexIndices) {
         this.vertexIndices = vertexIndices;
-    }
-
-    public void setTextureVertexIndices(ArrayList<Integer> textureVertexIndices) {
-        assert textureVertexIndices.size() >= 3;
+        this.normalIndices = normalIndices;
         this.textureVertexIndices = textureVertexIndices;
     }
 
-    public void setNormalIndices(ArrayList<Integer> normalIndices) {
-        assert normalIndices.size() >= 3;
-        this.normalIndices = normalIndices;
+    public Polygon() {
+        this.vertexIndices = new ArrayList<>();
+        this.normalIndices = new ArrayList<>();
+        this.textureVertexIndices = new ArrayList<>();
     }
 
-    public ArrayList<Integer> getVertexIndices() {
+    public List<Integer> getVertexIndices() {
         return vertexIndices;
     }
 
-    public ArrayList<Integer> getTextureVertexIndices() {
+    public void setVertexIndices(List<Integer> vertexIndices) {
+        this.vertexIndices = vertexIndices;
+    }
+
+    public List<Integer> getNormalIndices() {
+        return normalIndices;
+    }
+
+    public void setNormalIndices(List<Integer> normalIndices) {
+        this.normalIndices = normalIndices;
+    }
+
+    public List<Integer> getTextureVertexIndices() {
         return textureVertexIndices;
     }
 
-    public ArrayList<Integer> getNormalIndices() {
-        return normalIndices;
+    public void setTextureVertexIndices(List<Integer> textureVertexIndices) {
+        this.textureVertexIndices = textureVertexIndices;
+    }
+
+    public boolean isTriangle() {
+        return vertexIndices.size() == 3;
+    }
+
+    public int getVertexIndex(int index) {
+        return vertexIndices.get(index);
+    }
+
+    public int getNormalIndex(int index) {
+        return normalIndices.get(index);
+    }
+
+    public int getTextureVertexIndex(int index) {
+        return textureVertexIndices.get(index);
+    }
+
+    public int numberOfVertices() {
+        return normalIndices.size();
     }
 }
