@@ -8,124 +8,80 @@ import java.util.Scanner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ObjReaderFindLineInObjTest  {
+class ObjReaderFindLineInObjTest  {
+    private final ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestFindLineInObj.obj"));
+
+    ObjReaderFindLineInObjTest() throws IOException {
+    }
 
     @Test
-    public void testFindLine01() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "v", 1);
+    void testFindLine01() throws IOException{
+        int expected = reader.findLineInObj("v", 1);
         Assertions.assertEquals(expected, 1);
     }
 
     @Test
-    public void testFindLine02() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "v", 0);
+    void testFindLine02() throws IOException{
+        int expected = reader.findLineInObj("v", 0);
         Assertions.assertEquals(expected, -1);
     }
 
     @Test
-    public void testFindLine03() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "v", 5);
+    void testFindLine03() throws IOException{
+        int expected = reader.findLineInObj("v", 5);
         Assertions.assertEquals(expected, 5);
     }
 
     @Test
-    public void testFindLine04() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "v", 6);
+    void testFindLine04() throws IOException{
+        int expected = reader.findLineInObj("v", 6);
         Assertions.assertEquals(expected, -1);
     }
 
     @Test
-    public void testFindLine05() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "vt", 0);
+    void testFindLine05() throws IOException{
+        int expected = reader.findLineInObj("vt", 0);
         Assertions.assertEquals(expected, -1);
     }
 
     @Test
-    public void testFindLine06() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "vt", 2);
+    void testFindLine06() throws IOException{
+        int expected = reader.findLineInObj("vt", 2);
         Assertions.assertEquals(expected, 8);
     }
     @Test
-    public void testFindLine07() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "vt", 1);
+    void testFindLine07() throws IOException{
+        int expected = reader.findLineInObj("vt", 1);
         Assertions.assertEquals(expected, 7);
     }
 
     @Test
-    public void testFindLine08() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "v", 123);
+    void testFindLine08() throws IOException{
+        int expected = reader.findLineInObj("v", 123);
         Assertions.assertEquals(expected, -1);
     }
 
     @Test
-    public void testFindLine09() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "vn", 0);
+    void testFindLine09() throws IOException{
+        int expected = reader.findLineInObj("vn", 0);
         Assertions.assertEquals(expected, -1);
     }
 
     @Test
-    public void testFindLine10() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "vn", 1);
+    void testFindLine10() throws IOException{
+        int expected = reader.findLineInObj("vn", 1);
         Assertions.assertEquals(expected, 13);
     }
 
     @Test
-    public void testFindLine11() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "vn", -123);
+    void testFindLine11() throws IOException{
+        int expected = reader.findLineInObj("vn", -123);
         Assertions.assertEquals(expected, -1);
     }
 
     @Test
-    public void testFindLine12() throws IOException{
-        Path path = Path.of("src/main/ObjFiles/TestFindLineInObj.obj");
-        String file = Files.readString(path);
-        Scanner scanner = new Scanner(file);
-
-        int expected = ObjReader.findLineInObj(scanner, "vn", 123);
+    void testFindLine12() throws IOException{
+        int expected = reader.findLineInObj("vn", 123);
         Assertions.assertEquals(expected, -1);
     }
 }
