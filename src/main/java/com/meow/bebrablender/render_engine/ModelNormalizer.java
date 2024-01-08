@@ -2,8 +2,8 @@ package com.meow.bebrablender.render_engine;
 
 import com.meow.bebrablender.math.vectors.Vector3f;
 import com.meow.bebrablender.model.Polygon;
-import com.meow.bebrablender.triangulation.Triangulation;
-import com.meow.bebrablender.utils.NormalUtils;
+import com.meow.bebrablender.triangulation.TriangulationUtils;
+import com.meow.bebrablender.normals.NormalUtils;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class ModelNormalizer {
             List<Vector3f> vertices,
             List<Polygon> polygons,
             List<Vector3f> normals) {
-        Triangulation.triangulateList(polygons);
+        TriangulationUtils.triangulateModelPolygons(polygons);
         NormalUtils.recalculateModelNormals(vertices, normals, polygons);
     }
 }

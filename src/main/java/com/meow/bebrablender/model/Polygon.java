@@ -16,21 +16,21 @@ public class Polygon {
     }
 
     public void setVertexIndices(List<Integer> vertexIndices) {
-        if(vertexIndices.size() < 3) {
+        if (vertexIndices.size() < 3) {
             throw new IllegalArgumentException("Кол-во индексов вершин меньше 3");
         }
         this.vertexIndices = vertexIndices;
     }
 
     public void setTextureVertexIndices(List<Integer> textureVertexIndices) {
-        if(textureVertexIndices.size() < 3) {
+        if (textureVertexIndices.size() < 3) {
             throw new IllegalArgumentException("Кол-во индексов текстурных вершин меньше 3");
         }
         this.textureVertexIndices = textureVertexIndices;
     }
 
     public void setNormalIndices(List<Integer> normalIndices) {
-        if(normalIndices.size() < 3) {
+        if (normalIndices.size() < 3) {
             throw new IllegalArgumentException("Кол-во индексов нормалей меньше 3");
         }
         this.normalIndices = normalIndices;
@@ -46,5 +46,13 @@ public class Polygon {
 
     public List<Integer> getNormalIndices() {
         return normalIndices;
+    }
+
+    public int numberOfVertices() {
+        return normalIndices.size();
+    }
+
+    public boolean isTriangle() {
+        return vertexIndices.size() == 3;
     }
 }

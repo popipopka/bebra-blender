@@ -3,8 +3,9 @@ package com.meow.bebrablender;
 import com.meow.bebrablender.math.vectors.Vector3f;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.objreader.ObjReader;
-import com.meow.bebrablender.render_engine.Camera;
-import com.meow.bebrablender.render_engine.RenderEngine;
+//import com.meow.bebrablender.render_engine.Camera;
+import com.meow.bebrablender.render_engine.ModelNormalizer;
+//import com.meow.bebrablender.render_engine.RenderEngine;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -33,10 +34,10 @@ public class BebraController {
 
     private Model mesh = null;
 
-    private Camera camera = new Camera(
-            new Vector3f(0, 0, 100),
-            new Vector3f(0, 0, 0),
-            1.0F, 1, 0.01F, 100);
+//    private Camera camera = new Camera(
+//            new Vector3f(0, 0, 100),
+//            new Vector3f(0, 0, 0),
+//            1.0F, 1, 0.01F, 100);
 
     private Timeline timeline;
 
@@ -53,10 +54,10 @@ public class BebraController {
             double height = canvas.getHeight();
 
             canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
-            camera.setAspectRatio((float) (width / height));
+//            camera.setAspectRatio((float) (width / height));
 
             if (mesh != null) {
-                RenderEngine.render(canvas.getGraphicsContext2D(), camera, mesh, (int) width, (int) height);
+//                RenderEngine.render(canvas.getGraphicsContext2D(), camera, mesh, (int) width, (int) height);
             }
         });
 
@@ -79,40 +80,47 @@ public class BebraController {
 
         try {
             String fileContent = Files.readString(fileName);
-            mesh = ObjReader.read(fileContent);
+            Model initialModel = ObjReader.read(fileContent);
+            ModelNormalizer.
+                    triangulateAndRecalculateModelNormals(
+                            initialModel.getVertices(),
+                            initialModel.getPolygons(),
+                            initialModel.getNormals()
+                    );
+            mesh = initialModel;
             // todo: обработка ошибок
         } catch (IOException exception) {
 
         }
     }
 
-    @FXML
-    public void handleCameraForward(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(0, 0, -TRANSLATION));
-    }
-
-    @FXML
-    public void handleCameraBackward(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(0, 0, TRANSLATION));
-    }
-
-    @FXML
-    public void handleCameraLeft(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(TRANSLATION, 0, 0));
-    }
-
-    @FXML
-    public void handleCameraRight(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(-TRANSLATION, 0, 0));
-    }
-
-    @FXML
-    public void handleCameraUp(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(0, TRANSLATION, 0));
-    }
-
-    @FXML
-    public void handleCameraDown(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3f(0, -TRANSLATION, 0));
-    }
+//    @FXML
+//    public void handleCameraForward(ActionEvent actionEvent) {
+//        camera.movePosition(new Vector3f(0, 0, -TRANSLATION));
+//    }
+//
+//    @FXML
+//    public void handleCameraBackward(ActionEvent actionEvent) {
+//        camera.movePosition(new Vector3f(0, 0, TRANSLATION));
+//    }
+//
+//    @FXML
+//    public void handleCameraLeft(ActionEvent actionEvent) {
+//        camera.movePosition(new Vector3f(TRANSLATION, 0, 0));
+//    }
+//
+//    @FXML
+//    public void handleCameraRight(ActionEvent actionEvent) {
+//        camera.movePosition(new Vector3f(-TRANSLATION, 0, 0));
+//    }
+//
+//    @FXML
+//    public void handleCameraUp(ActionEvent actionEvent) {
+//        camera.movePosition(new Vector3f(0, TRANSLATION, 0));
+//    }
+//
+//    @FXML
+//    public void handleCameraDown(ActionEvent actionEvent) {
+//        camera.movePosition(new Vector3f(0, -TRANSLATION, 0));
+//    }
 }

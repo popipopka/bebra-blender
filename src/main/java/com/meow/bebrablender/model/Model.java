@@ -12,10 +12,10 @@ import java.util.List;
  * @author Pertsev Roman (Alexander Laptev, Ivan Kosenko)
  */
 public class Model {
-    private final List<Vector3f> vertices = new ArrayList<>();
-    private final List<Vector2f> textureVertices = new ArrayList<>();
-    private final List<Vector3f> normals = new ArrayList<>();
-    private final List<Polygon> polygons = new ArrayList<>();
+    private List<Vector3f> vertices = new ArrayList<>();
+    private List<Vector2f> textureVertices = new ArrayList<>();
+    private List<Vector3f> normals = new ArrayList<>();
+    private List<Polygon> polygons = new ArrayList<>();
 
     public List<Vector3f> getVertices() {
         return vertices;

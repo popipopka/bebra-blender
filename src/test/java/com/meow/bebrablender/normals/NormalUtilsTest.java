@@ -3,18 +3,20 @@ package com.meow.bebrablender.normals;
 import com.meow.bebrablender.math.vectors.Vector3f;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.model.Polygon;
-import com.meow.bebrablender.utils.NormalUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NormalUtilsTest {
-    private static Model constructBrickModel() {
+    private static Model constructBrickModel() throws NoSuchFieldException, IllegalAccessException {
         Model model = new Model();
 
-        model.vertices = new ArrayList<>(List.of(new Vector3f[]{
+        Field verticiesField = Model.class.getDeclaredField("vertices");
+        verticiesField.setAccessible(true);
+        verticiesField.set(model, new ArrayList<>(List.of(new Vector3f[]{
                 new Vector3f(0, 0, 0),
                 new Vector3f(0, 2, 0),
                 new Vector3f(1, 2, 0),
@@ -23,58 +25,83 @@ public class NormalUtilsTest {
                 new Vector3f(0, 2, 1),
                 new Vector3f(1, 2, 1),
                 new Vector3f(1, 0, 1)
-        }));
+        })));
 
-        model.polygons = new ArrayList<>(List.of(
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
+        polygonsField.set(model, new ArrayList<>(List.of(
+                new Polygon(), new Polygon(), new Polygon(),
+                new Polygon(), new Polygon(), new Polygon()
+        )));
+
+        List<Polygon> polygons = new ArrayList<>(List.of(
                 new Polygon(), new Polygon(), new Polygon(),
                 new Polygon(), new Polygon(), new Polygon()
         ));
+        polygons.get(0).setVertexIndices(new ArrayList<>(List.of(new Integer[]{0, 1, 2, 3})));
+        polygons.get(1).setVertexIndices(new ArrayList<>(List.of(new Integer[]{0, 4, 5, 1})));
+        polygons.get(2).setVertexIndices(new ArrayList<>(List.of(new Integer[]{3, 7, 4, 0})));
+        polygons.get(3).setVertexIndices(new ArrayList<>(List.of(new Integer[]{2, 6, 5, 1})));
+        polygons.get(4).setVertexIndices(new ArrayList<>(List.of(new Integer[]{3, 7, 6, 2})));
+        polygons.get(5).setVertexIndices(new ArrayList<>(List.of(new Integer[]{7, 4, 5, 6})));
 
-        model.polygons.get(0).setVertexIndices(new ArrayList<>(List.of(new Integer[]{0, 1, 2, 3})));
-        model.polygons.get(1).setVertexIndices(new ArrayList<>(List.of(new Integer[]{0, 4, 5, 1})));
-        model.polygons.get(2).setVertexIndices(new ArrayList<>(List.of(new Integer[]{3, 7, 4, 0})));
-        model.polygons.get(3).setVertexIndices(new ArrayList<>(List.of(new Integer[]{2, 6, 5, 1})));
-        model.polygons.get(4).setVertexIndices(new ArrayList<>(List.of(new Integer[]{3, 7, 6, 2})));
-        model.polygons.get(5).setVertexIndices(new ArrayList<>(List.of(new Integer[]{7, 4, 5, 6})));
-
+        polygonsField.set(model,
+                polygons
+        );
 
         return model;
     }
 
-    private static Model constructPyramidModel() {
+    private static Model constructPyramidModel() throws NoSuchFieldException, IllegalAccessException {
         Model model = new Model();
 
-        model.vertices = new ArrayList<>(List.of(new Vector3f[]{
+        Field verticiesField = Model.class.getDeclaredField("vertices");
+        verticiesField.setAccessible(true);
+        verticiesField.set(model, new ArrayList<>(List.of(new Vector3f[]{
                 new Vector3f(0, 0, 0),
                 new Vector3f(2, 0, 0),
                 new Vector3f(1, 2, 0),
                 new Vector3f(1, 1, 1)
-        }));
+        })));
 
-        model.polygons = new ArrayList<>(List.of(
+        List<Polygon> polygons = new ArrayList<>(List.of(
                 new Polygon(), new Polygon(),
                 new Polygon(), new Polygon()
         ));
+        polygons.get(0).setVertexIndices(new ArrayList<>(List.of(new Integer[]{1, 0, 2})));
+        polygons.get(1).setVertexIndices(new ArrayList<>(List.of(new Integer[]{0, 3, 1})));
+        polygons.get(2).setVertexIndices(new ArrayList<>(List.of(new Integer[]{2, 3, 0})));
+        polygons.get(3).setVertexIndices(new ArrayList<>(List.of(new Integer[]{1, 3, 2})));
 
-        model.polygons.get(0).setVertexIndices(new ArrayList<>(List.of(new Integer[]{1, 0, 2})));
-        model.polygons.get(1).setVertexIndices(new ArrayList<>(List.of(new Integer[]{0, 3, 1})));
-        model.polygons.get(2).setVertexIndices(new ArrayList<>(List.of(new Integer[]{2, 3, 0})));
-        model.polygons.get(3).setVertexIndices(new ArrayList<>(List.of(new Integer[]{1, 3, 2})));
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
+        polygonsField.set(model,
+                polygons
+        );
 
         return model;
     }
 
     @Test
-    public void normalToPolygon1() {
+    public void normalToPolygon1() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructBrickModel();
 
-        Polygon randomPolygon = model.polygons.get(0);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
+        
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, model.vertices);
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
 
-        Vector3f vertex1 = model.vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = model.vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = model.vertices.get(randomPolygon.getVertexIndices().get(2));
+        Polygon randomPolygon = polygons.get(0);
+
+        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+
+        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
         Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
         Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
@@ -83,16 +110,25 @@ public class NormalUtilsTest {
     }
 
     @Test
-    public void normalToPolygon2() {
+    public void normalToPolygon2() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructBrickModel();
 
-        Polygon randomPolygon = model.polygons.get(1);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, model.vertices);
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
 
-        Vector3f vertex1 = model.vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = model.vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = model.vertices.get(randomPolygon.getVertexIndices().get(2));
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
+        Polygon randomPolygon = polygons.get(1);
+
+        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+
+        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
         Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
         Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
@@ -101,16 +137,25 @@ public class NormalUtilsTest {
     }
 
     @Test
-    public void normalToPolygon3() {
+    public void normalToPolygon3() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructBrickModel();
 
-        Polygon randomPolygon = model.polygons.get(2);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, model.vertices);
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
 
-        Vector3f vertex1 = model.vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = model.vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = model.vertices.get(randomPolygon.getVertexIndices().get(2));
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+
+        Polygon randomPolygon = polygons.get(2);
+
+        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+
+        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
         Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
         Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
@@ -119,16 +164,25 @@ public class NormalUtilsTest {
     }
 
     @Test
-    public void normalToPolygon4() {
+    public void normalToPolygon4() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructBrickModel();
 
-        Polygon randomPolygon = model.polygons.get(3);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, model.vertices);
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
 
-        Vector3f vertex1 = model.vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = model.vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = model.vertices.get(randomPolygon.getVertexIndices().get(2));
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
+        Polygon randomPolygon = polygons.get(3);
+
+        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+
+        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
         Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
         Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
@@ -137,16 +191,25 @@ public class NormalUtilsTest {
     }
 
     @Test
-    public void normalToPolygon5() {
+    public void normalToPolygon5() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructBrickModel();
 
-        Polygon randomPolygon = model.polygons.get(4);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, model.vertices);
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
 
-        Vector3f vertex1 = model.vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = model.vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = model.vertices.get(randomPolygon.getVertexIndices().get(2));
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
+        Polygon randomPolygon = polygons.get(4);
+
+        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+
+        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
         Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
         Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
@@ -155,16 +218,25 @@ public class NormalUtilsTest {
     }
 
     @Test
-    public void normalToPolygon6() {
+    public void normalToPolygon6() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructBrickModel();
 
-        Polygon randomPolygon = model.polygons.get(5);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, model.vertices);
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
 
-        Vector3f vertex1 = model.vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = model.vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = model.vertices.get(randomPolygon.getVertexIndices().get(2));
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
+        Polygon randomPolygon = polygons.get(5);
+
+        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+
+        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
         Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
         Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
@@ -174,34 +246,25 @@ public class NormalUtilsTest {
 
 
     @Test
-    public void normalToPolygon7() {
+    public void normalToPolygon7() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructPyramidModel();
 
-        Polygon randomPolygon = model.polygons.get(0);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, model.vertices);
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
 
-        Vector3f vertex1 = model.vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = model.vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = model.vertices.get(randomPolygon.getVertexIndices().get(2));
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
+        Polygon randomPolygon = polygons.get(0);
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
-    }
-
-    @Test
-    public void normalToPolygon8() {
-        Model model = constructPyramidModel();
-
-        Polygon randomPolygon = model.polygons.get(1);
-
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, model.vertices);
-
-        Vector3f vertex1 = model.vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = model.vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = model.vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
         Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
         Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
@@ -210,15 +273,25 @@ public class NormalUtilsTest {
     }
 
     @Test
-    public void normalToPolygon9() {
+    public void normalToPolygon8() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructPyramidModel();
 
-        Polygon randomPolygon = model.polygons.get(2);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, model.vertices);
-        Vector3f vertex1 = model.vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = model.vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = model.vertices.get(randomPolygon.getVertexIndices().get(2));
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
+
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
+        Polygon randomPolygon = polygons.get(0);
+
+        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+
+        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
         Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
         Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
@@ -227,16 +300,25 @@ public class NormalUtilsTest {
     }
 
     @Test
-    public void normalToPolygon10() {
+    public void normalToPolygon9() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructPyramidModel();
 
-        Polygon randomPolygon = model.polygons.get(3);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, model.vertices);
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
 
-        Vector3f vertex1 = model.vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = model.vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = model.vertices.get(randomPolygon.getVertexIndices().get(2));
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
+        Polygon randomPolygon = polygons.get(0);
+
+        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+
+        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
         Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
         Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
@@ -245,26 +327,73 @@ public class NormalUtilsTest {
     }
 
     @Test
-    public void selectPolygonsSurroundingVertex1() {
+    public void normalToPolygon10() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructPyramidModel();
+
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
+
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
+
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
+        Polygon randomPolygon = polygons.get(0);
+
+        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+
+        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+
+        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+
+        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+    }
+
+    @Test
+    public void selectPolygonsSurroundingVertex1() throws NoSuchFieldException, IllegalAccessException {
+        Model model = constructPyramidModel();
+        
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
+
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
+
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
 
         List<Polygon> result = NormalUtils.selectPolygonsSurroundingVertex(
-                0, model.vertices, model.polygons
+                0, vertices, polygons
         );
 
         List<Polygon> expected = new ArrayList<>();
-        expected.add(model.polygons.get(0));
-        expected.add(model.polygons.get(1));
-        expected.add(model.polygons.get(2));
+        expected.add(polygons.get(0));
+        expected.add(polygons.get(1));
+        expected.add(polygons.get(2));
 
         Assertions.assertEquals(expected, result);
     }
 
     @Test
-    public void normalToVertex1() {
+    public void normalToVertex1() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructBrickModel();
 
-        Vector3f result = NormalUtils.vertexNormal(7, model.vertices, model.polygons);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
+
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
+
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
+
+        Vector3f result = NormalUtils.vertexNormal(7, vertices, polygons);
 
         Vector3f expected = new Vector3f((float) -1 / 3, (float) -1 / 3, (float) -1 / 3).normalize();
 
@@ -272,10 +401,20 @@ public class NormalUtilsTest {
     }
 
     @Test
-    public void normalToVertex2() {
+    public void normalToVertex2() throws NoSuchFieldException, IllegalAccessException {
         Model model = constructPyramidModel();
 
-        Vector3f result = NormalUtils.vertexNormal(3, model.vertices, model.polygons);
+        Field verticesField = Model.class.getDeclaredField("vertices");
+        verticesField.setAccessible(true);
+
+        Field polygonsField = Model.class.getDeclaredField("polygons");
+        polygonsField.setAccessible(true);
+
+        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
+        
+
+        Vector3f result = NormalUtils.vertexNormal(3, vertices, polygons);
         Vector3f expected = new Vector3f(
                 0,
                 (float) (1 / Math.sqrt(2)) - (float) (2 / Math.sqrt(6)),

@@ -1,4 +1,4 @@
-package com.meow.bebrablender.utils;
+package com.meow.bebrablender.normals;
 
 
 import com.meow.bebrablender.math.vectors.Vector3f;
