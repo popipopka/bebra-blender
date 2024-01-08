@@ -26,7 +26,7 @@ public class ObjReader {
         this.lines = Files.readAllLines(path);
     }
 
-    public Model read() throws IOException {
+    public Model read() {
         loadInModel();
         checkPolygons();
         
@@ -199,7 +199,7 @@ public class ObjReader {
             );
 
         } catch (NumberFormatException e) {
-            throw new ObjReaderException("Failed to parse float value.", lineInd);
+            throw new ObjReaderException("Failed to parse double value.", lineInd);
 
         } catch (IndexOutOfBoundsException e) {
             throw new ObjReaderException("Too few normal arguments.", lineInd);

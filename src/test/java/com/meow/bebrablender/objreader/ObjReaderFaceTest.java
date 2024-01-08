@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 class ObjReaderFaceTest {
-    ObjReader reader = new ObjReader(null);
+    private final ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/Null.obj"));
 
     ObjReaderFaceTest() throws IOException {
     }
@@ -93,7 +93,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord06() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestWithoutPolygons01.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestWithoutPolygons01.obj"));
             
             reader.read();
             Assertions.fail();
@@ -107,7 +107,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord07() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestWithoutVertex01.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestWithoutVertex01.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -120,7 +120,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord08() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestWithoutPolygons02.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestWithoutPolygons02.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -133,7 +133,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord09() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestWithoutTextureVericesPolygon01.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestWithoutTextureVericesPolygon01.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -146,7 +146,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord10() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestWithoutTextureVericesPolygon01.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestWithoutTextureVericesPolygon01.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -159,7 +159,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord11() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestIncorrectSpecifiedIndexPolygon01.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestIncorrectSpecifiedIndexPolygon01.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -172,7 +172,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord12() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestIncorrectSpecifiedIndexPolygon02.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestIncorrectSpecifiedIndexPolygon02.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -185,7 +185,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord13() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestIncorrectSpecifiedIndexPolygon03.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestIncorrectSpecifiedIndexPolygon03.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -198,7 +198,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord14() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestIncorrectSpecifiedIndexPolygon04.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestIncorrectSpecifiedIndexPolygon04.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -211,7 +211,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord15() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestIncorrectSpecifiedIndexPolygon05.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestIncorrectSpecifiedIndexPolygon05.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -224,7 +224,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord16() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestIncorrectSpecifiedIndexPolygon06.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestIncorrectSpecifiedIndexPolygon06.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -237,7 +237,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord17() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestInvalidElementSizePolygon01.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestInvalidElementSizePolygon01.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -250,7 +250,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord18() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestInvalidElementSizePolygon02.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestInvalidElementSizePolygon02.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -263,7 +263,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord19() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestInvalidElementSizePolygon03.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestInvalidElementSizePolygon03.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -276,7 +276,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord20() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestFailedToParseInt01.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestFailedToParseInt01.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -289,7 +289,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord21() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestFailedToParseInt02.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestFailedToParseInt02.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -302,7 +302,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord22() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestFailedToParseInt03.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestFailedToParseInt03.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -329,7 +329,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord24() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestIncorrectSpecifiedIndexPolygon07.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestIncorrectSpecifiedIndexPolygon07.obj"));
             Model model = reader.read();
 
             Assertions.fail();
@@ -342,7 +342,7 @@ class ObjReaderFaceTest {
     @Test
     void testParseFaceWord25() {
         try {
-            ObjReader reader = new ObjReader(Path.of("src/main/ObjFiles/TestIncorrectSpecifiedIndexPolygon08.obj"));
+            ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/TestIncorrectSpecifiedIndexPolygon08.obj"));
             Model model = reader.read();
 
             Assertions.fail();
