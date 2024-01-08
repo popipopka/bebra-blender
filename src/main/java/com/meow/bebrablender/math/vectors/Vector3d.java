@@ -2,7 +2,7 @@ package com.meow.bebrablender.math.vectors;
 
 public class Vector3d extends AbstractVector<Vector3d> {
     public Vector3d() {
-        super(3, new double[]{0, 0, 0});
+        super(3);
     }
 
     public Vector3d(double x, double y, double z) {
@@ -42,6 +42,15 @@ public class Vector3d extends AbstractVector<Vector3d> {
         double y = this.z() * v.x() - this.x() * v.z();
         double z = this.x() * v.y() - this.y() * v.x();
 
+        return new Vector3d(x, y, z);
+    }
+
+    public Vector3d crossProd(Vector3d v1, Vector3d v2) {
+        double x = v1.y() * v2.z() - v1.z() * v2.y();
+        double y = v1.z() * v2.x() - v1.x() * v2.z();
+        double z = v1.x() * v2.y() - v1.y() * v2.x();
+
+        setCoords(new double[]{x, y, z});
         return new Vector3d(x, y, z);
     }
 

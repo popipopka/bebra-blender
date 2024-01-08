@@ -1,7 +1,7 @@
 package com.meow.bebrablender.objwriter;
 
-import com.meow.bebrablender.math.vectors.Vector2f;
-import com.meow.bebrablender.math.vectors.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector2d;
+import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.model.Polygon;
 
@@ -30,22 +30,22 @@ public class ObjWriter {
         }
     }
 
-    protected void writeVerticesOfModel(PrintWriter printWriter, List<Vector3f> vertices) {
-        for (Vector3f vertex : vertices) {
+    protected void writeVerticesOfModel(PrintWriter printWriter, List<Vector3d> vertices) {
+        for (Vector3d vertex : vertices) {
             printWriter.println(OBJ_VERTEX_TOKEN + " " + vertex.x() + " " + vertex.y() + " " + vertex.z());
         }
         printWriter.println();
     }
 
-    protected void writeTextureVerticesOfModel(PrintWriter printWriter, List<Vector2f> textureVertices) {
-        for (Vector2f vertex : textureVertices) {
+    protected void writeTextureVerticesOfModel(PrintWriter printWriter, List<Vector2d> textureVertices) {
+        for (Vector2d vertex : textureVertices) {
             printWriter.println(OBJ_TEXTURE_TOKEN + " " + vertex.x() + " " + vertex.y());
         }
         printWriter.println();
     }
 
-    protected void writeNormalsOfModel(PrintWriter printWriter, List<Vector3f> normals){
-        for (Vector3f normal : normals) {
+    protected void writeNormalsOfModel(PrintWriter printWriter, List<Vector3d> normals){
+        for (Vector3d normal : normals) {
             printWriter.println(OBJ_NORMAL_TOKEN + " " + normal.x() + " " + normal.y() + " " + normal.z());
         }
         printWriter.println();

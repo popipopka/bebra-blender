@@ -1,7 +1,7 @@
 package com.meow.bebrablender.objreader;
 
-import com.meow.bebrablender.math.vectors.Vector2f;
-import com.meow.bebrablender.math.vectors.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector2d;
+import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.model.Polygon;
 
@@ -29,10 +29,10 @@ public class ObjReader {
     public Model read() {
         loadInModel();
         checkPolygons();
-        
+
         return result;
     }
-    
+
     private void checkPolygons() {
         for (Polygon face : result.getPolygons()) {
             // проверка вершин
@@ -41,13 +41,13 @@ public class ObjReader {
             checkNormInFace(face);
             // проверка текстурных вершин
             checkTextureInFace(face);
-            
+
         }
     }
-    
+
     private void checkTextureInFace(Polygon face) {
         int textureIndicesSize = result.getTextureVertices().size();
-        
+
         if (!face.getTextureVertexIndices().isEmpty()) {
             for (int i = 0; i < 3; i++) {
                 int textureIndex = face.getTextureVertexIndices().get(i);
@@ -65,10 +65,10 @@ public class ObjReader {
             }
         }
     }
-    
+
     private void checkVertInFace(Polygon face) {
-        int vertexIndicesSize  = result.getVertices().size();
-        
+        int vertexIndicesSize = result.getVertices().size();
+
         for (int i = 0; i < 3; i++) {
             // проверка на то, что индекс вершины полигона не содержится в массиве индексов модели
             int vertexIndex = face.getVertexIndices().get(i);
@@ -87,9 +87,9 @@ public class ObjReader {
             }
         }
     }
-    
+
     private void checkNormInFace(Polygon face) {
-        int normalIndicesSize  = result.getNormals().size();
+        int normalIndicesSize = result.getNormals().size();
 
         // проверка для нормалей
         if (!face.getNormalIndices().isEmpty()) {
@@ -118,7 +118,7 @@ public class ObjReader {
             line = lines.get(i);
 
             String[] split = line.split("\\s+");
-            if(split.length == 1) continue;
+            if (split.length == 1) continue;
 
             wordsInLine = new ArrayList<>(Arrays.asList(split));
 
@@ -150,13 +150,13 @@ public class ObjReader {
         if (result.getVertices().isEmpty()) throw new ObjReaderException("OBJ has not any vertices");
     }
 
-    public Vector3f parseVertex(final List<String> lineWithoutToken, int lineInd) {
+    public Vector3d parseVertex(final List<String> lineWithoutToken, int lineInd) {
         try {
             if (lineWithoutToken.size() > 3) {
                 throw new ObjReaderException("Too much vertex arguments.", lineInd);
             }
 
-            return new Vector3f(
+            return new Vector3d(
                     Double.parseDouble(lineWithoutToken.get(0)),
                     Double.parseDouble(lineWithoutToken.get(1)),
                     Double.parseDouble(lineWithoutToken.get(2)));
@@ -169,14 +169,14 @@ public class ObjReader {
         }
     }
 
-    public Vector2f parseTextureVertex(final List<String> lineWithoutToken, int lineInd) {
+    public Vector2d parseTextureVertex(final List<String> lineWithoutToken, int lineInd) {
         try {
             if (lineWithoutToken.size() > 2
                     && (Math.signum(Double.parseDouble(lineWithoutToken.get(2))) != 0)) {
 
                 throw new ObjReaderException("Too much texture vertex arguments.", lineInd);
             }
-            return new Vector2f(
+            return new Vector2d(
                     Double.parseDouble(lineWithoutToken.get(0)),
                     Double.parseDouble(lineWithoutToken.get(1))
             );
@@ -189,12 +189,12 @@ public class ObjReader {
         }
     }
 
-    public Vector3f parseNormal(final List<String> lineWithoutToken, int lineInd) {
+    public Vector3d parseNormal(final List<String> lineWithoutToken, int lineInd) {
         try {
             if (lineWithoutToken.size() > 3) {
                 throw new ObjReaderException("Too much normal arguments.", lineInd);
             }
-            return new Vector3f(
+            return new Vector3d(
                     Double.parseDouble(lineWithoutToken.get(0)),
                     Double.parseDouble(lineWithoutToken.get(1)),
                     Double.parseDouble(lineWithoutToken.get(2))
@@ -226,8 +226,8 @@ public class ObjReader {
 
         Polygon result = new Polygon();
         result.setVertexIndices(faceVertexIndices);
-        if(!faceTextureVertexIndices.isEmpty()) result.setTextureVertexIndices(faceTextureVertexIndices);
-        if(!faceNormalIndices.isEmpty()) result.setNormalIndices(faceNormalIndices);
+        if (!faceTextureVertexIndices.isEmpty()) result.setTextureVertexIndices(faceTextureVertexIndices);
+        if (!faceNormalIndices.isEmpty()) result.setNormalIndices(faceNormalIndices);
         return result;
     }
 

@@ -3,7 +3,7 @@ package com.meow.bebrablender.math.vectors;
 public class Vector2d extends AbstractVector<Vector2d> {
 
     public Vector2d() {
-        super(2, new double[]{0, 0});
+        super(2);
     }
 
     public Vector2d(double x, double y) {

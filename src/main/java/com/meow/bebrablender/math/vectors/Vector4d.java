@@ -2,7 +2,7 @@ package com.meow.bebrablender.math.vectors;
 
 public class Vector4d extends AbstractVector<Vector4d> {
     public Vector4d() {
-        super(4, new double[]{0, 0, 0, 0});
+        super(4);
     }
 
     public Vector4d(double x, double y, double z, double w) {
