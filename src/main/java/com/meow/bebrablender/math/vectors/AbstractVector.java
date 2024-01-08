@@ -9,7 +9,7 @@ import java.util.Arrays;
 public abstract class AbstractVector<T extends Vector> implements Vector<T> {
     protected double[] coords;
     protected final int size;
-    private static final double EPSILON = 1e-6;
+    private static final double EPSILON = 1E-6;
 
     protected AbstractVector(int size, double[] coords) {
         this.coords = coords;
