@@ -2,24 +2,32 @@ package com.meow.bebrablender.math.matrices;
 
 /**
  *
- * @param <T> matrix type
+ * @param <M> matrix type
  * @param <V> vector type
  */
-public interface SquareMatrix<T, V> {
+public interface SquareMatrix<M, V> {
 
-    double[][] getData();
+    double[][] data();
+
+    void setData(double[][] data);
 
     void setNull();
 
     void setUnit();
 
-    T add(T m);
+    M add(M m);
 
-    T subtract(T m);
+    M add(M m1, M m2);
 
-    V multiplyVector(V v);
+    M sub(M m);
 
-    T multiply(T m);
+    M sub(M m1, M m2);
 
-    T transpose();
+    V mulVec(V v);
+
+    M mul(M m);
+
+    M mul(M m1, M m2);
+
+    M trans();
 }

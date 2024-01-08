@@ -1,10 +1,13 @@
 package com.meow.bebrablender.math.matrices;
 
+import com.meow.bebrablender.general.Copiable;
 import com.meow.bebrablender.math.vectors.Vector;
 
 import java.util.Arrays;
 
-public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vector> implements SquareMatrix<T, V> {
+public abstract class AbstractSquareMatrix<M extends SquareMatrix, V extends Vector>
+        implements SquareMatrix<M, V>, Copiable<M> {
+
     protected double[][] data;
     private final int size;
 
@@ -24,6 +27,19 @@ public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vec
         if (this.size != expectedSize) {
             throw new IllegalArgumentException(String.format("Размерность данной матрицы %d на %d", expectedSize, expectedSize));
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+
+        str.append("AbstractSquareMatrix{\n");
+        for (double[] arr : data) {
+            str.append(Arrays.toString(arr)).append("\n");
+        }
+        str.append("}");
+
+        return str.toString();
     }
 
     @Override
@@ -72,15 +88,15 @@ public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vec
         }
     }
 
-    protected abstract T initialReturnThis();
+    protected abstract M initialReturnThis();
 
     protected abstract V initialCreateVector(double[] data);
 
     @Override
-    public T add(T m) {
+    public M add(M m) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                this.data[i][j] = this.data[i][j] + m.getData()[i][j];
+                this.data[i][j] = this.data[i][j] + m.data()[i][j];
             }
         }
 
@@ -88,10 +104,24 @@ public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vec
     }
 
     @Override
-    public T subtract(T m) {
+    public M add(M m1, M m2) {
+        double[][] newData = new double[size][size];
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                this.data[i][j] = this.data[i][j] - m.getData()[i][j];
+                newData[i][j] = m1.data()[i][j] + m2.data()[i][j];
+            }
+        }
+
+        setData(newData);
+        return initialReturnThis();
+    }
+
+    @Override
+    public M sub(M m) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                this.data[i][j] = this.data[i][j] - m.data()[i][j];
             }
         }
 
@@ -99,10 +129,24 @@ public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vec
     }
 
     @Override
-    public V multiplyVector(V v) {
+    public M sub(M m1, M m2) {
+        double[][] newData = new double[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                newData[i][j] = m1.data()[i][j] - m2.data()[i][j];
+            }
+        }
+
+        setData(newData);
+        return initialReturnThis();
+    }
+
+    @Override
+    public V mulVec(V v) {
         double[] newData = new double[size];
 
-        double[] vCoord = v.getCoords();
+        double[] vCoord = v.coords();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 newData[i] += this.data[i][j] * vCoord[j];
@@ -112,20 +156,40 @@ public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vec
     }
 
     @Override
-    public T multiply(T m) {
+    public M mul(M m) {
+        double[][] newData = new double[size][size];
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
 
                 for (int k = 0; k < size; k++) {
-                    this.data[i][j] += this.data[i][k] * m.getData()[k][j];
+                    newData[i][j] += this.data[i][k] * m.data()[k][j];
                 }
             }
         }
+        this.setData(newData);
         return initialReturnThis();
     }
 
     @Override
-    public T transpose() {
+    public M mul(M m1, M m2) {
+        double[][] newData = new double[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+
+                for (int k = 0; k < size; k++) {
+                    newData[i][j] += m1.data()[i][k] * m2.data()[k][j];
+                }
+            }
+        }
+
+        setData(newData);
+        return initialReturnThis();
+    }
+
+    @Override
+    public M trans() {
         double[][] newData = new double[size][size];
 
         for (int i = 0; i < size; i++) {
@@ -139,7 +203,15 @@ public abstract class AbstractSquareMatrix<T extends SquareMatrix, V extends Vec
     }
 
     @Override
-    public double[][] getData() {
+    public double[][] data() {
         return this.data;
+    }
+
+    @Override
+    public void setData(double[][] data) {
+        if(this.data.length != data.length || this.data[0].length != data[0].length) {
+            throw new IllegalArgumentException("Размерность массива не соответствует размерности матрицы");
+        }
+        this.data = data;
     }
 }

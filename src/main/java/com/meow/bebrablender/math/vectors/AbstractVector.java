@@ -5,10 +5,10 @@ import com.meow.bebrablender.general.Copiable;
 import java.util.Arrays;
 
 /**
- * @param <T> vector type
+ * @param <V> vector type
  */
 
-public abstract class AbstractVector<T extends Vector> implements Vector<T>, Copiable<T> {
+public abstract class AbstractVector<V extends Vector> implements Vector<V>, Copiable<V> {
     protected double[] coords;
     protected final int size;
     private static final double EPSILON = 1E-6;
@@ -20,14 +20,11 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T>, Cop
     }
 
     @Override
-    public abstract T copy();
-
-    @Override
     public void setCoords(double[] coords) {
         if (coords.length != size) {
             throw new IllegalArgumentException("Размерность массива не соответствует размерности вектора");
         }
-        this.coords = Arrays.copyOf(coords, size);
+        this.coords = coords;
     }
 
     private void checkSize(int expectedSize) {
@@ -46,7 +43,7 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T>, Cop
 
         for (int i = 0; i < size; i++) {
             if (Math.abs(coords[i] - that.coords[i]) <= EPSILON) {
-                return false;
+                return true;
             }
         }
 
@@ -66,22 +63,36 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T>, Cop
     }
 
     @Override
-    public double[] getCoords() {
+    public double[] coords() {
         return coords;
     }
 
     @Override
-    public T add(T v) {
-        double[] vCoord = v.getCoords();
+    public V add(V v) {
+        double[] vCoords = v.coords();
         for (int i = 0; i < this.coords.length; i++) {
-            this.coords[i] += vCoord[i];
+            this.coords[i] += vCoords[i];
         }
         return initialReturnThis();
     }
 
     @Override
-    public T subtract(T v) {
-        double[] vCoord = v.getCoords();
+    public V add(V v1, V v2) {
+        double[] v1Coords = v1.coords();
+        double[] v2Coords = v2.coords();
+
+        double[] newCoords = new double[size];
+        for (int i = 0; i < this.coords.length; i++) {
+            newCoords[i] = v1Coords[i] + v2Coords[i];
+        }
+
+        setCoords(newCoords);
+        return initialReturnThis();
+    }
+
+    @Override
+    public V sub(V v) {
+        double[] vCoord = v.coords();
         for (int i = 0; i < this.coords.length; i++) {
             this.coords[i] -= vCoord[i];
         }
@@ -89,19 +100,21 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T>, Cop
     }
 
     @Override
-    public T setSubtract(T v1, T v2) {
-        double[] v1Coord = v1.getCoords();
-        double[] v2Coord = v2.getCoords();
+    public V sub(V v1, V v2) {
+        double[] v1Coords = v1.coords();
+        double[] v2Coords = v2.coords();
 
+        double[] newCoords = new double[size];
         for (int i = 0; i < this.coords.length; i++) {
-            this.coords[i] = v1Coord[i] - v2Coord[i];
+            newCoords[i] = v1Coords[i] - v2Coords[i];
         }
 
+        setCoords(newCoords);
         return initialReturnThis();
     }
 
     @Override
-    public T multiply(double number) {
+    public V mul(double number) {
         for (int i = 0; i < this.coords.length; i++) {
             this.coords[i] *= number;
         }
@@ -109,7 +122,20 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T>, Cop
     }
 
     @Override
-    public T divide(double number) {
+    public V mul(V v, double number) {
+        double[] vCoords = v.coords();
+
+        double[] newCoords = new double[size];
+        for (int i = 0; i < this.coords.length; i++) {
+            newCoords[i] = vCoords[i] * number;
+        }
+
+        setCoords(newCoords);
+        return initialReturnThis();
+    }
+
+    @Override
+    public V div(double number) {
         if (number == 0) throw new ArithmeticException("Деление на ноль запрещено");
 
         for (int i = 0; i < this.coords.length; i++) {
@@ -119,7 +145,20 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T>, Cop
     }
 
     @Override
-    public double length() {
+    public V div(V v, double number) {
+        double[] vCoords = v.coords();
+
+        double[] newCoords = new double[size];
+        for (int i = 0; i < this.coords.length; i++) {
+            newCoords[i] = vCoords[i] / number;
+        }
+
+        setCoords(newCoords);
+        return initialReturnThis();
+    }
+
+    @Override
+    public double len() {
         double sum = 0;
         for (double e : this.coords) {
             sum += Math.pow(e, 2);
@@ -128,35 +167,35 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T>, Cop
     }
 
     @Override
-    public T normalize() {
-        double length = length();
+    public V norm() {
+        double length = len();
 
-        if (length != 0) divide(length);
+        if (length != 0) div(length);
         return initialReturnThis();
     }
 
     @Override
-    public double scalarProduct(T v) {
+    public double sclProd(V v) {
         double result = 0;
         for (int i = 0; i < size; i++) {
-            result += this.coords[i] * v.getCoords()[i];
+            result += this.coords[i] * v.coords()[i];
         }
         return result;
     }
 
     @Override
-    public boolean isOrthogonal(T v) {
-        return scalarProduct(v) == 0;
+    public boolean isOrt(V v) {
+        return sclProd(v) == 0;
     }
 
     @Override
-    public T to(T v) {
-        double[] vCoords = v.getCoords();
+    public V to(V v) {
+        double[] vCoords = v.coords();
         for (int i = 0; i < size; i++) {
             coords[i] = vCoords[i] - coords[i];
         }
         return initialReturnThis();
     }
 
-    protected abstract T initialReturnThis();
+    protected abstract V initialReturnThis();
 }

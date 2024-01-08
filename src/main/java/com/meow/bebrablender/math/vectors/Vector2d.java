@@ -1,16 +1,16 @@
 package com.meow.bebrablender.math.vectors;
 
-public class Vector2f extends AbstractVector<Vector2f> {
+public class Vector2d extends AbstractVector<Vector2d> {
 
-    public Vector2f() {
+    public Vector2d() {
         super(2, new double[]{0, 0});
     }
 
-    public Vector2f(double x, double y) {
+    public Vector2d(double x, double y) {
         super(2, new double[]{x, y});
     }
 
-    public Vector2f(double[] coords) {
+    public Vector2d(double[] coords) {
         super(2, coords);
     }
 
@@ -30,17 +30,17 @@ public class Vector2f extends AbstractVector<Vector2f> {
         coords[1] = y;
     }
 
-    public double crossMagnitude(Vector2f v) {
+    public double crossMagnitude(Vector2d v) {
         return coords[0] * v.y() - coords[1] * v.x();
     }
 
     @Override
-    public Vector2f copy() {
-        return new Vector2f(this.coords);
+    public Vector2d copy() {
+        return new Vector2d(this.coords);
     }
 
     @Override
-    protected Vector2f initialReturnThis() {
+    protected Vector2d initialReturnThis() {
         return this;
     }
 }

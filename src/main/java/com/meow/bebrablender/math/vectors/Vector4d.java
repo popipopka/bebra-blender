@@ -1,15 +1,15 @@
 package com.meow.bebrablender.math.vectors;
 
-public class Vector4f extends AbstractVector<Vector4f> {
-    public Vector4f() {
-        super(0, new double[]{0, 0, 0, 0});
+public class Vector4d extends AbstractVector<Vector4d> {
+    public Vector4d() {
+        super(4, new double[]{0, 0, 0, 0});
     }
 
-    public Vector4f(double x, double y, double z, double w) {
+    public Vector4d(double x, double y, double z, double w) {
         super(4, new double[]{x, y, z, w});
     }
 
-    public Vector4f(double[] coords) {
+    public Vector4d(double[] coords) {
         super(4, coords);
     }
 
@@ -46,12 +46,12 @@ public class Vector4f extends AbstractVector<Vector4f> {
     }
 
     @Override
-    public Vector4f copy() {
-        return new Vector4f(this.coords);
+    public Vector4d copy() {
+        return new Vector4d(this.coords);
     }
 
     @Override
-    protected Vector4f initialReturnThis() {
+    protected Vector4d initialReturnThis() {
         return this;
     }
 }
