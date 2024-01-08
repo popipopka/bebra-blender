@@ -16,7 +16,12 @@ public abstract class AbstractVector<V extends Vector> implements Vector<V>, Cop
     protected AbstractVector(int size, double[] coords) {
         this.coords = coords;
         this.size = size;
-        checkSize(coords.length);
+        checkSize();
+    }
+
+    public AbstractVector(int size) {
+        this.size = size;
+        this.coords = new double[size];
     }
 
     @Override
@@ -27,9 +32,9 @@ public abstract class AbstractVector<V extends Vector> implements Vector<V>, Cop
         this.coords = coords;
     }
 
-    private void checkSize(int expectedSize) {
-        if (this.size != expectedSize) {
-            throw new IllegalArgumentException("Размерность данного вектора равна " + expectedSize);
+    private void checkSize() {
+        if (this.size != this.coords.length) {
+            throw new IllegalArgumentException("Размерность данного вектора равна " + size);
         }
     }
 

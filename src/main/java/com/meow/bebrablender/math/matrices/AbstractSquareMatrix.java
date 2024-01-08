@@ -14,12 +14,18 @@ public abstract class AbstractSquareMatrix<M extends SquareMatrix, V extends Vec
     protected AbstractSquareMatrix(int expectedSize, double[][] data) {
         this.data = data;
         this.size = expectedSize;
-        checkSize(expectedSize);
+        checkSize();
     }
 
-    private void checkSize(int expectedSize) {
-        if (this.size != expectedSize) {
-            throw new IllegalArgumentException(String.format("Размерность данной матрицы %d на %d", expectedSize, expectedSize));
+    protected AbstractSquareMatrix(int expectedSize) {
+        this.size = expectedSize;
+        this.data = new double[size][size];
+        checkSize();
+    }
+
+    private void checkSize() {
+        if (this.size != this.data.length) {
+            throw new IllegalArgumentException(String.format("Размерность данной матрицы %d на %d", size, size));
         }
     }
 

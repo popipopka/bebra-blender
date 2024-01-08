@@ -7,6 +7,10 @@ public class Matrix4d extends AbstractSquareMatrix<Matrix4d, Vector4d> {
         super(4, data);
     }
 
+    public Matrix4d() {
+        super(4);
+    }
+
     @Override
     protected Matrix4d initialReturnThis() {
         return this;
