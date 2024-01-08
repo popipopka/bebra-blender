@@ -8,16 +8,25 @@ import java.util.Arrays;
 
 public abstract class AbstractVector<T extends Vector> implements Vector<T> {
     protected double[] coords;
-    protected int size;
+    protected final int size;
+    private static final double EPSILON = 1e-6;
 
-    protected AbstractVector(int expectedSize, double[] coords) {
+    protected AbstractVector(int size, double[] coords) {
         this.coords = coords;
-        this.size = coords.length;
-        checkSize(expectedSize);
+        this.size = size;
+        checkSize(coords.length);
+    }
+
+    @Override
+    public void setCoords(double[] coords) {
+        if (coords.length != size) {
+            throw new IllegalArgumentException("Размерность массива не соответствует размерности вектора");
+        }
+        this.coords = Arrays.copyOf(coords, size);
     }
 
     private void checkSize(int expectedSize) {
-        if (this.coords.length != expectedSize) {
+        if (this.size != expectedSize) {
             throw new IllegalArgumentException("Размерность данного вектора равна " + expectedSize);
         }
     }
@@ -31,12 +40,19 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T> {
         if (size != that.size) return false;
 
         for (int i = 0; i < size; i++) {
-            if (Double.compare(coords[i], that.coords[i]) != 0) {
+            if (Math.abs(coords[i] - that.coords[i]) <= EPSILON) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractVector{" +
+                Arrays.toString(coords) +
+                '}';
     }
 
     @Override
