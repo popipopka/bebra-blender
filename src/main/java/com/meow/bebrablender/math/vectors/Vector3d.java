@@ -1,6 +1,6 @@
 package com.meow.bebrablender.math.vectors;
 
-public class Vector3d extends AbstractVector<Vector3d> {
+public class Vector3d extends AbstractVector<Vector3d> implements Comparable<Vector2d> {
     public Vector3d() {
         super(3);
     }
@@ -62,5 +62,13 @@ public class Vector3d extends AbstractVector<Vector3d> {
     @Override
     protected Vector3d initialReturnThis() {
         return this;
+    }
+
+    @Override
+    public int compareTo(Vector2d o) {
+        int cmp = Double.compare(this.y(), o.y());
+        if (cmp != 0) {
+            return cmp;
+        } else return Double.compare(this.x(), o.x());
     }
 }
