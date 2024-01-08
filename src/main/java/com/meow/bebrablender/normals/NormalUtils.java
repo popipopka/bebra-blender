@@ -1,6 +1,7 @@
 package com.meow.bebrablender.normals;
 
-import com.meow.bebrablender.math.vectors.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector3d;
+import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Polygon;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class NormalUtils {
      * @param normals  all model normals list
      * @param polygons all model polygons list
      */
-    public static void recalculateModelNormals(List<Vector3f> vertices, List<Vector3f> normals,
+    public static void recalculateModelNormals(List<Vector3d> vertices, List<Vector3d> normals,
                                                List<Polygon> polygons) {
         for (int i = 0; i < vertices.size(); i++) {
             normals.set(i, vertexNormal(i, vertices, polygons));
@@ -29,7 +30,7 @@ public class NormalUtils {
      * @param vertices all model vertices list
      * @return normal vector to input polygon
      */
-    public static Vector3f polygonNormal(Polygon polygon, List<Vector3f> vertices) {
+    public static Vector3d polygonNormal(Polygon polygon, List<Vector3d> vertices) {
         List<Integer> vertexIndices = polygon.getVertexIndices();
 
         if (vertexIndices.size() < 3)
@@ -37,15 +38,15 @@ public class NormalUtils {
         if (vertices.size() < 3)
             throw new IllegalArgumentException("Vertices count must be greater than or equal to 3");
 
-        Vector3f vertex1 = vertices.get(vertexIndices.get(0));
-        Vector3f vertex2 = vertices.get(vertexIndices.get(1));
-        Vector3f vertex3 = vertices.get(vertexIndices.get(2));
+        Vector3d vertex1 = vertices.get(vertexIndices.get(0));
+        Vector3d vertex2 = vertices.get(vertexIndices.get(1));
+        Vector3d vertex3 = vertices.get(vertexIndices.get(2));
 
         //vectors in the polygon flat
-        Vector3f vector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z()).normalize();
-        Vector3f vector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z()).normalize();
+        Vector3d vector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z()).norm();
+        Vector3d vector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z()).norm();
 
-        return vector1.crossProduct(vector2).normalize();
+        return vector1.crossProd(vector2).norm();
     }
 
     /**
@@ -54,19 +55,19 @@ public class NormalUtils {
      * @param polygons    all model polygons list
      * @return normal vector to vertex relative to model
      */
-    public static Vector3f vertexNormal(Integer vertexIndex, List<Vector3f> vertices, List<Polygon> polygons) {
+    public static Vector3d vertexNormal(Integer vertexIndex, List<Vector3d> vertices, List<Polygon> polygons) {
         // Вариант, куда передают все вершины модели
         List<Polygon> polygonsSurroundingVertex = selectPolygonsSurroundingVertex(
                 vertexIndex, vertices, polygons
         );
 
-        Vector3f sumVector = new Vector3f(0, 0, 0);
+        Vector3d sumVector = new Vector3d(0, 0, 0);
         for (Polygon polygon : polygonsSurroundingVertex) {
-            sumVector.add(polygonNormal(polygon, vertices).normalize());
+            sumVector.add(polygonNormal(polygon, vertices).norm());
         }
 
         // return average vector
-        return sumVector.divide(polygonsSurroundingVertex.size()).normalize();
+        return sumVector.div(polygonsSurroundingVertex.size()).norm();
     }
 
     /**
@@ -77,7 +78,7 @@ public class NormalUtils {
      * @param polygons    all model polygons list
      * @return polygons which bordering input vertex
      */
-    public static List<Polygon> selectPolygonsSurroundingVertex(Integer vertexIndex, List<Vector3f> vertices,
+    public static List<Polygon> selectPolygonsSurroundingVertex(Integer vertexIndex, List<Vector3d> vertices,
                                                                 List<Polygon> polygons) {
         if (vertices.isEmpty())
             throw new IllegalArgumentException("Vertex array must be not empty");
