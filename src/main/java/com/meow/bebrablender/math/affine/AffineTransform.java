@@ -1,6 +1,6 @@
 package com.meow.bebrablender.math.affine;
 
-import com.meow.bebrablender.math.vectors.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Model;
 
 import java.util.List;
@@ -39,8 +39,8 @@ public class AffineTransform {
     }
 
     private void applyTransform(Supplier<AffineApplicable> transform) {
-        List<Vector3f> vertices = this.model.getVertices();
-        for (Vector3f v : vertices) {
+        List<Vector3d> vertices = this.model.getVertices();
+        for (Vector3d v : vertices) {
             transform.get().apply(v);
         }
     }

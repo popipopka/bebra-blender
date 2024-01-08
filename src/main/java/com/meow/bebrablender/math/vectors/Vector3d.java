@@ -1,15 +1,15 @@
 package com.meow.bebrablender.math.vectors;
 
-public class Vector3f extends AbstractVector<Vector3f> {
-    public Vector3f() {
-        super(0, new double[]{0, 0, 0});
+public class Vector3d extends AbstractVector<Vector3d> {
+    public Vector3d() {
+        super(3, new double[]{0, 0, 0});
     }
 
-    public Vector3f(double x, double y, double z) {
+    public Vector3d(double x, double y, double z) {
         super(3, new double[]{x, y, z});
     }
 
-    public Vector3f(double[] coords) {
+    public Vector3d(double[] coords) {
         super(3, coords);
     }
 
@@ -37,21 +37,21 @@ public class Vector3f extends AbstractVector<Vector3f> {
         coords[2] = z;
     }
 
-    public Vector3f crossProduct(Vector3f v) {
+    public Vector3d crossProd(Vector3d v) {
         double x = this.y() * v.z() - this.z() * v.y();
         double y = this.z() * v.x() - this.x() * v.z();
         double z = this.x() * v.y() - this.y() * v.x();
 
-        return new Vector3f(x, y, z);
+        return new Vector3d(x, y, z);
     }
 
     @Override
-    public Vector3f copy() {
-        return new Vector3f(this.coords);
+    public Vector3d copy() {
+        return new Vector3d(this.coords);
     }
 
     @Override
-    protected Vector3f initialReturnThis() {
+    protected Vector3d initialReturnThis() {
         return this;
     }
 }

@@ -1,6 +1,6 @@
 package com.meow.bebrablender.math.affine;
 
-import com.meow.bebrablender.math.vectors.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.objreader.ObjReader;
 import org.junit.jupiter.api.Assertions;
@@ -23,12 +23,12 @@ class AffineTransformTest {
         double a = 45;
         RotateX r = new RotateX(a);
 
-        List<Vector3f> initVert = List.copyOf(model.getVertices());
+        List<Vector3d> initVert = List.copyOf(model.getVertices());
 
         affine.rotateX(a);
-        List<Vector3f> expected = model.getVertices();
+        List<Vector3d> expected = model.getVertices();
 
-        List<Vector3f> actual = List.of(
+        List<Vector3d> actual = List.of(
                 r.apply(initVert.getFirst()),
                 r.apply(initVert.get(1)),
                 r.apply(initVert.get(2)),
@@ -47,12 +47,12 @@ class AffineTransformTest {
         double a = 45;
         RotateY r = new RotateY(a);
 
-        List<Vector3f> initVert = List.copyOf(model.getVertices());
+        List<Vector3d> initVert = List.copyOf(model.getVertices());
 
         affine.rotateX(a);
-        List<Vector3f> expected = model.getVertices();
+        List<Vector3d> expected = model.getVertices();
 
-        List<Vector3f> actual = List.of(
+        List<Vector3d> actual = List.of(
                 r.apply(initVert.getFirst()),
                 r.apply(initVert.get(1)),
                 r.apply(initVert.get(2)),
@@ -71,12 +71,12 @@ class AffineTransformTest {
         double a = 45;
         RotateZ r = new RotateZ(a);
 
-        List<Vector3f> initVert = List.copyOf(model.getVertices());
+        List<Vector3d> initVert = List.copyOf(model.getVertices());
 
         affine.rotateX(a);
-        List<Vector3f> expected = model.getVertices();
+        List<Vector3d> expected = model.getVertices();
 
-        List<Vector3f> actual = List.of(
+        List<Vector3d> actual = List.of(
                 r.apply(initVert.getFirst()),
                 r.apply(initVert.get(1)),
                 r.apply(initVert.get(2)),
@@ -97,12 +97,12 @@ class AffineTransformTest {
         double tZ = 2;
         Translate t = new Translate(tX, tY, tZ);
 
-        List<Vector3f> initVert = List.copyOf(model.getVertices());
+        List<Vector3d> initVert = List.copyOf(model.getVertices());
 
         affine.translate(tX, tY, tZ);
-        List<Vector3f> expected = model.getVertices();
+        List<Vector3d> expected = model.getVertices();
 
-        List<Vector3f> actual = List.of(
+        List<Vector3d> actual = List.of(
                 t.apply(initVert.getFirst()),
                 t.apply(initVert.get(1)),
                 t.apply(initVert.get(2)),
@@ -123,12 +123,12 @@ class AffineTransformTest {
         double sZ = 9;
         Translate t = new Translate(sX, sY, sZ);
 
-        List<Vector3f> initVert = List.copyOf(model.getVertices());
+        List<Vector3d> initVert = List.copyOf(model.getVertices());
 
         affine.translate(sX, sY, sZ);
-        List<Vector3f> expected = model.getVertices();
+        List<Vector3d> expected = model.getVertices();
 
-        List<Vector3f> actual = List.of(
+        List<Vector3d> actual = List.of(
                 t.apply(initVert.getFirst()),
                 t.apply(initVert.get(1)),
                 t.apply(initVert.get(2)),

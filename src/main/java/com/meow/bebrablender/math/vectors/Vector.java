@@ -2,28 +2,36 @@ package com.meow.bebrablender.math.vectors;
 
 /**
  *
- * @param <T> vector type
+ * @param <V> vector type
  */
-public interface Vector<T> {
-    double[] getCoords();
+public interface Vector<V> {
+    double[] coords();
 
     void setCoords(double[] coords);
 
-    T add(T v);
-    T subtract(T v);
-    T setSubtract(T v1, T v2);
+    V add(V v);
 
-    T multiply(double number);
+    V add(V v1, V v2);
 
-    T divide(double number);
+    V sub(V v);
+    
+    V sub(V v1, V v2);
 
-    double length();
+    V mul(double number);
+    
+    V mul(V v, double number);
 
-    double scalarProduct(T v);
+    V div(double number);
+    
+    V div(V v, double number);
 
-    T normalize();
+    double len();
 
-    boolean isOrthogonal(T v);
+    double sclProd(V v);
 
-    T to(T v);
+    V norm();
+
+    boolean isOrt(V v);
+
+    V to(V v);
 }
