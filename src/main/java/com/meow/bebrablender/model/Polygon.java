@@ -5,62 +5,46 @@ import java.util.List;
 
 public class Polygon {
     private List<Integer> vertexIndices;
-    private List<Integer> normalIndices;
     private List<Integer> textureVertexIndices;
+    private List<Integer> normalIndices;
 
-    public Polygon(List<Integer> vertexIndices, List<Integer> normalIndices, List<Integer> textureVertexIndices) {
+
+    public Polygon() {
+        vertexIndices = new ArrayList<>();
+        textureVertexIndices = new ArrayList<>();
+        normalIndices = new ArrayList<>();
+    }
+
+    public void setVertexIndices(List<Integer> vertexIndices) {
+        if(vertexIndices.size() < 3) {
+            throw new IllegalArgumentException("Кол-во индексов вершин меньше 3");
+        }
         this.vertexIndices = vertexIndices;
-        this.normalIndices = normalIndices;
+    }
+
+    public void setTextureVertexIndices(List<Integer> textureVertexIndices) {
+        if(textureVertexIndices.size() < 3) {
+            throw new IllegalArgumentException("Кол-во индексов текстурных вершин меньше 3");
+        }
         this.textureVertexIndices = textureVertexIndices;
     }
 
-    public Polygon() {
-        this.vertexIndices = new ArrayList<>();
-        this.normalIndices = new ArrayList<>();
-        this.textureVertexIndices = new ArrayList<>();
+    public void setNormalIndices(List<Integer> normalIndices) {
+        if(normalIndices.size() < 3) {
+            throw new IllegalArgumentException("Кол-во индексов нормалей меньше 3");
+        }
+        this.normalIndices = normalIndices;
     }
 
     public List<Integer> getVertexIndices() {
         return vertexIndices;
     }
 
-    public void setVertexIndices(List<Integer> vertexIndices) {
-        this.vertexIndices = vertexIndices;
-    }
-
-    public List<Integer> getNormalIndices() {
-        return normalIndices;
-    }
-
-    public void setNormalIndices(List<Integer> normalIndices) {
-        this.normalIndices = normalIndices;
-    }
-
     public List<Integer> getTextureVertexIndices() {
         return textureVertexIndices;
     }
 
-    public void setTextureVertexIndices(List<Integer> textureVertexIndices) {
-        this.textureVertexIndices = textureVertexIndices;
-    }
-
-    public boolean isTriangle() {
-        return vertexIndices.size() == 3;
-    }
-
-    public int getVertexIndex(int index) {
-        return vertexIndices.get(index);
-    }
-
-    public int getNormalIndex(int index) {
-        return normalIndices.get(index);
-    }
-
-    public int getTextureVertexIndex(int index) {
-        return textureVertexIndices.get(index);
-    }
-
-    public int numberOfVertices() {
-        return normalIndices.size();
+    public List<Integer> getNormalIndices() {
+        return normalIndices;
     }
 }
