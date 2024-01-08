@@ -117,8 +117,10 @@ public class ObjReader {
         for (int i = 0; i < lines.size(); i++) {
             line = lines.get(i);
 
-            wordsInLine = new ArrayList<>(Arrays.asList(line.split("\\s+")));
-            if (wordsInLine.isEmpty()) continue;
+            String[] split = line.split("\\s+");
+            if(split.length == 1) continue;
+
+            wordsInLine = new ArrayList<>(Arrays.asList(split));
 
             token = wordsInLine.getFirst();
             wordsInLine.removeFirst();
@@ -224,8 +226,8 @@ public class ObjReader {
 
         Polygon result = new Polygon();
         result.setVertexIndices(faceVertexIndices);
-        result.setTextureVertexIndices(faceTextureVertexIndices);
-        result.setNormalIndices(faceNormalIndices);
+        if(!faceTextureVertexIndices.isEmpty()) result.setTextureVertexIndices(faceTextureVertexIndices);
+        if(!faceNormalIndices.isEmpty()) result.setNormalIndices(faceNormalIndices);
         return result;
     }
 
