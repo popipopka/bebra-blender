@@ -19,7 +19,7 @@ public abstract class AbstractVector<V extends Vector> implements Vector<V>, Cop
         checkSize();
     }
 
-    public AbstractVector(int size) {
+    protected AbstractVector(int size) {
         this.size = size;
         this.coords = new double[size];
     }

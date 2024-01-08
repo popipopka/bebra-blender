@@ -13,18 +13,31 @@ public class AffineTransform {
         this.model = model;
     }
 
-    public void rotateX(double angle) {
-        RotateX rotate = new RotateX(angle);
+    public void trs(
+            double sX, double sY, double sZ,
+            double aX, double aY, double aZ,
+            double tX, double tY, double tZ) {
+        scale(sX, sY, sZ);
+
+        rotateX(aX);
+        rotateY(aY);
+        rotateZ(aZ);
+
+        translate(tX, tY, tZ);
+    }
+
+    public void rotateX(double ang) {
+        RotateX rotate = new RotateX(ang);
         applyTransform(() -> rotate);
     }
 
-    public void rotateY(double angle) {
-        RotateY rotate = new RotateY(angle);
+    public void rotateY(double ang) {
+        RotateY rotate = new RotateY(ang);
         applyTransform(() -> rotate);
     }
 
-    public void rotateZ(double angle) {
-        RotateZ rotate = new RotateZ(angle);
+    public void rotateZ(double ang) {
+        RotateZ rotate = new RotateZ(ang);
         applyTransform(() -> rotate);
     }
 
