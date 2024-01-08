@@ -37,7 +37,7 @@ public class Vector3f extends AbstractVector<Vector3f> {
         coords[2] = z;
     }
 
-    public Vector3f product(Vector3f v) {
+    public Vector3f crossProduct(Vector3f v) {
         double x = this.y() * v.z() - this.z() * v.y();
         double y = this.z() * v.x() - this.x() * v.z();
         double z = this.x() * v.y() - this.y() * v.x();

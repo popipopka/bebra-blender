@@ -46,7 +46,7 @@ public class NormalUtils {
         Vector3f vector1 = new Vector3f(vertex2.x()- vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z()).normalize();
         Vector3f vector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z()).normalize();
 
-        return vector1.product(vector2).normalize();
+        return vector1.crossProduct(vector2).normalize();
     }
 
     /**

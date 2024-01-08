@@ -99,7 +99,7 @@ class VectorsTest {
         Vector3f v2 = new Vector3f(4, 5, 6);
 
 
-        Vector3f expected = v1.product(v2);
+        Vector3f expected = v1.crossProduct(v2);
         Vector3f actual = new Vector3f(-3, 6, -3);
 
 
