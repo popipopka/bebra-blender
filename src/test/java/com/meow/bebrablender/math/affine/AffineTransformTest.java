@@ -43,6 +43,30 @@ class AffineTransformTest {
     }
 
     @Test
+    void vRotateX() {
+        double a = 45;
+        RotateX r = new RotateX(a);
+
+        List<Vector3d> initVert = List.copyOf(model.getVertices());
+
+        affine.rotateX(a);
+        List<Vector3d> expected = model.getVertices();
+
+        List<Vector3d> actual = List.of(
+                r.apply(initVert.getFirst()),
+                r.apply(initVert.get(1)),
+                r.apply(initVert.get(2)),
+                r.apply(initVert.get(3)),
+                r.apply(initVert.get(4)),
+                r.apply(initVert.get(5)),
+                r.apply(initVert.get(6)),
+                r.apply(initVert.get(7))
+        );
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
     void rotateY() {
         double a = 45;
         RotateY r = new RotateY(a);

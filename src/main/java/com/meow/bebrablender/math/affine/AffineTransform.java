@@ -13,17 +13,10 @@ public class AffineTransform {
         this.model = model;
     }
 
-    public void trs(
-            double sX, double sY, double sZ,
-            double aX, double aY, double aZ,
-            double tX, double tY, double tZ) {
-        scale(sX, sY, sZ);
-
-        rotateX(aX);
-        rotateY(aY);
-        rotateZ(aZ);
-
-        translate(tX, tY, tZ);
+    public void trs(Vector3d scale, Vector3d rotate, Vector3d translate) {
+        scale(scale);
+        rotate(rotate);
+        translate(translate);
     }
 
     public void rotateX(double ang) {
@@ -41,14 +34,28 @@ public class AffineTransform {
         applyTransform(() -> rotate);
     }
 
+    public void rotate(Vector3d rV) {
+        rotateX(rV.x());
+        rotateX(rV.y());
+        rotateX(rV.z());
+    }
+
     public void translate(double tX, double tY, double tZ) {
         Translate translate = new Translate(tX, tY, tZ);
         applyTransform(() -> translate);
     }
 
+    public void translate(Vector3d tV) {
+        translate(tV.x(), tV.y(), tV.z());
+    }
+
     public void scale(double sX, double sY, double sZ) {
         Scale scale = new Scale(sX, sY, sZ);
         applyTransform(() -> scale);
+    }
+
+    public void scale(Vector3d tS) {
+        translate(tS.x(), tS.y(), tS.z());
     }
 
     private void applyTransform(Supplier<AffineApplicable> transform) {
