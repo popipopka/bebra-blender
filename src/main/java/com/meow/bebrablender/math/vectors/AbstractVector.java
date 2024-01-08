@@ -84,6 +84,18 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T> {
     }
 
     @Override
+    public T setSubtract(T v1, T v2) {
+        double[] v1Coord = v1.getCoords();
+        double[] v2Coord = v2.getCoords();
+
+        for (int i = 0; i < this.coords.length; i++) {
+            this.coords[i] = v1Coord[i] - v2Coord[i];
+        }
+
+        return initialReturnThis();
+    }
+
+    @Override
     public T multiply(double number) {
         for (int i = 0; i < this.coords.length; i++) {
             this.coords[i] *= number;

@@ -12,6 +12,7 @@ public interface Vector<T> {
     T add(T v);
 
     T subtract(T v);
+    T setSubtract(T v1, T v2);
 
     T multiply(double number);
 
