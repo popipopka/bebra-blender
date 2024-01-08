@@ -1,6 +1,5 @@
 package com.meow.bebrablender.normals;
 
-
 import com.meow.bebrablender.math.vectors.Vector3f;
 import com.meow.bebrablender.model.Polygon;
 
@@ -15,7 +14,7 @@ import java.util.List;
 public class NormalUtils {
     /**
      * @param vertices all model vertices list
-     * @param normals all model normals list
+     * @param normals  all model normals list
      * @param polygons all model polygons list
      */
     public static void recalculateModelNormals(List<Vector3f> vertices, List<Vector3f> normals,
@@ -43,7 +42,7 @@ public class NormalUtils {
         Vector3f vertex3 = vertices.get(vertexIndices.get(2));
 
         //vectors in the polygon flat
-        Vector3f vector1 = new Vector3f(vertex2.x()- vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z()).normalize();
+        Vector3f vector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z()).normalize();
         Vector3f vector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z()).normalize();
 
         return vector1.crossProduct(vector2).normalize();

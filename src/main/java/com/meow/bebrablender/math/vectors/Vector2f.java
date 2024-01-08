@@ -35,6 +35,11 @@ public class Vector2f extends AbstractVector<Vector2f> {
     }
 
     @Override
+    public Vector2f copy() {
+        return new Vector2f(this.coords);
+    }
+
+    @Override
     protected Vector2f initialReturnThis() {
         return this;
     }

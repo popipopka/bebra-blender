@@ -10,7 +10,6 @@ public interface Vector<T> {
     void setCoords(double[] coords);
 
     T add(T v);
-
     T subtract(T v);
     T setSubtract(T v1, T v2);
 

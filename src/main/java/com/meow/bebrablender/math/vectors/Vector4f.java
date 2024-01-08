@@ -46,6 +46,11 @@ public class Vector4f extends AbstractVector<Vector4f> {
     }
 
     @Override
+    public Vector4f copy() {
+        return new Vector4f(this.coords);
+    }
+
+    @Override
     protected Vector4f initialReturnThis() {
         return this;
     }

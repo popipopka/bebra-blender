@@ -1,12 +1,14 @@
 package com.meow.bebrablender.math.vectors;
 
+import com.meow.bebrablender.general.Copiable;
+
 import java.util.Arrays;
 
 /**
  * @param <T> vector type
  */
 
-public abstract class AbstractVector<T extends Vector> implements Vector<T> {
+public abstract class AbstractVector<T extends Vector> implements Vector<T>, Copiable<T> {
     protected double[] coords;
     protected final int size;
     private static final double EPSILON = 1E-6;
@@ -16,6 +18,9 @@ public abstract class AbstractVector<T extends Vector> implements Vector<T> {
         this.size = size;
         checkSize(coords.length);
     }
+
+    @Override
+    public abstract T copy();
 
     @Override
     public void setCoords(double[] coords) {
