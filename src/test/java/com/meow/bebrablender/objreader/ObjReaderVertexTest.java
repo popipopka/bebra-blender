@@ -1,6 +1,7 @@
 package com.meow.bebrablender.objreader;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -8,7 +9,7 @@ import com.meow.bebrablender.math.vectors.Vector3f;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 class ObjReaderVertexTest {
-    private final ObjReader reader = new ObjReader(null);
+    private final ObjReader reader = new ObjReader(Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/Null.obj"));
 
     ObjReaderVertexTest() throws IOException {
     }
@@ -17,7 +18,7 @@ class ObjReaderVertexTest {
     void testParseVertex3f01() {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.02", "1.03"));
         Vector3f result = reader.parseVertex(wordsInLineWithoutToken, 5);
-        Vector3f expectedResult = new Vector3f(1.01f, 1.02f, 1.03f);
+        Vector3f expectedResult = new Vector3f(1.01, 1.02, 1.03);
         Assertions.assertEquals(result, expectedResult);
     }
 
@@ -25,7 +26,7 @@ class ObjReaderVertexTest {
     void testParseVertex3f02() {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.02", "1.03"));
         Vector3f result = reader.parseVertex(wordsInLineWithoutToken, 5);
-        Vector3f expectedResult = new Vector3f(1.01f, 1.02f, 1.10f);
+        Vector3f expectedResult = new Vector3f(1.01, 1.02, 1.10);
         Assertions.assertNotEquals(result, expectedResult);
     }
 
@@ -36,7 +37,7 @@ class ObjReaderVertexTest {
             reader.parseVertex(wordsInLineWithoutToken, 10);
             Assertions.fail();
         } catch (ObjReaderException exception) {
-            String expectedError = "Error parsing OBJ file on line: 10. Failed to parse float value.";
+            String expectedError = "Error parsing OBJ file on line: 10. Failed to parse double value.";
             Assertions.assertEquals(expectedError, exception.getMessage());
         }
     }
