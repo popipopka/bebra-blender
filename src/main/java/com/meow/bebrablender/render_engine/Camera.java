@@ -1,11 +1,18 @@
 package com.meow.bebrablender.render_engine;
-import com.meow.bebrablender.math.Matrix4f;
+import com.meow.bebrablender.math.matrices.Matrix4d;
+import com.meow.bebrablender.math.vectors.Vector3d;
 
 public class Camera {
+    private Vector3d position;
+    private Vector3d target;
+    private float fov;
+    private float aspectRatio;
+    private float nearPlane;
+    private float farPlane;
 
     public Camera(
-            final Vector3f position,
-            final Vector3f target,
+            final Vector3d position,
+            final Vector3d target,
             final float fov,
             final float aspectRatio,
             final float nearPlane,
@@ -18,11 +25,11 @@ public class Camera {
         this.farPlane = farPlane;
     }
 
-    public void setPosition(final Vector3f position) {
+    public void setPosition(final Vector3d position) {
         this.position = position;
     }
 
-    public void setTarget(final Vector3f target) {
+    public void setTarget(final Vector3d target) {
         this.target = target;
     }
 
@@ -30,34 +37,27 @@ public class Camera {
         this.aspectRatio = aspectRatio;
     }
 
-    public Vector3f getPosition() {
+    public Vector3d getPosition() {
         return position;
     }
 
-    public Vector3f getTarget() {
+    public Vector3d getTarget() {
         return target;
     }
 
-    public void movePosition(final Vector3f translation) {
+    public void movePosition(final Vector3d translation) {
         this.position.add(translation);
     }
 
-    public void moveTarget(final Vector3f translation) {
+    public void moveTarget(final Vector3d translation) {
         this.target.add(target);
     }
 
-    Matrix4f getViewMatrix() {
+    Matrix4d getViewMatrix() {
         return GraphicConveyor.lookAt(position, target);
     }
 
-    Matrix4f getProjectionMatrix() {
+    Matrix4d getProjectionMatrix() {
         return GraphicConveyor.perspective(fov, aspectRatio, nearPlane, farPlane);
     }
-
-    private Vector3f position;
-    private Vector3f target;
-    private float fov;
-    private float aspectRatio;
-    private float nearPlane;
-    private float farPlane;
 }
