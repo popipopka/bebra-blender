@@ -16,7 +16,7 @@ public class ObjWriter {
     private static final String OBJ_NORMAL_TOKEN = "vn";
     private static final String OBJ_FACE_TOKEN = "f";
 
-    public static void writeModelToObjFile(String fileName, Model model) {
+    public void writeModelToObjFile(String fileName, Model model) {
 
         File file = new File(fileName);
 
@@ -30,35 +30,35 @@ public class ObjWriter {
         }
     }
 
-    protected static void writeVerticesOfModel(PrintWriter printWriter, List<Vector3f> vertices) {
+    protected void writeVerticesOfModel(PrintWriter printWriter, List<Vector3f> vertices) {
         for (Vector3f vertex : vertices) {
             printWriter.println(OBJ_VERTEX_TOKEN + " " + vertex.x() + " " + vertex.y() + " " + vertex.z());
         }
         printWriter.println();
     }
 
-    protected static void writeTextureVerticesOfModel(PrintWriter printWriter, List<Vector2f> textureVertices) {
+    protected void writeTextureVerticesOfModel(PrintWriter printWriter, List<Vector2f> textureVertices) {
         for (Vector2f vertex : textureVertices) {
             printWriter.println(OBJ_TEXTURE_TOKEN + " " + vertex.x() + " " + vertex.y());
         }
         printWriter.println();
     }
 
-    protected static void writeNormalsOfModel(PrintWriter printWriter, List<Vector3f> normals){
+    protected void writeNormalsOfModel(PrintWriter printWriter, List<Vector3f> normals){
         for (Vector3f normal : normals) {
             printWriter.println(OBJ_NORMAL_TOKEN + " " + normal.x() + " " + normal.y() + " " + normal.z());
         }
         printWriter.println();
     }
 
-    protected static void writePolygonsOfModel(PrintWriter printWriter, List<Polygon> polygons){
+    protected void writePolygonsOfModel(PrintWriter printWriter, List<Polygon> polygons){
         for (Polygon polygon : polygons) {
             printWriter.print(modelsPolygonToFaceForObjFile(polygon.getVertexIndices(), polygon.getTextureVertexIndices(), polygon.getNormalIndices()));
             printWriter.println();
         }
     }
 
-    private static String modelsPolygonToFaceForObjFile(List<Integer> vertexIndices, List<Integer> textureVertexIndices, List<Integer> normalIndices) {
+    private String modelsPolygonToFaceForObjFile(List<Integer> vertexIndices, List<Integer> textureVertexIndices, List<Integer> normalIndices) {
         StringBuilder objFace = new StringBuilder();
         objFace.append(OBJ_FACE_TOKEN+" ");
 
