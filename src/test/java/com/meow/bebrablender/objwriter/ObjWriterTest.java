@@ -17,13 +17,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 class ObjWriterTest {
+    private ObjWriter objWriter = new ObjWriter();
     @Test
     public void testWriteVerticesToObjFile() throws IOException {
         ArrayList<Vector3f> vertices = new ArrayList<>();
         vertices.add(new Vector3f(1.0f, 1.0f, 1.0f));
 
         try (PrintWriter printWriter = new PrintWriter("Test file.obj")) {
-            ObjWriter.writeVerticesOfModel(printWriter, vertices);
+            objWriter.writeVerticesOfModel(printWriter, vertices);
         }
 
         String fileContent = Files.readString(Path.of("Test file.obj"));
@@ -37,7 +38,7 @@ class ObjWriterTest {
         textureVertices.add(new Vector2f(1.0f, 1.0f));
 
         try (PrintWriter printWriter = new PrintWriter("Test file.obj")) {
-            ObjWriter.writeTextureVerticesOfModel(printWriter, textureVertices);
+            objWriter.writeTextureVerticesOfModel(printWriter, textureVertices);
         }
 
         String fileContent = Files.readString(Path.of("Test file.obj"));
@@ -51,7 +52,7 @@ class ObjWriterTest {
         normals.add(new Vector3f(1.0f, 1.0f, 1.0f));
 
         try (PrintWriter printWriter = new PrintWriter("Test file.obj")) {
-            ObjWriter.writeNormalsOfModel(printWriter, normals);
+            objWriter.writeNormalsOfModel(printWriter, normals);
         }
 
         String fileContent = Files.readString(Path.of("Test file.obj"));
@@ -70,7 +71,7 @@ class ObjWriterTest {
         //здесь(-1,1,4) а дальше (0,2,5) тк при считывании данных в листы полигона мы должны уменьшить
         //значения на единицу(см методичку стр 48)
         try (PrintWriter printWriter = new PrintWriter("Test file.obj")) {
-            ObjWriter.writePolygonsOfModel(printWriter, polygons);
+            objWriter.writePolygonsOfModel(printWriter, polygons);
         }
 
         String fileContent = Files.readString(Path.of("Test file.obj"));
@@ -78,12 +79,12 @@ class ObjWriterTest {
     }
     @Test
     public void testCompareObjFiles() throws IOException {
-        String fileContent = Files.readString(Path.of("3DModels/Faceform/WrapUpperTeeth.obj"));
-        Model originalModel = ObjReader.read(fileContent);
+        ObjReader objReader = new ObjReader (Path.of("3DModels/Faceform/WrapUpperTeeth.obj"));
+        Model originalModel = objReader.read();
 
-        ObjWriter.writeModelToObjFile("Test file.obj", originalModel);
-        String fileContent2 = Files.readString(Path.of("Test file.obj"));
-        Model newModel = ObjReader.read(fileContent2);
+        objWriter.writeModelToObjFile("Test file.obj", originalModel);
+        objReader = new ObjReader(Path.of("Test file.obj"));
+        Model newModel = objReader.read();
 
         Assertions.assertEquals(originalModel, newModel);
     }
