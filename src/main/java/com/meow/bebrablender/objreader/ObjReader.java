@@ -38,8 +38,8 @@ public class ObjReader {
 				case OBJ_FACE_TOKEN -> {
 					result.polygons.add(parseFace(wordsInLine, lineInd));
 					if (result.polygons.size() > 1 &&
-							(result.polygons.get(result.polygons.size() - 2).getTextureVertexIndices().size() == 0) !=
-									(result.polygons.get(result.polygons.size() - 1).getTextureVertexIndices().size() == 0))
+							(result.polygons.get(result.polygons.size() - 2).getTextureVertexIndices().isEmpty()) !=
+									(result.polygons.get(result.polygons.size() - 1).getTextureVertexIndices().isEmpty()))
 					{
 						throw new ObjReaderException("Polygon has no texture vertices.", lineInd);
 					}
@@ -48,11 +48,11 @@ public class ObjReader {
 			}
 		}
 
-		if (result.polygons.size() == 0) {
+		if (result.polygons.isEmpty()) {
 			throw new ObjReaderException("OBJ has not any polygons", lineInd);
 		}
 
-		if (result.vertices.size() == 0) {
+		if (result.vertices.isEmpty()) {
 			throw new ObjReaderException("OBJ has not any vertices", lineInd);
 		}
 
@@ -80,7 +80,7 @@ public class ObjReader {
 			}
 
 			// проверка для нормалей
-			if (list.getNormalIndices().size() != 0) {
+			if (!list.getNormalIndices().isEmpty()) {
 				for (int i = 0; i < 3; i++) {
 					int normalIndex = list.getNormalIndices().get(i);
 					if (normalIndex < 0) {
@@ -98,7 +98,7 @@ public class ObjReader {
 			}
 
 			// проверка для текстурных вершин
-			if (list.getTextureVertexIndices().size() != 0) {
+			if (!list.getTextureVertexIndices().isEmpty()) {
 				for (int i = 0; i < 3; i++) {
 					int textureIndex = list.getTextureVertexIndices().get(i);
 					if (textureIndex < 0) {
@@ -189,7 +189,7 @@ public class ObjReader {
 			parseFaceWord(s, onePolygonVertexIndices, onePolygonTextureVertexIndices, onePolygonNormalIndices, lineInd);
 		}
 
-		if (findEqualites(onePolygonVertexIndices)) {
+		if (findEqualities(onePolygonVertexIndices)) {
 			throw new ObjReaderException("The polygon can`t contain the same vertex indices", lineInd);
 		}
 
@@ -219,7 +219,7 @@ public class ObjReader {
 				case 3 -> {
 					onePolygonVertexIndices.add(Integer.parseInt(wordIndices[0]) - 1);
 					onePolygonNormalIndices.add(Integer.parseInt(wordIndices[2]) - 1);
-					if (!wordIndices[1].equals("")) {
+					if (!wordIndices[1].isEmpty()) {
 						onePolygonTextureVertexIndices.add(Integer.parseInt(wordIndices[1]) - 1);
 					}
 				}
@@ -260,10 +260,10 @@ public class ObjReader {
 		}
 		return -1;
 	}
-	public static boolean findEqualites(ArrayList<Integer> onePolygonVertexIndices) {
+	public static boolean findEqualities(ArrayList<Integer> onePolygonVertexIndices) {
 		for (int i = 0; i < onePolygonVertexIndices.size() - 1; i++) {
 			for (int j = i + 1; j < onePolygonVertexIndices.size(); j++) {
-				if (onePolygonVertexIndices.get(i) == onePolygonVertexIndices.get(j)) return true;
+				if (onePolygonVertexIndices.get(i).equals(onePolygonVertexIndices.get(j))) return true;
 			}
 		}
 		return false;
