@@ -7,6 +7,8 @@ package com.meow.bebrablender.math.vectors;
 public interface Vector<T> {
     double[] getCoords();
 
+    void setCoords(double[] coords);
+
     T add(T v);
 
     T subtract(T v);

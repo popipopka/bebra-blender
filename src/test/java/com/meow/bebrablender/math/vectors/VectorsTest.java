@@ -127,4 +127,26 @@ class VectorsTest {
 
         Assertions.assertTrue(expected);
     }
+
+    @Test
+    void to() {
+        Vector3f v1 = new Vector3f(15, 3, 3);
+        Vector3f v2 = new Vector3f(7, 9, 3);
+
+        Vector3f expected = v1.to(v2);
+        Vector3f actual = new Vector3f(-8, 6, 0);
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void crossMagnitude() {
+        Vector2f v1 = new Vector2f(-2, 0);
+        Vector2f v2 = new Vector2f(4, 5);
+
+        double expected = v1.crossMagnitude(v2);
+        double actual = -10;
+
+        Assertions.assertEquals(0, Double.compare(expected, actual));
+    }
 }
