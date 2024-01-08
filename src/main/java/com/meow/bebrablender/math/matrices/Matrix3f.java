@@ -9,6 +9,10 @@ public class Matrix3f extends AbstractSquareMatrix<Matrix3f, Vector3f> {
         super(3, data);
     }
 
+    public Matrix3f() {
+        super(3);
+    }
+
     @Override
     protected Matrix3f initialReturnThis() {
         return this;

@@ -67,6 +67,20 @@ public class VectorsUtils {
         return new Vector4f(v1.x() / v2.x(), v1.y() / v2.y(), v1.z() / v2.z(), v1.w() / v2.w());
     }
 
+    public static Vector2f scalarProduct(Vector2f v1, Vector2f v2) {
+        return new Vector2f(v1.x() * v2.x(), v1.y() * v2.y());
+    }
+
+
+    public static Vector3f scalarProduct(Vector3f v1, Vector3f v2) {
+        return new Vector3f(v1.x() * v2.x(), v1.y() * v2.y(), v1.z() * v2.z());
+    }
+
+
+    public static Vector4f scalarProduct(Vector4f v1, Vector4f v2) {
+        return new Vector4f(v1.x() * v2.x(), v1.y() * v2.y(), v1.z() * v2.z(), v1.w() * v2.w());
+    }
+
     public static Vector3f crossProduct(Vector3f v1, Vector3f v2) {
         return new Vector3f(
                 v1.y() * v2.z() - v1.z() * v2.y(),
