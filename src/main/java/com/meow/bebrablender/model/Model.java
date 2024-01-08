@@ -8,10 +8,10 @@ import java.util.List;
 
 public class Model {
 
-    public List<Vector3f> vertices = new ArrayList<Vector3f>();
-    public List<Vector2f> textureVertices = new ArrayList<Vector2f>();
-    public List<Vector3f> normals = new ArrayList<Vector3f>();
-    public List<Polygon> polygons = new ArrayList<Polygon>();
+    private final List<Vector3f> vertices = new ArrayList<>();
+    private final List<Vector2f> textureVertices = new ArrayList<>();
+    private final List<Vector3f> normals = new ArrayList<>();
+    private final List<Polygon> polygons = new ArrayList<>();
 
     public List<Vector3f> getVertices() {
         return vertices;
