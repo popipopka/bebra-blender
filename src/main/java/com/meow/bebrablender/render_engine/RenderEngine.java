@@ -7,6 +7,7 @@ import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.model.ModelContainer;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,8 @@ public class RenderEngine {
                 resultPoints.add(resultPoint);
             }
 
+            mesh.setColor(Color.GREEN);
+            graphicsContext.setStroke(mesh.getColor());
             for (int vertexInPolygonInd = 1; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
                 graphicsContext.strokeLine(
                         resultPoints.get(vertexInPolygonInd - 1).getX(),

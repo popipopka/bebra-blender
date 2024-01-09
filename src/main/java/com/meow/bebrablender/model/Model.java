@@ -2,6 +2,7 @@ package com.meow.bebrablender.model;
 
 import com.meow.bebrablender.math.vectors.Vector2d;
 import com.meow.bebrablender.math.vectors.Vector3d;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.List;
  * @author Pertsev Roman (Alexander Laptev, Ivan Kosenko)
  */
 public class Model {
+
+    private Color color = Color.BLACK;
     private List<Vector3d> vertices = new ArrayList<>();
     private List<Vector2d> textureVertices = new ArrayList<>();
     private List<Vector3d> normals = new ArrayList<>();
@@ -31,5 +34,13 @@ public class Model {
 
     public List<Polygon> getPolygons() {
         return polygons;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

@@ -1,5 +1,7 @@
 package com.meow.bebrablender.controller;
 
+import com.meow.bebrablender.Party;
+import com.meow.bebrablender.math.matrices.Matrix4d;
 import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.model.ModelContainer;
@@ -114,10 +116,13 @@ public class BebraController {
     private int flag = 1;
 
 
+
     @FXML
     private Canvas canvas;
 
     private Model mesh = null;
+
+    private Party party = new Party(100);
 
     private Camera camera = new Camera(
             new Vector3d(1000, 800, 100),
@@ -368,7 +373,9 @@ public class BebraController {
         partyButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                ModelContainer container = modelContainers.get(currentModel);
+                Matrix4d modelMatrix = container.getConveyor().getModelMatrix();
+                party.start(modelMatrix);
             }
         });
 
