@@ -108,7 +108,10 @@ public class BebraController {
     private String darkThemeS2 = "-fx-background-color: #696969;-fx-font: 25 arial;";
     private String redThemeS1 = "-fx-base: #A52A2A;";
     private String redThemeS2 = "-fx-background-color: #800000;-fx-font: 25 arial;";
+    private String purpleThemeS2 = "-fx-background-color: #8A2BE2;-fx-font: 25 arial;";
+    private String orangeThemeS2 = "-fx-background-color: #FF4500;-fx-font: 25 arial;";
     private HashMap<String, ModelContainer> modelContainers = new HashMap<>();
+    private int flag = 1;
 
 
     @FXML
@@ -141,6 +144,16 @@ public class BebraController {
             if (modelContainers.containsKey(currentModel)) {
                 RenderEngine.render(canvas.getGraphicsContext2D(), camera,
                         modelContainers.get(currentModel), 800, 600);
+                if (flag==1) {
+                    partyButton.setStyle(purpleThemeS2);
+                    flag = 0;
+                } else if(flag==0){
+                    partyButton.setStyle(redThemeS2);
+                    flag = 2;
+                }else if(flag==2){
+                    partyButton.setStyle(orangeThemeS2);
+                    flag = 1;
+                }
             }
         });
 
@@ -148,13 +161,13 @@ public class BebraController {
         timeline.play();
 
         anchorPane.setOnKeyPressed(keyEvent -> {
-            if(keyEvent.getCode() == KeyCode.W) handleCameraUp();
-            if(keyEvent.getCode() == KeyCode.S) handleCameraDown();
-            if(keyEvent.getCode() == KeyCode.A) handleCameraLeft();
-            if(keyEvent.getCode() == KeyCode.D) handleCameraRight();
+            if (keyEvent.getCode() == KeyCode.W) handleCameraUp();
+            if (keyEvent.getCode() == KeyCode.S) handleCameraDown();
+            if (keyEvent.getCode() == KeyCode.A) handleCameraLeft();
+            if (keyEvent.getCode() == KeyCode.D) handleCameraRight();
 
-            if(keyEvent.getCode() == KeyCode.E) handleCameraForward();
-            if(keyEvent.getCode() == KeyCode.F) handleCameraBackward();
+            if (keyEvent.getCode() == KeyCode.E) handleCameraForward();
+            if (keyEvent.getCode() == KeyCode.F) handleCameraBackward();
         });
     }
 
