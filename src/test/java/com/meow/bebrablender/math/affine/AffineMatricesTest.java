@@ -41,12 +41,46 @@ class AffineMatricesTest {
         AffineTransform affine = new AffineTransform();
         double a = 45;
         double ra = Math.toRadians(a);
-        Vector3d v = new Vector3d(45, 0, 0);
+        Vector3d v = new Vector3d(a, 0, 0);
 
         Matrix4d expected = affine.rotate(v);
         Matrix4d actual = new Matrix4d(new double[][]{
                 {1, 0, 0, 0},
-                {0, Math.cos(ra), Math.cos(ra), 0},
+                {0, Math.cos(ra), Math.sin(ra), 0},
+                {0, -Math.sin(ra), Math.cos(ra), 0},
+                {0, 0, 0, 1}
+        });
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void rotateY() {
+        AffineTransform affine = new AffineTransform();
+        double a = 45;
+        double ra = Math.toRadians(a);
+        Vector3d v = new Vector3d(0, a, 0);
+
+        Matrix4d expected = affine.rotate(v);
+        Matrix4d actual = new Matrix4d(new double[][]{
+                {Math.cos(ra), 0, Math.sin(ra), 0},
+                {0, 1, 0, 0},
+                {-Math.sin(ra), 0, Math.cos(ra), 0},
+                {0, 0, 0, 1}
+        });
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void rotateZ() {
+        AffineTransform affine = new AffineTransform();
+        double a = 45;
+        double ra = Math.toRadians(a);
+        Vector3d v = new Vector3d(0, 0, a);
+
+        Matrix4d expected = affine.rotate(v);
+        Matrix4d actual = new Matrix4d(new double[][]{
+                {Math.cos(ra), Math.sin(ra), 0, 0},
+                {-Math.sin(ra), Math.cos(ra), 0, 0},
                 {0, 0, 1, 0},
                 {0, 0, 0, 1}
         });
