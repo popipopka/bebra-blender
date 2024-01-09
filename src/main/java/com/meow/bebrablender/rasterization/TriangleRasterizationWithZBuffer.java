@@ -1,14 +1,14 @@
 package com.meow.bebrablender.rasterization;
 
-import com.meow.bebrablender.math.vectors.Vector2d;
 import com.meow.bebrablender.math.points.Point2d;
+import com.meow.bebrablender.math.vectors.Vector2d;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 
 import java.util.Arrays;
 
 
-public class TriangleRasterization {
+public class TriangleRasterizationWithZBuffer {
     /**
      * A mutable vector used to speed up calculations.
      */
@@ -25,9 +25,9 @@ public class TriangleRasterization {
      * @param pw   The pixel writer.
      * @param trig The triangle to draw.
      */
-    public static void drawTriangle(PixelWriter pw, Triangle trig) {
+    public static void drawTriangle(PixelWriter pw, Triangle trig, ZBuffer zBuffer) {
         drawTriangle(pw, trig.getP1(), trig.getP2(), trig.getP3(),
-                trig.getColor1(), trig.getColor2(), trig.getColor3());
+                trig.getColor1(), trig.getColor2(), trig.getColor3(), zBuffer);
     }
 
     /**
@@ -48,13 +48,14 @@ public class TriangleRasterization {
             final Point2d point3,
             final Color color1,
             final Color color2,
-            final Color color3
+            final Color color3,
+            ZBuffer zBuffer
     ) {
         Point2d[] vertexPoints = new Point2d[]{point1, point2, point3};
         Arrays.sort(vertexPoints);
 
-        drawTopTriangle(pw, point1, point2, point3, color1, color2, color3);
-        drawBottomTriangle(pw, point1, point2, point3, color1, color2, color3);
+        drawTopTriangle(pw, point1, point2, point3, color1, color2, color3, zBuffer);
+        drawBottomTriangle(pw, point1, point2, point3, color1, color2, color3, zBuffer);
     }
 
     public static double getZCoordinate(Point2d currPoint, Triangle triangle) {
@@ -87,7 +88,8 @@ public class TriangleRasterization {
             final Point2d point3,
             final Color color1,
             final Color color2,
-            final Color color3
+            final Color color3,
+            ZBuffer zBuffer
     ) {
         final int x2x1 = (int) (point2.getX() - point1.getX());
         final int x3x1 = (int) (point3.getX() - point1.getX());
@@ -120,7 +122,8 @@ public class TriangleRasterization {
             final Point2d point3,
             final Color color1,
             final Color color2,
-            final Color color3
+            final Color color3,
+            ZBuffer zBuffer
     ) {
         final int x3x2 = (int) (point3.getX() - point2.getX());
         final int x3x1 = (int) (point3.getX() - point1.getX());

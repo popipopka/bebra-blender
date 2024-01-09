@@ -5,7 +5,6 @@ import com.meow.bebrablender.model.Polygon;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.UnaryOperator;
 
 public class TriangulationUtils {
     public static List<Polygon> triangulate(Polygon polygon) {
