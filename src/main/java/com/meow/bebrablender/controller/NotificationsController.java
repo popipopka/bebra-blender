@@ -19,10 +19,10 @@ public class NotificationsController {
 
     @FXML
     private void initialize(){
-        notifAPane.setStyle("-fx-base: #D3D3D3;");
+        notifAPane.setStyle(NotificationsView.getCurrentThemeS1());
 
         notifArea.setText(NotificationsView.getMessage());
-        notifArea.setStyle("-fx-control-inner-background: #FFFFF0;-fx-font: 25 arial;");
+        notifArea.setStyle(NotificationsView.getCurrentThemeS3());
         notifArea.setMaxHeight(180);
         notifArea.setMinWidth(600);
         notifArea.setLayoutX(90);
@@ -31,7 +31,7 @@ public class NotificationsController {
         notifArea.setEditable(false);
 
         notifButton.setText("OK");
-        notifButton.setStyle("-fx-font: 25 arial; -fx-base: #FFFFF0;");
+        notifButton.setStyle(NotificationsView.getCurrentThemeS2());
         notifButton.setLayoutX(365);
         notifButton.setLayoutY(200);
         notifButton.setDisable(false);

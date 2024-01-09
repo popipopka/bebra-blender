@@ -94,6 +94,15 @@ import java.util.ArrayList;
         private Label label;
         private ArrayList<Button> listModel = new ArrayList<>();
         private int indexNewModel = 0;
+        String currentThemeS1 = new String();
+        String currentThemeS2 = new String();
+        String whiteThemeS1 = "-fx-base: #D3D3D3;";
+        String whiteThemeS2 = "-fx-background-color: #FFFFF0;-fx-font: 25 arial;";
+        String darkThemeS1 = "-fx-base: #808080;";
+        String darkThemeS2 = "-fx-background-color: #696969;-fx-font: 25 arial;";
+        String redThemeS1 = "-fx-base: #A52A2A;";
+        String redThemeS2 = "-fx-background-color: #800000;-fx-font: 25 arial;";
+
 
         @FXML
         private Canvas canvas;
@@ -168,6 +177,31 @@ import java.util.ArrayList;
             deleteVertexButton.setVisible(false);
             deletePolygonButton.setVisible(false);
             infoButton.setVisible(false);
+        }
+        private void changeTheme(){
+            anchorPane.setStyle(currentThemeS1);
+            fileButton.setStyle(currentThemeS2);
+            camerasButton.setStyle(currentThemeS2);;
+            modelsButton.setStyle(currentThemeS2);
+            scaleButton.setStyle(currentThemeS2);
+            rotateButton.setStyle(currentThemeS2);
+            translateButton.setStyle(currentThemeS2);
+            saveModelButton.setStyle(currentThemeS2);
+            deleteVertexButton.setStyle(currentThemeS2);
+            deletePolygonButton.setStyle(currentThemeS2);
+            infoButton.setStyle(currentThemeS2);
+            addCameraButton.setStyle(currentThemeS2);
+            nextCameraButton.setStyle(currentThemeS2);
+            deleteCameraButton.setStyle(currentThemeS2);
+
+            openModelButton.setStyle(currentThemeS2);
+            applyScaleButton.setStyle(currentThemeS2);
+            applyRotateButton.setStyle(currentThemeS2);
+            applyTranslateButton.setStyle(currentThemeS2);
+            backButton.setStyle(currentThemeS2);
+            NotificationsView.setCurrentThemeS1(currentThemeS1);
+            NotificationsView.setCurrentThemeS2(currentThemeS2);
+
         }
         private void buttonControl() {
             final boolean[] cameraSetting = {false};
@@ -377,7 +411,9 @@ import java.util.ArrayList;
             whiteThemeButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-
+                    currentThemeS1=whiteThemeS1;
+                    currentThemeS2=whiteThemeS2;
+                    changeTheme();
                 }
             });
             darkThemeButton.setText("D");
@@ -391,7 +427,9 @@ import java.util.ArrayList;
             darkThemeButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-
+                    currentThemeS1=darkThemeS1;
+                    currentThemeS2=darkThemeS2;
+                    changeTheme();
                 }
             });
             redThemeButton.setText("R");
@@ -405,7 +443,9 @@ import java.util.ArrayList;
             redThemeButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-
+                    currentThemeS1=redThemeS1;
+                    currentThemeS2=redThemeS2;
+                    changeTheme();
                 }
             });
 
@@ -579,11 +619,13 @@ import java.util.ArrayList;
             deleteVertexButton.setMinHeight(60);
             deleteVertexButton.setLayoutX(1250);
             deleteVertexButton.setLayoutY(620);
-            deleteVertexButton.setDisable(true);
+            deleteVertexButton.setDisable(false);
             deleteVertexButton.setVisible(false);
             deleteVertexButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
+                    NotificationsView.setMessage("HHH");
+                    NotificationsView.showMessage();
                 }
             });
             deletePolygonButton.setText("Delete polygon");
