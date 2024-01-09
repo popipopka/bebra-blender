@@ -20,7 +20,7 @@ public class BebraApplication extends Application {
         viewport.prefWidthProperty().bind(scene.widthProperty());
         viewport.prefHeightProperty().bind(scene.heightProperty());
 
-        stage.setTitle("Simple3DViewer");
+        stage.setTitle("Bebra3DViewer");
         stage.setScene(scene);
         stage.show();
     }
