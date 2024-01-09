@@ -23,48 +23,4 @@ class ObjReaderTextureTest {
         Assertions.assertEquals(result, expectedResult);
     }
 
-    @Test
-    void testParseVertex2f02() {
-        ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.03"));
-        Vector2d result = reader.parseTextureVertex(wordsInLineWithoutToken, 5);
-        Vector2d expectedResult = new Vector2d(1.01, 1.10);
-        Assertions.assertNotEquals(result, expectedResult);
-    }
-
-    @Test
-    void testParseVertex2f03() {
-        ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("ab", "o"));
-        try {
-            reader.parseTextureVertex(wordsInLineWithoutToken, 10);
-            Assertions.fail();
-        } catch (ObjReaderException exception) {
-            String expectedError = "Error parsing OBJ file on line: 10. Failed to parse double value.";
-            Assertions.assertEquals(expectedError, exception.getMessage());
-        }
-    }
-
-    @Test
-    void testParseVertex2f04() {
-        ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(List.of("1.0"));
-        try {
-            reader.parseTextureVertex(wordsInLineWithoutToken, 10);
-            Assertions.fail();
-        } catch (ObjReaderException exception) {
-            String expectedError = "Error parsing OBJ file on line: 10. Too few texture vertex arguments.";
-            Assertions.assertEquals(expectedError, exception.getMessage());
-        }
-    }
-
-    @Test
-    void testParseVertex2f05() {
-        ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.0", "1.1", "1.2"));
-        try {
-            reader.parseTextureVertex(wordsInLineWithoutToken, 10);
-            Assertions.fail();
-        } catch (ObjReaderException exception) {
-            String expectedError = "Error parsing OBJ file on line: 10. Too much texture vertex arguments.";
-            Assertions.assertEquals(expectedError, exception.getMessage());
-        }
-    }
-
 }

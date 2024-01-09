@@ -117,7 +117,7 @@ public class BebraController {
     private Model mesh = null;
 
     private Camera camera = new Camera(
-            new Vector3d(0, 0, 100),
+            new Vector3d(1000, 800, 100),
             new Vector3d(0, 0, 0),
             1.0F, 1, 0.01F, 100);
 
@@ -231,7 +231,7 @@ public class BebraController {
         final boolean[] fileSetting = {false};
         FileChooser fileChooser = new FileChooser();
         // создаем список объектов
-        ObservableList<String> langs = FXCollections.observableArrayList("Java");
+        ObservableList<String> langs = FXCollections.observableArrayList();
         modelListView = new ListView<>(langs);
         modelListView.setMinHeight(320);
         modelListView.setMaxHeight(320);
@@ -244,7 +244,12 @@ public class BebraController {
         langsSelectionModel.selectedItemProperty().addListener(new ChangeListener<String>() {
 
             public void changed(ObservableValue<? extends String> changed, String oldValue, String newValue) {
-
+                saveModelButton.setDisable(false);
+                deletePolygonButton.setDisable(false);
+                deleteVertexButton.setDisable(false);
+                translateButton.setDisable(false);
+                rotateButton.setDisable(false);
+                scaleButton.setDisable(false);
                 currentModel = newValue;
                 label.setText("Selected: " + newValue);
             }
@@ -252,7 +257,7 @@ public class BebraController {
         modelListView.setVisible(false);
         anchorPane.getChildren().add(modelListView);
 
-        ObservableList<String> langs1 = FXCollections.observableArrayList("Camera bebra", "Camera 2");
+        ObservableList<String> langs1 = FXCollections.observableArrayList("Bebra Camera");
         cameraListView = new ListView<>(langs1);
         cameraListView.setMinHeight(320);
         cameraListView.setMaxHeight(320);
@@ -636,7 +641,7 @@ public class BebraController {
         scaleButton.setMinHeight(60);
         scaleButton.setLayoutX(1250);
         scaleButton.setLayoutY(380);
-        scaleButton.setDisable(false);
+        scaleButton.setDisable(true);
         scaleButton.setVisible(false);
         scaleButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -688,7 +693,7 @@ public class BebraController {
             public void handle(ActionEvent actionEvent) {
                 String file = "New file.obj";
                 ObjWriter objWriter = new ObjWriter();
-                objWriter.writeModelToObjFile(file, mesh);
+                objWriter.writeModelToObjFile(file, modelContainers.get(currentModel).getModel());
             }
         });
         deleteVertexButton.setText("Delete vertex");
@@ -697,7 +702,7 @@ public class BebraController {
         deleteVertexButton.setMinHeight(60);
         deleteVertexButton.setLayoutX(1250);
         deleteVertexButton.setLayoutY(620);
-        deleteVertexButton.setDisable(false);
+        deleteVertexButton.setDisable(true);
         deleteVertexButton.setVisible(false);
         deleteVertexButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -717,6 +722,8 @@ public class BebraController {
         deletePolygonButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                NotificationsView.setMessage("Error: The developers are invalid." + "\n" + "They didn't have time to do it." + "\n" + "Wait for the next updates");
+                NotificationsView.showMessage();
             }
         });
         selectColorButton.setText("Color model");
@@ -769,30 +776,42 @@ public class BebraController {
     @FXML
     public void handleCameraForward(ActionEvent actionEvent) {
         camera.movePosition(new Vector3d(0, 0, -TRANSLATION));
+        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
+        System.out.println("b");
     }
 
     @FXML
     public void handleCameraBackward(ActionEvent actionEvent) {
         camera.movePosition(new Vector3d(0, 0, TRANSLATION));
+        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
+        System.out.println("b");
     }
 
     @FXML
     public void handleCameraLeft(ActionEvent actionEvent) {
         camera.movePosition(new Vector3d(TRANSLATION, 0, 0));
+        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
+        System.out.println("b");
     }
 
     @FXML
     public void handleCameraRight(ActionEvent actionEvent) {
         camera.movePosition(new Vector3d(-TRANSLATION, 0, 0));
+        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
+        System.out.println("b");
     }
 
     @FXML
     public void handleCameraUp(ActionEvent actionEvent) {
         camera.movePosition(new Vector3d(0, TRANSLATION, 0));
+        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
+        System.out.println("b");
     }
 
     @FXML
     public void handleCameraDown(ActionEvent actionEvent) {
         camera.movePosition(new Vector3d(0, -TRANSLATION, 0));
+        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
+        System.out.println("b");
     }
 }

@@ -79,7 +79,7 @@ class ObjWriterTest {
     }
     @Test
     public void testCompareObjFiles() throws IOException {
-        ObjReader objReader = new ObjReader (Path.of("3DModels/Faceform/WrapUpperTeeth.obj"));
+        ObjReader objReader = new ObjReader (Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/AffineCube.obj"));
         Model originalModel = objReader.read();
 
         objWriter.writeModelToObjFile("Test file.obj", originalModel);
