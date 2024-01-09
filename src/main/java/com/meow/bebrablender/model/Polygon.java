@@ -49,7 +49,7 @@ public class Polygon {
     }
 
     public int numberOfVertices() {
-        return normalIndices.size();
+        return vertexIndices.size();
     }
 
     public boolean isTriangle() {

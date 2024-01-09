@@ -1,5 +1,6 @@
 package com.meow.bebrablender.normals;
 
+import com.meow.bebrablender.math.vectors.Vector2d;
 import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Polygon;
@@ -21,7 +22,11 @@ public class NormalUtils {
     public static void recalculateModelNormals(List<Vector3d> vertices, List<Vector3d> normals,
                                                List<Polygon> polygons) {
         for (int i = 0; i < vertices.size(); i++) {
-            normals.set(i, vertexNormal(i, vertices, polygons));
+            Vector3d normal = vertexNormal(i, vertices, polygons);
+            if (normals.size() < i)
+                normals.set(i, normal);
+            else
+                normals.add(normal);
         }
     }
 

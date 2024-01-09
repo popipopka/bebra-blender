@@ -26,17 +26,19 @@ public class TriangulationUtils {
                     )
             );
 
-            triangulatedPolygon.setNormalIndices(
-                    Arrays.asList(polygon.getNormalIndices().get(0),
-                            polygon.getNormalIndices().get(verListInd - 1),
-                            polygon.getNormalIndices().get(verListInd))
-            );
+            if (polygon.getNormalIndices().size() >= 3)
+                triangulatedPolygon.setNormalIndices(
+                        Arrays.asList(polygon.getNormalIndices().get(0),
+                                polygon.getNormalIndices().get(verListInd - 1),
+                                polygon.getNormalIndices().get(verListInd))
+                );
 
-            triangulatedPolygon.setTextureVertexIndices(
-                    Arrays.asList(polygon.getTextureVertexIndices().get(0),
-                            polygon.getTextureVertexIndices().get(verListInd - 1),
-                            polygon.getTextureVertexIndices().get(verListInd))
-            );
+            if (polygon.getTextureVertexIndices().size() >= 3)
+                triangulatedPolygon.setTextureVertexIndices(
+                        Arrays.asList(polygon.getTextureVertexIndices().get(0),
+                                polygon.getTextureVertexIndices().get(verListInd - 1),
+                                polygon.getTextureVertexIndices().get(verListInd))
+                );
 
             triangulatedPolygons.add(triangulatedPolygon);
         }
@@ -67,7 +69,7 @@ public class TriangulationUtils {
             if (triangulatedPolygons.size() != 1) {
                 polygons.addAll(
                         initialPolygonIndex + 1,
-                        triangulatedPolygons.subList(0, triangulatedPolygons.size())
+                        triangulatedPolygons.subList(1, triangulatedPolygons.size())
                 );
             }
         }
