@@ -59,31 +59,6 @@ public class TriangleRasterizationWithZBuffer {
     }
 
     /**
-     * Method that calculates z-coordinate of input point in the camera coordinates system
-     *
-     * @param currPoint point to get z-coordinate from triangle
-     * @param p1        the first point of the triangle
-     * @param p2        the second point of the triangle
-     * @param p3        the third point of the triangle
-     * @return z-coordinate of input point in the camera coordinates system
-     */
-    public static double getInitialZCoordinate(Point2d currPoint, Point2d p1, Point2d p2, Point2d p3) {
-        double bettaBarycentric =
-                ((p2.getY() - p3.getY()) * (p1.getX() - p3.getX()) - (p2.getX() - p3.getX()) * (p1.getY()) - p3.getY())
-                        / (currPoint.getY() * (p1.getX() - p3.getX()) - (p1.getY() - p3.getY()) * (currPoint.getX() - p3.getX()));
-        double alphaBarycentric =
-                (currPoint.getX() - p3.getX() - bettaBarycentric * (p2.getX() - p3.getX())) / (p1.getX() - p3.getX());
-        double gammaBarycentric = 1 - alphaBarycentric - bettaBarycentric;
-
-        double zCoordinate =
-                alphaBarycentric * p1.getDepth()
-                        + bettaBarycentric * p2.getDepth()
-                        + gammaBarycentric * p3.getDepth();
-
-        return zCoordinate;
-    }
-
-    /**
      * Draws the top triangle as part of the bigger triangle.
      */
     private static void drawTopTriangle(
@@ -110,6 +85,7 @@ public class TriangleRasterizationWithZBuffer {
                 l = r;
                 r = tmp;
             }
+
             for (int x = l; x <= r; x++) {
                 Point2d currPoint = new Point2d(x, y);
                 double initialZCoordinate = getInitialZCoordinate(currPoint, point1, point2, point3);
@@ -154,12 +130,37 @@ public class TriangleRasterizationWithZBuffer {
 //                pw.setArgb(x, y, colorBits);
                 Point2d currPoint = new Point2d(x, y);
                 double initialZCoordinate = getInitialZCoordinate(currPoint, point1, point2, point3);
-                if (zBuffer.isFrontestPoint(currPoint, initialZCoordinate)) {
+                if (zBuffer.isFrontgestPoint(currPoint, initialZCoordinate)) {
                     zBuffer.setBufferValue((int) currPoint.getX(), (int) currPoint.getY(), initialZCoordinate);
                     pw.setColor(x, y, color1);
                 }
             }
         }
+    }
+
+    /**
+     * Method that calculates z-coordinate of input point in the camera coordinates system
+     *
+     * @param currPoint point to get z-coordinate from triangle
+     * @param p1        the first point of the triangle
+     * @param p2        the second point of the triangle
+     * @param p3        the third point of the triangle
+     * @return z-coordinate of input point in the camera coordinates system
+     */
+    public static double getInitialZCoordinate(Point2d currPoint, Point2d p1, Point2d p2, Point2d p3) {
+        double bettaBarycentric =
+                ((p2.getY() - p3.getY()) * (p1.getX() - p3.getX()) - (p2.getX() - p3.getX()) * (p1.getY()) - p3.getY())
+                        / (currPoint.getY() * (p1.getX() - p3.getX()) - (p1.getY() - p3.getY()) * (currPoint.getX() - p3.getX()));
+        double alphaBarycentric =
+                (currPoint.getX() - p3.getX() - bettaBarycentric * (p2.getX() - p3.getX())) / (p1.getX() - p3.getX());
+        double gammaBarycentric = 1 - alphaBarycentric - bettaBarycentric;
+
+        double zCoordinate =
+                alphaBarycentric * p1.getDepth()
+                        + bettaBarycentric * p2.getDepth()
+                        + gammaBarycentric * p3.getDepth();
+
+        return zCoordinate;
     }
 
     /**
