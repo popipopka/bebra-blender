@@ -58,11 +58,16 @@ public class TriangleRasterizationWithZBuffer {
         drawBottomTriangle(pw, point1, point2, point3, color1, color2, color3, zBuffer);
     }
 
-    public static double getZCoordinate(Point2d currPoint, Triangle triangle) {
-        Point2d p1 = triangle.getP1();
-        Point2d p2 = triangle.getP2();
-        Point2d p3 = triangle.getP3();
-
+    /**
+     * Method that calculates z-coordinate of input point in the camera coordinates system
+     *
+     * @param currPoint point to get z-coordinate from triangle
+     * @param p1        the first point of the triangle
+     * @param p2        the second point of the triangle
+     * @param p3        the third point of the triangle
+     * @return z-coordinate of input point in the camera coordinates system
+     */
+    public static double getInitialZCoordinate(Point2d currPoint, Point2d p1, Point2d p2, Point2d p3) {
         double bettaBarycentric =
                 ((p2.getY() - p3.getY()) * (p1.getX() - p3.getX()) - (p2.getX() - p3.getX()) * (p1.getY()) - p3.getY())
                         / (currPoint.getY() * (p1.getX() - p3.getX()) - (p1.getY() - p3.getY()) * (currPoint.getX() - p3.getX()));
@@ -107,7 +112,9 @@ public class TriangleRasterizationWithZBuffer {
             }
             for (int x = l; x <= r; x++) {
 //                final int colorBits = interpolateColor(x, y, v1, c1, v2, c2, v3, c3);
-                pw.setColor(x, y, color1);
+                Point2d currPoint = new Point2d(x, y);
+                if (zBuffer.isFrontestPoint(currPoint, getInitialZCoordinate(currPoint, point1, point2, point3)))
+                    pw.setColor(x, y, color1);
             }
         }
     }
@@ -143,7 +150,9 @@ public class TriangleRasterizationWithZBuffer {
             for (int x = l; x <= r; x++) {
 //                final int colorBits = interpolateColor(x, y, v1, c1, v2, c2, v3, c3, area);
 //                pw.setArgb(x, y, colorBits);
-                pw.setColor(x, y, color1);
+                Point2d currPoint = new Point2d(x, y);
+                if (zBuffer.isFrontestPoint(currPoint, getInitialZCoordinate(currPoint, point1, point2, point3)))
+                    pw.setColor(x, y, color1);
             }
         }
     }
