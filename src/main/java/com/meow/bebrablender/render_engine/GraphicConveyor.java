@@ -12,8 +12,8 @@ public class GraphicConveyor {
         this.affine = new AffineTransform();
     }
 
-    public Matrix4d rotateScaleTranslate(Vector3d scale, Vector3d rotate, Vector3d translate) {
-        return this.affine.trs(scale, rotate, translate);
+    public Matrix4d rotateScaleTranslate(Vector3d rotate, Vector3d scale, Vector3d translate) {
+        return this.affine.srt(scale, rotate, translate);
     }
 
     public Matrix4d getModelMatrix() {

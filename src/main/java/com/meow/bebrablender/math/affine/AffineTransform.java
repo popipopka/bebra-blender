@@ -2,9 +2,7 @@ package com.meow.bebrablender.math.affine;
 
 import com.meow.bebrablender.math.matrices.Matrix4d;
 import com.meow.bebrablender.math.vectors.Vector3d;
-import com.meow.bebrablender.model.Model;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 public class AffineTransform {
@@ -19,7 +17,7 @@ public class AffineTransform {
         });
     }
 
-    public Matrix4d trs(Vector3d scale, Vector3d rotate, Vector3d translate) {
+    public Matrix4d srt(Vector3d scale, Vector3d rotate, Vector3d translate) {
         scale(scale);
         rotate(rotate);
         translate(translate);
@@ -45,9 +43,9 @@ public class AffineTransform {
     }
 
     public Matrix4d rotate(Vector3d v) {
-        rotateX(v.x());
-        rotateY(v.y());
         rotateZ(v.z());
+        rotateY(v.y());
+        rotateX(v.x());
         return result;
     }
 
