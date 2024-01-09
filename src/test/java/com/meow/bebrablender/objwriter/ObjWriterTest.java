@@ -1,8 +1,8 @@
 package com.meow.bebrablender.objwriter;
 
 
-import com.meow.bebrablender.math.vectors.Vector2f;
-import com.meow.bebrablender.math.vectors.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector2d;
+import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.model.Polygon;
 import com.meow.bebrablender.objreader.ObjReader;
@@ -20,8 +20,8 @@ class ObjWriterTest {
     private ObjWriter objWriter = new ObjWriter();
     @Test
     public void testWriteVerticesToObjFile() throws IOException {
-        ArrayList<Vector3f> vertices = new ArrayList<>();
-        vertices.add(new Vector3f(1.0f, 1.0f, 1.0f));
+        ArrayList<Vector3d> vertices = new ArrayList<>();
+        vertices.add(new Vector3d(1.0f, 1.0f, 1.0f));
 
         try (PrintWriter printWriter = new PrintWriter("Test file.obj")) {
             objWriter.writeVerticesOfModel(printWriter, vertices);
@@ -34,8 +34,8 @@ class ObjWriterTest {
 
     @Test
     public void testWriteTextureVerticesToObjFile() throws IOException {
-        ArrayList<Vector2f> textureVertices = new ArrayList<>();
-        textureVertices.add(new Vector2f(1.0f, 1.0f));
+        ArrayList<Vector2d> textureVertices = new ArrayList<>();
+        textureVertices.add(new Vector2d(1.0f, 1.0f));
 
         try (PrintWriter printWriter = new PrintWriter("Test file.obj")) {
             objWriter.writeTextureVerticesOfModel(printWriter, textureVertices);
@@ -48,8 +48,8 @@ class ObjWriterTest {
 
     @Test
     public void testWriteNormalsToObjFile() throws IOException {
-        ArrayList<Vector3f> normals = new ArrayList<>();
-        normals.add(new Vector3f(1.0f, 1.0f, 1.0f));
+        ArrayList<Vector3d> normals = new ArrayList<>();
+        normals.add(new Vector3d(1.0f, 1.0f, 1.0f));
 
         try (PrintWriter printWriter = new PrintWriter("Test file.obj")) {
             objWriter.writeNormalsOfModel(printWriter, normals);

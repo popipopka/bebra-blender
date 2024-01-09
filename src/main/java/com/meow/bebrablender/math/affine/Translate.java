@@ -1,9 +1,8 @@
 package com.meow.bebrablender.math.affine;
 
+import com.meow.bebrablender.math.MathUtils;
 import com.meow.bebrablender.math.matrices.Matrix4d;
 import com.meow.bebrablender.math.vectors.Vector3d;
-import com.meow.bebrablender.math.vectors.Vector4d;
-import com.meow.bebrablender.math.vectors.VectorsUtils;
 
 public class Translate implements AffineApplicable {
     public final Matrix4d transformMatrix;
@@ -18,14 +17,14 @@ public class Translate implements AffineApplicable {
     }
 
     @Override
-    public Vector3d apply(Vector3d v) {
-        Vector4d v4f = VectorsUtils.v3fToV4f(v);
+    public Matrix4d apply(Matrix4d m) {
+        return transformMatrix.mul(m);
+    }
 
-        v4f = transformMatrix.mulVec(v4f);
-
-        Vector3d v3f = VectorsUtils.v4fToV3f(v4f);
-        v.setCoords(v3f.coords());
-
+    @Override
+    public Vector3d applyToVector(Vector3d v) {
+        Vector3d mulV = MathUtils.mulMatrix4ByVector3(transformMatrix, v);
+        v.setCoords(mulV.coords());
         return v;
     }
 }

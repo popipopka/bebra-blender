@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.meow.bebrablender.math.vectors.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector3d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 class ObjReaderVertexTest {
@@ -17,16 +17,16 @@ class ObjReaderVertexTest {
     @Test
     void testParseVertex3f01() {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.02", "1.03"));
-        Vector3f result = reader.parseVertex(wordsInLineWithoutToken, 5);
-        Vector3f expectedResult = new Vector3f(1.01, 1.02, 1.03);
+        Vector3d result = reader.parseVertex(wordsInLineWithoutToken, 5);
+        Vector3d expectedResult = new Vector3d(1.01, 1.02, 1.03);
         Assertions.assertEquals(result, expectedResult);
     }
 
     @Test
     void testParseVertex3f02() {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.02", "1.03"));
-        Vector3f result = reader.parseVertex(wordsInLineWithoutToken, 5);
-        Vector3f expectedResult = new Vector3f(1.01, 1.02, 1.10);
+        Vector3d result = reader.parseVertex(wordsInLineWithoutToken, 5);
+        Vector3d expectedResult = new Vector3d(1.01, 1.02, 1.10);
         Assertions.assertNotEquals(result, expectedResult);
     }
 

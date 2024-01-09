@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.meow.bebrablender.math.vectors.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector3d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -18,16 +18,16 @@ class ObjReaderNormalTest {
     @Test
     void testParseNormal01() {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.02", "1.03"));
-        Vector3f result = reader.parseNormal(wordsInLineWithoutToken, 5);
-        Vector3f actual = new Vector3f(1.01, 1.02, 1.03);
+        Vector3d result = reader.parseNormal(wordsInLineWithoutToken, 5);
+        Vector3d actual = new Vector3d(1.01, 1.02, 1.03);
         Assertions.assertEquals(result, actual);
     }
 
     @Test
     void testParseNormal02() {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.02", "1.03"));
-        Vector3f result = reader.parseNormal(wordsInLineWithoutToken, 5);
-        Vector3f actual = new Vector3f(1.01, 1.02, 1.03);
+        Vector3d result = reader.parseNormal(wordsInLineWithoutToken, 5);
+        Vector3d actual = new Vector3d(1.01, 1.02, 1.03);
         Assertions.assertNotEquals(result, actual);
     }
 

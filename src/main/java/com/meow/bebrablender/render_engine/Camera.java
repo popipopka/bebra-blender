@@ -53,11 +53,11 @@ public class Camera {
         this.target.add(target);
     }
 
-    Matrix4d getViewMatrix() {
-        return GraphicConveyor.lookAt(position, target);
+    public Matrix4d getViewMatrix() {
+        return GraphicConveyor.view(position, target);
     }
 
-    Matrix4d getProjectionMatrix() {
+    public Matrix4d getProjectionMatrix() {
         return GraphicConveyor.perspective(fov, aspectRatio, nearPlane, farPlane);
     }
 }

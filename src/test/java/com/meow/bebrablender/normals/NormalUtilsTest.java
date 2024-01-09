@@ -1,6 +1,6 @@
 package com.meow.bebrablender.normals;
 
-import com.meow.bebrablender.math.vectors.Vector3f;
+import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.model.Polygon;
 import org.junit.jupiter.api.Assertions;
@@ -16,15 +16,15 @@ public class NormalUtilsTest {
 
         Field verticiesField = Model.class.getDeclaredField("vertices");
         verticiesField.setAccessible(true);
-        verticiesField.set(model, new ArrayList<>(List.of(new Vector3f[]{
-                new Vector3f(0, 0, 0),
-                new Vector3f(0, 2, 0),
-                new Vector3f(1, 2, 0),
-                new Vector3f(1, 0, 0),
-                new Vector3f(0, 0, 1),
-                new Vector3f(0, 2, 1),
-                new Vector3f(1, 2, 1),
-                new Vector3f(1, 0, 1)
+        verticiesField.set(model, new ArrayList<>(List.of(new Vector3d[]{
+                new Vector3d(0, 0, 0),
+                new Vector3d(0, 2, 0),
+                new Vector3d(1, 2, 0),
+                new Vector3d(1, 0, 0),
+                new Vector3d(0, 0, 1),
+                new Vector3d(0, 2, 1),
+                new Vector3d(1, 2, 1),
+                new Vector3d(1, 0, 1)
         })));
 
         Field polygonsField = Model.class.getDeclaredField("polygons");
@@ -57,11 +57,11 @@ public class NormalUtilsTest {
 
         Field verticiesField = Model.class.getDeclaredField("vertices");
         verticiesField.setAccessible(true);
-        verticiesField.set(model, new ArrayList<>(List.of(new Vector3f[]{
-                new Vector3f(0, 0, 0),
-                new Vector3f(2, 0, 0),
-                new Vector3f(1, 2, 0),
-                new Vector3f(1, 1, 1)
+        verticiesField.set(model, new ArrayList<>(List.of(new Vector3d[]{
+                new Vector3d(0, 0, 0),
+                new Vector3d(2, 0, 0),
+                new Vector3d(1, 2, 0),
+                new Vector3d(1, 1, 1)
         })));
 
         List<Polygon> polygons = new ArrayList<>(List.of(
@@ -92,21 +92,21 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
 
         Polygon randomPolygon = polygons.get(0);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+        Vector3d result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3d vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3d vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3d vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3d randomPolygonVector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3d randomPolygonVector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+        Assertions.assertTrue(randomPolygonVector1.isOrt(result) && randomPolygonVector2.isOrt(result));
     }
 
     @Test
@@ -119,21 +119,21 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
         Polygon randomPolygon = polygons.get(1);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+        Vector3d result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3d vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3d vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3d vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3d randomPolygonVector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3d randomPolygonVector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+        Assertions.assertTrue(randomPolygonVector1.isOrt(result) && randomPolygonVector2.isOrt(result));
     }
 
     @Test
@@ -146,21 +146,21 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
 
         Polygon randomPolygon = polygons.get(2);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+        Vector3d result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3d vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3d vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3d vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3d randomPolygonVector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3d randomPolygonVector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+        Assertions.assertTrue(randomPolygonVector1.isOrt(result) && randomPolygonVector2.isOrt(result));
     }
 
     @Test
@@ -173,21 +173,21 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
         Polygon randomPolygon = polygons.get(3);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+        Vector3d result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3d vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3d vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3d vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3d randomPolygonVector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3d randomPolygonVector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+        Assertions.assertTrue(randomPolygonVector1.isOrt(result) && randomPolygonVector2.isOrt(result));
     }
 
     @Test
@@ -200,21 +200,21 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
         Polygon randomPolygon = polygons.get(4);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+        Vector3d result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3d vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3d vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3d vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3d randomPolygonVector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3d randomPolygonVector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+        Assertions.assertTrue(randomPolygonVector1.isOrt(result) && randomPolygonVector2.isOrt(result));
     }
 
     @Test
@@ -227,21 +227,21 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
         Polygon randomPolygon = polygons.get(5);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+        Vector3d result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3d vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3d vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3d vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3d randomPolygonVector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3d randomPolygonVector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+        Assertions.assertTrue(randomPolygonVector1.isOrt(result) && randomPolygonVector2.isOrt(result));
     }
 
 
@@ -255,21 +255,21 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
         Polygon randomPolygon = polygons.get(0);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+        Vector3d result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3d vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3d vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3d vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3d randomPolygonVector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3d randomPolygonVector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+        Assertions.assertTrue(randomPolygonVector1.isOrt(result) && randomPolygonVector2.isOrt(result));
     }
 
     @Test
@@ -282,21 +282,21 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
         Polygon randomPolygon = polygons.get(0);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+        Vector3d result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3d vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3d vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3d vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3d randomPolygonVector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3d randomPolygonVector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+        Assertions.assertTrue(randomPolygonVector1.isOrt(result) && randomPolygonVector2.isOrt(result));
     }
 
     @Test
@@ -309,21 +309,21 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
         Polygon randomPolygon = polygons.get(0);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+        Vector3d result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3d vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3d vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3d vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3d randomPolygonVector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3d randomPolygonVector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+        Assertions.assertTrue(randomPolygonVector1.isOrt(result) && randomPolygonVector2.isOrt(result));
     }
 
     @Test
@@ -336,21 +336,21 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
         Polygon randomPolygon = polygons.get(0);
 
-        Vector3f result = NormalUtils.polygonNormal(randomPolygon, vertices);
+        Vector3d result = NormalUtils.polygonNormal(randomPolygon, vertices);
 
-        Vector3f vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
-        Vector3f vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
-        Vector3f vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
+        Vector3d vertex1 = vertices.get(randomPolygon.getVertexIndices().get(0));
+        Vector3d vertex2 = vertices.get(randomPolygon.getVertexIndices().get(1));
+        Vector3d vertex3 = vertices.get(randomPolygon.getVertexIndices().get(2));
 
-        Vector3f randomPolygonVector1 = new Vector3f(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
-        Vector3f randomPolygonVector2 = new Vector3f(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
+        Vector3d randomPolygonVector1 = new Vector3d(vertex2.x() - vertex1.x(), vertex2.y() - vertex1.y(), vertex2.z() - vertex1.z());
+        Vector3d randomPolygonVector2 = new Vector3d(vertex3.x() - vertex1.x(), vertex3.y() - vertex1.y(), vertex3.z() - vertex1.z());
 
-        Assertions.assertTrue(randomPolygonVector1.isOrthogonal(result) && randomPolygonVector2.isOrthogonal(result));
+        Assertions.assertTrue(randomPolygonVector1.isOrt(result) && randomPolygonVector2.isOrt(result));
     }
 
     @Test
@@ -363,7 +363,7 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
 
@@ -389,15 +389,15 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
 
-        Vector3f result = NormalUtils.vertexNormal(7, vertices, polygons);
+        Vector3d result = NormalUtils.vertexNormal(7, vertices, polygons);
 
-        Vector3f expected = new Vector3f((float) -1 / 3, (float) -1 / 3, (float) -1 / 3).normalize();
+        Vector3d expected = new Vector3d((float) -1 / 3, (float) -1 / 3, (float) -1 / 3).norm();
 
-        Assertions.assertEquals(expected.normalize(), result.normalize());
+        Assertions.assertEquals(expected.norm(), result.norm());
     }
 
     @Test
@@ -410,17 +410,17 @@ public class NormalUtilsTest {
         Field polygonsField = Model.class.getDeclaredField("polygons");
         polygonsField.setAccessible(true);
 
-        List<Vector3f> vertices = (List<Vector3f>) verticesField.get(model);
+        List<Vector3d> vertices = (List<Vector3d>) verticesField.get(model);
         List<Polygon> polygons = (List<Polygon>) polygonsField.get(model);
         
 
-        Vector3f result = NormalUtils.vertexNormal(3, vertices, polygons);
-        Vector3f expected = new Vector3f(
+        Vector3d result = NormalUtils.vertexNormal(3, vertices, polygons);
+        Vector3d expected = new Vector3d(
                 0,
                 (float) (1 / Math.sqrt(2)) - (float) (2 / Math.sqrt(6)),
                 (float) -(1 / Math.sqrt(2)) - (float) (2 / Math.sqrt(6))
-        ).divide(3).normalize();
+        ).div(3).norm();
 
-        Assertions.assertEquals(expected.normalize(), result.normalize());
+        Assertions.assertEquals(expected.norm(), result.norm());
     }
 }

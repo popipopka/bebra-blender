@@ -1,6 +1,5 @@
 package com.meow.bebrablender;
 
-import com.meow.bebrablender.math.vectors.Vector3f;
 import com.meow.bebrablender.model.Model;
 import com.meow.bebrablender.objreader.ObjReader;
 //import com.meow.bebrablender.render_engine.Camera;
@@ -67,31 +66,31 @@ public class BebraController {
 
     @FXML
     private void onOpenModelMenuItemClick() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
-        fileChooser.setTitle("Load Model");
-
-        File file = fileChooser.showOpenDialog((Stage) canvas.getScene().getWindow());
-        if (file == null) {
-            return;
-        }
-
-        Path fileName = Path.of(file.getAbsolutePath());
-
-        try {
-            String fileContent = Files.readString(fileName);
-            Model initialModel = ObjReader.read(fileContent);
-            ModelNormalizer.
-                    triangulateAndRecalculateModelNormals(
-                            initialModel.getVertices(),
-                            initialModel.getPolygons(),
-                            initialModel.getNormals()
-                    );
-            mesh = initialModel;
-            // todo: обработка ошибок
-        } catch (IOException exception) {
-
-        }
+//        FileChooser fileChooser = new FileChooser();
+//        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
+//        fileChooser.setTitle("Load Model");
+//
+//        File file = fileChooser.showOpenDialog((Stage) canvas.getScene().getWindow());
+//        if (file == null) {
+//            return;
+//        }
+//
+//        Path fileName = Path.of(file.getAbsolutePath());
+//
+//        try {
+//            String fileContent = Files.readString(fileName);
+//            Model initialModel = ObjReader.read(fileContent);
+//            ModelNormalizer.
+//                    triangulateAndRecalculateModelNormals(
+//                            initialModel.getVertices(),
+//                            initialModel.getPolygons(),
+//                            initialModel.getNormals()
+//                    );
+//            mesh = initialModel;
+//            // todo: обработка ошибок
+//        } catch (IOException exception) {
+//
+//        }
     }
 
 //    @FXML

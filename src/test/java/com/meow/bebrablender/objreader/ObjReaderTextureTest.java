@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.meow.bebrablender.math.vectors.Vector2f;
+import com.meow.bebrablender.math.vectors.Vector2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 class ObjReaderTextureTest {
@@ -18,16 +18,16 @@ class ObjReaderTextureTest {
     @Test
     void testParseVertex2f01() {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.02"));
-        Vector2f result = reader.parseTextureVertex(wordsInLineWithoutToken, 5);
-        Vector2f expectedResult = new Vector2f(1.01, 1.02);
+        Vector2d result = reader.parseTextureVertex(wordsInLineWithoutToken, 5);
+        Vector2d expectedResult = new Vector2d(1.01, 1.02);
         Assertions.assertEquals(result, expectedResult);
     }
 
     @Test
     void testParseVertex2f02() {
         ArrayList<String> wordsInLineWithoutToken = new ArrayList<>(Arrays.asList("1.01", "1.03"));
-        Vector2f result = reader.parseTextureVertex(wordsInLineWithoutToken, 5);
-        Vector2f expectedResult = new Vector2f(1.01, 1.10);
+        Vector2d result = reader.parseTextureVertex(wordsInLineWithoutToken, 5);
+        Vector2d expectedResult = new Vector2d(1.01, 1.10);
         Assertions.assertNotEquals(result, expectedResult);
     }
 
