@@ -130,7 +130,7 @@ public class TriangleRasterizationWithZBuffer {
 //                pw.setArgb(x, y, colorBits);
                 Point2d currPoint = new Point2d(x, y);
                 double initialZCoordinate = getInitialZCoordinate(currPoint, point1, point2, point3);
-                if (zBuffer.isFrontgestPoint(currPoint, initialZCoordinate)) {
+                if (zBuffer.isFrontestPoint(currPoint, initialZCoordinate)) {
                     zBuffer.setBufferValue((int) currPoint.getX(), (int) currPoint.getY(), initialZCoordinate);
                     pw.setColor(x, y, color1);
                 }
