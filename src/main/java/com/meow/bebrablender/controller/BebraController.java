@@ -80,6 +80,8 @@ public class BebraController {
     @FXML
     private Button backButton;
     @FXML
+    private Button partyButton;
+    @FXML
     private AnchorPane anchorPane;
     @FXML
     private TextField fieldXTF;
@@ -342,6 +344,21 @@ public class BebraController {
         zTF.setVisible(false);
         zTF.setEditable(false);
 
+        partyButton.setText("Party");
+        partyButton.setStyle(redThemeS2);
+        partyButton.setMinWidth(200);
+        partyButton.setMinHeight(60);
+        partyButton.setLayoutX(1000);
+        partyButton.setLayoutY(0);
+        partyButton.setDisable(false);
+        partyButton.setVisible(false);
+        partyButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+            }
+        });
+
         applyScaleButton.setText("Apply");
         applyScaleButton.setStyle("-fx-font: 25 arial; -fx-base: #FFFFF0;");
         applyScaleButton.setMinWidth(300);
@@ -475,6 +492,7 @@ public class BebraController {
             currentThemeS1 = whiteThemeS1;
             currentThemeS2 = whiteThemeS2;
             changeTheme();
+            partyButton.setVisible(false);
         });
         darkThemeButton.setText("D");
         darkThemeButton.setStyle("-fx-font: 25 arial; -fx-base: #A9A9A9;");
@@ -488,6 +506,7 @@ public class BebraController {
             currentThemeS1 = darkThemeS1;
             currentThemeS2 = darkThemeS2;
             changeTheme();
+            partyButton.setVisible(false);
         });
         redThemeButton.setText("R");
         redThemeButton.setStyle("-fx-font: 25 arial; -fx-base: #A52A2A;");
@@ -501,6 +520,7 @@ public class BebraController {
             currentThemeS1 = redThemeS1;
             currentThemeS2 = redThemeS2;
             changeTheme();
+            partyButton.setVisible(true);
         });
 
         camerasButton.setText("Cameras");
