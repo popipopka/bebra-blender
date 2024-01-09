@@ -18,7 +18,8 @@ public class Translate implements AffineApplicable {
 
     @Override
     public Matrix4d apply(Matrix4d m) {
-        return transformMatrix.mul(m);
+        transformMatrix.setData(m.mul(transformMatrix).data());
+        return transformMatrix;
     }
 
     @Override

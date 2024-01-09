@@ -4,7 +4,7 @@ import com.meow.bebrablender.math.vectors.Vector3d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class AffineApplicableTest {
+class AffineVectorTest {
     @Test
     void rotateX45() {
         Vector3d v = new Vector3d(4, 5, 9);

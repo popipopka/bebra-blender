@@ -6,9 +6,9 @@ public class ModelContainer {
     private Model model;
     private GraphicConveyor conveyor;
 
-    public ModelContainer(Model model, GraphicConveyor conveyor) {
+    public ModelContainer(Model model) {
         this.model = model;
-        this.conveyor = conveyor;
+        this.conveyor = new GraphicConveyor();
     }
 
     public Model getModel() {
