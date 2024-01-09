@@ -111,7 +111,6 @@ public class TriangleRasterizationWithZBuffer {
                 r = tmp;
             }
             for (int x = l; x <= r; x++) {
-//                final int colorBits = interpolateColor(x, y, v1, c1, v2, c2, v3, c3);
                 Point2d currPoint = new Point2d(x, y);
                 double initialZCoordinate = getInitialZCoordinate(currPoint, point1, point2, point3);
                 if (zBuffer.isFrontestPoint(currPoint, initialZCoordinate)) {

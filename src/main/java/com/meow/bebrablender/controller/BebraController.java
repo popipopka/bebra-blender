@@ -10,25 +10,20 @@ import com.meow.bebrablender.render_engine.Camera;
 import com.meow.bebrablender.render_engine.GraphicConveyor;
 import com.meow.bebrablender.render_engine.ModelNormalizer;
 import com.meow.bebrablender.render_engine.RenderEngine;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -344,13 +339,11 @@ public class BebraController {
                 double y = Double.parseDouble(fieldYTF.getText());
                 double z = Double.parseDouble(fieldZTF.getText());
 
-                Vector3d scale =  new Vector3d(new double[]{x, y, z});
+                Vector3d scale = new Vector3d(new double[]{x, y, z});
                 Vector3d rotate = new Vector3d();
                 Vector3d translate = new Vector3d();
 
-                //TODO брать модель из листа на экране и менять ее
-                Model model = new Model();
-                ModelContainer cont = new ModelContainer(model);
+                ModelContainer cont = modelContainers.get(currentModel);
                 GraphicConveyor conv = cont.getConveyor();
                 conv.rotateScaleTranslate(rotate, scale, translate);
             }
@@ -371,13 +364,11 @@ public class BebraController {
                 double y = Double.parseDouble(fieldYTF.getText());
                 double z = Double.parseDouble(fieldZTF.getText());
 
-                Vector3d scale =  new Vector3d(new double[]{1, 1, 1});
+                Vector3d scale = new Vector3d(new double[]{1, 1, 1});
                 Vector3d rotate = new Vector3d(new double[]{x, y, z});
                 Vector3d translate = new Vector3d();
 
-                //TODO брать модель из листа на экране и менять ее
-                Model model = new Model();
-                ModelContainer cont = new ModelContainer(model);
+                ModelContainer cont = modelContainers.get(currentModel);
                 GraphicConveyor conv = cont.getConveyor();
                 conv.rotateScaleTranslate(rotate, scale, translate);
             }
@@ -398,13 +389,11 @@ public class BebraController {
                 double y = Double.parseDouble(fieldYTF.getText());
                 double z = Double.parseDouble(fieldZTF.getText());
 
-                Vector3d scale =  new Vector3d(new double[]{1, 1, 1});
+                Vector3d scale = new Vector3d(new double[]{1, 1, 1});
                 Vector3d rotate = new Vector3d();
                 Vector3d translate = new Vector3d(new double[]{x, y, z});
 
-                //TODO брать модель из листа на экране и менять ее
-                Model model = new Model();
-                ModelContainer cont = new ModelContainer(model);
+                ModelContainer cont = modelContainers.get(currentModel);
                 GraphicConveyor conv = cont.getConveyor();
                 conv.rotateScaleTranslate(rotate, scale, translate);
             }
@@ -467,11 +456,11 @@ public class BebraController {
                 try {
                     ObjReader objReader = new ObjReader(selectedFile.toPath());
                     Model model = objReader.read();
-                    ModelNormalizer.triangulateAndRecalculateModelNormals(model.getVertices(),model.getPolygons(),model.getNormals());
+                    ModelNormalizer.triangulateAndRecalculateModelNormals(model.getVertices(), model.getPolygons(), model.getNormals());
                     ModelContainer modelContainer = new ModelContainer(model);
                     langs.add(selectedFile.getName());
-                    modelContainers.put(selectedFile.getName(),modelContainer);
-                    RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainer,1532,800);
+                    modelContainers.put(selectedFile.getName(), modelContainer);
+                    RenderEngine.render(canvas.getGraphicsContext2D(), camera, modelContainer, 1532, 800);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
