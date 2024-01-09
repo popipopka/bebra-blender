@@ -97,6 +97,7 @@ public class BebraController {
     private ColorPicker colorPicker;
     private ListView<String> modelListView;
     private ListView<String> cameraListView;
+    private String currentModel;
     @FXML
     private Label label;
     private String currentThemeS1 = new String();
@@ -244,6 +245,7 @@ public class BebraController {
 
             public void changed(ObservableValue<? extends String> changed, String oldValue, String newValue) {
 
+                currentModel = newValue;
                 label.setText("Selected: " + newValue);
             }
         });
