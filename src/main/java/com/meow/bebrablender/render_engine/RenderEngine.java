@@ -19,8 +19,7 @@ public class RenderEngine {
             final Camera camera,
             final ModelContainer container,
             final int width,
-            final int height)
-    {
+            final int height) {
         Model mesh = container.getModel();
         GraphicConveyor conveyor = container.getConveyor();
 
