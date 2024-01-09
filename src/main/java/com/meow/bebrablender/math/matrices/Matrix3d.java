@@ -2,6 +2,8 @@ package com.meow.bebrablender.math.matrices;
 
 import com.meow.bebrablender.math.vectors.Vector3d;
 
+import java.util.Arrays;
+
 public class Matrix3d extends AbstractSquareMatrix<Matrix3d, Vector3d> {
 
 
@@ -25,6 +27,6 @@ public class Matrix3d extends AbstractSquareMatrix<Matrix3d, Vector3d> {
 
     @Override
     public Matrix3d copy() {
-        return new Matrix3d(data);
+        return new Matrix3d(deepDataCopy());
     }
 }

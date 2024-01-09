@@ -44,10 +44,10 @@ public class AffineTransform {
         return result;
     }
 
-    public Matrix4d rotate(Vector3d rV) {
-        rotateX(rV.x());
-        rotateX(rV.y());
-        rotateX(rV.z());
+    public Matrix4d rotate(Vector3d v) {
+        rotateX(v.x());
+        rotateY(v.y());
+        rotateZ(v.z());
         return result;
     }
 
@@ -57,9 +57,10 @@ public class AffineTransform {
         return result;
     }
 
-    public Matrix4d translate(Vector3d tV) {
-        return translate(tV.x(), tV.y(), tV.z());
+    public Matrix4d translate(Vector3d v) {
+        return translate(v.x(), v.y(), v.z());
     }
+
 
     public Matrix4d scale(double sX, double sY, double sZ) {
         Scale scale = new Scale(sX, sY, sZ);
@@ -67,8 +68,8 @@ public class AffineTransform {
         return result;
     }
 
-    public Matrix4d scale(Vector3d tS) {
-        return translate(tS.x(), tS.y(), tS.z());
+    public Matrix4d scale(Vector3d v) {
+        return scale(v.x(), v.y(), v.z());
     }
 
     public Matrix4d getAffine() {

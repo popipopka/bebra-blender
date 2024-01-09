@@ -1,5 +1,7 @@
 package com.meow.bebrablender.math.vectors;
 
+import java.util.Arrays;
+
 public class Vector4d extends AbstractVector<Vector4d> {
     public Vector4d() {
         super(4);
@@ -47,7 +49,7 @@ public class Vector4d extends AbstractVector<Vector4d> {
 
     @Override
     public Vector4d copy() {
-        return new Vector4d(this.coords);
+        return new Vector4d(Arrays.copyOf(this.coords, size));
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.meow.bebrablender.math.matrices;
 
 import com.meow.bebrablender.math.vectors.Vector4d;
 
+import java.util.Arrays;
+
 public class Matrix4d extends AbstractSquareMatrix<Matrix4d, Vector4d> {
     public Matrix4d(double[][] data) {
         super(4, data);
@@ -23,6 +25,6 @@ public class Matrix4d extends AbstractSquareMatrix<Matrix4d, Vector4d> {
 
     @Override
     public Matrix4d copy() {
-        return new Matrix4d(data);
+        return new Matrix4d(deepDataCopy());
     }
 }

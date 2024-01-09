@@ -1,5 +1,7 @@
 package com.meow.bebrablender.math.vectors;
 
+import java.util.Arrays;
+
 public class Vector3d extends AbstractVector<Vector3d> implements Comparable<Vector2d> {
     public Vector3d() {
         super(3);
@@ -56,7 +58,7 @@ public class Vector3d extends AbstractVector<Vector3d> implements Comparable<Vec
 
     @Override
     public Vector3d copy() {
-        return new Vector3d(this.coords);
+        return new Vector3d(Arrays.copyOf(this.coords, size));
     }
 
     @Override
