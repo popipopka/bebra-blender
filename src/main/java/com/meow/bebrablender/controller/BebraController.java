@@ -22,6 +22,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -126,23 +127,23 @@ public class BebraController {
         anchorPane.setStyle("-fx-base: #D3D3D3;");
         buttonControl();
 
-        timeline = new Timeline();
-        timeline.setCycleCount(Animation.INDEFINITE);
-
-        KeyFrame frame = new KeyFrame(Duration.millis(15), event -> {
-            double width = canvas.getWidth();
-            double height = canvas.getHeight();
-
-            canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
-//            camera.setAspectRatio((float) (width / height));
-
-            if (mesh != null) {
-//                RenderEngine.render(canvas.getGraphicsContext2D(), camera, mesh, (int) width, (int) height);
-            }
-        });
-
-        timeline.getKeyFrames().add(frame);
-        timeline.play();
+//        timeline = new Timeline();
+//        timeline.setCycleCount(Animation.INDEFINITE);
+//
+//        KeyFrame frame = new KeyFrame(Duration.millis(15), event -> {
+//            double width = canvas.getWidth();
+//            double height = canvas.getHeight();
+//
+//            canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
+////            camera.setAspectRatio((float) (width / height));
+//
+//            if (mesh != null) {
+////                RenderEngine.render(canvas.getGraphicsContext2D(), camera, mesh, (int) width, (int) height);
+//            }
+//        });
+//
+//        timeline.getKeyFrames().add(frame);
+//        timeline.play();
     }
 
     private void hideApplyXYZ() {
@@ -468,7 +469,7 @@ public class BebraController {
                     ModelContainer modelContainer = new ModelContainer(model);
                     langs.add(selectedFile.getName());
                     modelContainers.put(selectedFile.getName(),modelContainer);
-                    RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainer,1550,800);
+                    RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainer,1532,800);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
