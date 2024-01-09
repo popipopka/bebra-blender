@@ -123,6 +123,7 @@ public class ObjReader {
             wordsInLine = new ArrayList<>(Arrays.asList(split));
 
             token = wordsInLine.getFirst();
+            if(!token.equals("v")&&!token.equals("vt")&&!token.equals("vn")&!token.equals("f"))continue;
             wordsInLine.removeFirst();
 
             switch (token) {
