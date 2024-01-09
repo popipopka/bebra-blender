@@ -7,6 +7,7 @@ import com.meow.bebrablender.notifications.NotificationsView;
 import com.meow.bebrablender.objreader.ObjReader;
 import com.meow.bebrablender.objwriter.ObjWriter;
 import com.meow.bebrablender.render_engine.Camera;
+import com.meow.bebrablender.render_engine.GraphicConveyor;
 import com.meow.bebrablender.render_engine.ModelNormalizer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -335,7 +336,19 @@ public class BebraController {
         applyScaleButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                double x = Double.parseDouble(fieldXTF.getText());
+                double y = Double.parseDouble(fieldYTF.getText());
+                double z = Double.parseDouble(fieldZTF.getText());
 
+                Vector3d scale =  new Vector3d(new double[]{x, y, z});
+                Vector3d rotate = new Vector3d();
+                Vector3d translate = new Vector3d();
+
+                //TODO брать модель из листа на экране и менять ее
+                Model model = new Model();
+                ModelContainer cont = new ModelContainer(model);
+                GraphicConveyor conv = cont.getConveyor();
+                conv.rotateScaleTranslate(rotate, scale, translate);
             }
         });
 
@@ -350,7 +363,19 @@ public class BebraController {
         applyRotateButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                double x = Double.parseDouble(fieldXTF.getText());
+                double y = Double.parseDouble(fieldYTF.getText());
+                double z = Double.parseDouble(fieldZTF.getText());
 
+                Vector3d scale =  new Vector3d(new double[]{1, 1, 1});
+                Vector3d rotate = new Vector3d(new double[]{x, y, z});
+                Vector3d translate = new Vector3d();
+
+                //TODO брать модель из листа на экране и менять ее
+                Model model = new Model();
+                ModelContainer cont = new ModelContainer(model);
+                GraphicConveyor conv = cont.getConveyor();
+                conv.rotateScaleTranslate(rotate, scale, translate);
             }
         });
 
@@ -365,7 +390,19 @@ public class BebraController {
         applyTranslateButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                double x = Double.parseDouble(fieldXTF.getText());
+                double y = Double.parseDouble(fieldYTF.getText());
+                double z = Double.parseDouble(fieldZTF.getText());
 
+                Vector3d scale =  new Vector3d(new double[]{1, 1, 1});
+                Vector3d rotate = new Vector3d();
+                Vector3d translate = new Vector3d(new double[]{x, y, z});
+
+                //TODO брать модель из листа на экране и менять ее
+                Model model = new Model();
+                ModelContainer cont = new ModelContainer(model);
+                GraphicConveyor conv = cont.getConveyor();
+                conv.rotateScaleTranslate(rotate, scale, translate);
             }
         });
 
