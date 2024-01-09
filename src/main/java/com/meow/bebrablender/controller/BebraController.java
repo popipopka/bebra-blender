@@ -22,6 +22,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -29,12 +30,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 
 public class BebraController {
-    final private float TRANSLATION = 0.5F;
+    final private float TRANSLATION = 2;
     @FXML
     private Button fileButton;
     @FXML
@@ -129,7 +131,7 @@ public class BebraController {
         timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
 
-        KeyFrame frame = new KeyFrame(Duration.millis(100), event -> {
+        KeyFrame frame = new KeyFrame(Duration.millis(200), event -> {
             double width = canvas.getWidth();
             double height = canvas.getHeight();
 
@@ -144,6 +146,16 @@ public class BebraController {
 
         timeline.getKeyFrames().add(frame);
         timeline.play();
+
+        anchorPane.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode() == KeyCode.W) handleCameraUp();
+            if(keyEvent.getCode() == KeyCode.S) handleCameraDown();
+            if(keyEvent.getCode() == KeyCode.A) handleCameraLeft();
+            if(keyEvent.getCode() == KeyCode.D) handleCameraRight();
+
+            if(keyEvent.getCode() == KeyCode.E) handleCameraForward();
+            if(keyEvent.getCode() == KeyCode.F) handleCameraBackward();
+        });
     }
 
     private void hideApplyXYZ() {
@@ -712,51 +724,38 @@ public class BebraController {
                             initialModel.getNormals()
                     );
             mesh = initialModel;
-            // todo: обработка ошибок
-        } catch (IOException exception) {
-
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
     @FXML
-    public void handleCameraForward(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3d(0, 0, -TRANSLATION));
-        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
-        System.out.println("b");
-    }
-
-    @FXML
-    public void handleCameraBackward(ActionEvent actionEvent) {
+    public void handleCameraForward() {
         camera.movePosition(new Vector3d(0, 0, TRANSLATION));
-        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
-        System.out.println("b");
     }
 
     @FXML
-    public void handleCameraLeft(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3d(TRANSLATION, 0, 0));
-        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
-        System.out.println("b");
+    public void handleCameraBackward() {
+        camera.movePosition(new Vector3d(0, 0, -TRANSLATION));
     }
 
     @FXML
-    public void handleCameraRight(ActionEvent actionEvent) {
+    public void handleCameraLeft() {
         camera.movePosition(new Vector3d(-TRANSLATION, 0, 0));
-        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
-        System.out.println("b");
     }
 
     @FXML
-    public void handleCameraUp(ActionEvent actionEvent) {
-        camera.movePosition(new Vector3d(0, TRANSLATION, 0));
-        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
-        System.out.println("b");
+    public void handleCameraRight() {
+        camera.movePosition(new Vector3d(TRANSLATION, 0, 0));
     }
 
     @FXML
-    public void handleCameraDown(ActionEvent actionEvent) {
+    public void handleCameraUp() {
         camera.movePosition(new Vector3d(0, -TRANSLATION, 0));
-        RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainers.get(currentModel),1532,800);
-        System.out.println("b");
+    }
+
+    @FXML
+    public void handleCameraDown() {
+        camera.movePosition(new Vector3d(0, TRANSLATION, 0));
     }
 }
