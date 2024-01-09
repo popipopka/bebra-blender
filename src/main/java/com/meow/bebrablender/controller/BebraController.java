@@ -9,6 +9,7 @@ import com.meow.bebrablender.objwriter.ObjWriter;
 import com.meow.bebrablender.render_engine.Camera;
 import com.meow.bebrablender.render_engine.GraphicConveyor;
 import com.meow.bebrablender.render_engine.ModelNormalizer;
+import com.meow.bebrablender.render_engine.RenderEngine;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -467,6 +468,7 @@ public class BebraController {
                     ModelContainer modelContainer = new ModelContainer(model);
                     langs.add(selectedFile.getName());
                     modelContainers.put(selectedFile.getName(),modelContainer);
+                    RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainer,1550,800);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
