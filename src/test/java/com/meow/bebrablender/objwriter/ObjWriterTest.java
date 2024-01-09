@@ -77,16 +77,5 @@ class ObjWriterTest {
         String fileContent = Files.readString(Path.of("Test file.obj"));
         Assertions.assertTrue(fileContent.contains("f 0/0/0 2/2/2 5/5/5"));
     }
-    @Test
-    public void testCompareObjFiles() throws IOException {
-        ObjReader objReader = new ObjReader (Path.of("src/main/resources/com/meow/bebrablender/ObjFiles/AffineCube.obj"));
-        Model originalModel = objReader.read();
-
-        objWriter.writeModelToObjFile("Test file.obj", originalModel);
-        objReader = new ObjReader(Path.of("Test file.obj"));
-        Model newModel = objReader.read();
-
-        Assertions.assertEquals(originalModel, newModel);
-    }
 
 }

@@ -96,8 +96,6 @@ public class BebraController {
     private ListView<String> modelListView;
     private ListView<String> cameraListView;
     private String currentModel;
-    @FXML
-    private Label label;
     private String currentThemeS1 = new String();
     private String currentThemeS2 = new String();
     private String whiteThemeS1 = "-fx-base: #D3D3D3;";
@@ -250,7 +248,6 @@ public class BebraController {
                 rotateButton.setDisable(false);
                 scaleButton.setDisable(false);
                 currentModel = newValue;
-                label.setText("Selected: " + newValue);
             }
         });
         modelListView.setVisible(false);
