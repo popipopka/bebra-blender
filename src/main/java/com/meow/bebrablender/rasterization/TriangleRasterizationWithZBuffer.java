@@ -113,8 +113,11 @@ public class TriangleRasterizationWithZBuffer {
             for (int x = l; x <= r; x++) {
 //                final int colorBits = interpolateColor(x, y, v1, c1, v2, c2, v3, c3);
                 Point2d currPoint = new Point2d(x, y);
-                if (zBuffer.isFrontestPoint(currPoint, getInitialZCoordinate(currPoint, point1, point2, point3)))
+                double initialZCoordinate = getInitialZCoordinate(currPoint, point1, point2, point3);
+                if (zBuffer.isFrontestPoint(currPoint, initialZCoordinate)) {
+                    zBuffer.setBufferValue((int) currPoint.getX(), (int) currPoint.getY(), initialZCoordinate);
                     pw.setColor(x, y, color1);
+                }
             }
         }
     }
@@ -151,8 +154,11 @@ public class TriangleRasterizationWithZBuffer {
 //                final int colorBits = interpolateColor(x, y, v1, c1, v2, c2, v3, c3, area);
 //                pw.setArgb(x, y, colorBits);
                 Point2d currPoint = new Point2d(x, y);
-                if (zBuffer.isFrontestPoint(currPoint, getInitialZCoordinate(currPoint, point1, point2, point3)))
+                double initialZCoordinate = getInitialZCoordinate(currPoint, point1, point2, point3);
+                if (zBuffer.isFrontestPoint(currPoint, initialZCoordinate)) {
+                    zBuffer.setBufferValue((int) currPoint.getX(), (int) currPoint.getY(), initialZCoordinate);
                     pw.setColor(x, y, color1);
+                }
             }
         }
     }
