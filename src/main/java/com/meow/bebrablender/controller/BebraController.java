@@ -2,6 +2,7 @@ package com.meow.bebrablender.controller;
 
 import com.meow.bebrablender.math.vectors.Vector3d;
 import com.meow.bebrablender.model.Model;
+import com.meow.bebrablender.model.ModelContainer;
 import com.meow.bebrablender.notifications.NotificationsView;
 import com.meow.bebrablender.objreader.ObjReader;
 import com.meow.bebrablender.objwriter.ObjWriter;
@@ -29,6 +30,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 
 public class BebraController {
     final private float TRANSLATION = 0.5F;
@@ -102,6 +104,7 @@ public class BebraController {
     private String darkThemeS2 = "-fx-background-color: #696969;-fx-font: 25 arial;";
     private String redThemeS1 = "-fx-base: #A52A2A;";
     private String redThemeS2 = "-fx-background-color: #800000;-fx-font: 25 arial;";
+    private HashMap<String, ModelContainer> modelContainers = new HashMap<>();
 
 
     @FXML
@@ -224,7 +227,7 @@ public class BebraController {
         final boolean[] fileSetting = {false};
         FileChooser fileChooser = new FileChooser();
         // создаем список объектов
-        ObservableList<String> langs = FXCollections.observableArrayList("Java", "JavaScript", "C#", "Python");
+        ObservableList<String> langs = FXCollections.observableArrayList("Java");
         modelListView = new ListView<>(langs);
         modelListView.setMinHeight(320);
         modelListView.setMaxHeight(320);
@@ -420,6 +423,16 @@ public class BebraController {
             public void handle(ActionEvent actionEvent) {
                 Stage stage = new Stage();
                 File selectedFile = fileChooser.showOpenDialog(stage);
+                try {
+                    ObjReader objReader = new ObjReader(selectedFile.toPath());
+                    Model model = objReader.read();
+                    ModelNormalizer.triangulateAndRecalculateModelNormals(model.getVertices(),model.getPolygons(),model.getNormals());
+                    ModelContainer modelContainer = new ModelContainer(model);
+                    langs.add(selectedFile.getName());
+                    modelContainers.put(selectedFile.getName(),modelContainer);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         whiteThemeButton.setText("W");
@@ -572,7 +585,6 @@ public class BebraController {
                     modelListView.setVisible(true);
                     modelSetting[0] = true;
                 }
-                langs.add("bebra");
             }
         });
 
