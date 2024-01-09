@@ -1,5 +1,14 @@
-package com.meow.bebrablender;
+package com.meow.bebrablender.controller;
 
+import com.meow.bebrablender.math.vectors.Vector3d;
+import com.meow.bebrablender.model.Model;
+import com.meow.bebrablender.notifications.NotificationsView;
+import com.meow.bebrablender.objreader.ObjReader;
+import com.meow.bebrablender.render_engine.Camera;
+import com.meow.bebrablender.render_engine.ModelNormalizer;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -89,36 +98,37 @@ import java.util.ArrayList;
         @FXML
         private Canvas canvas;
 
-        //  private Model mesh = null;
+          private Model mesh = null;
 
-//    private Camera camera = new Camera(
-//            new Vector3f(0, 0, 100),
-//            new Vector3f(0, 0, 0),
-//            1.0F, 1, 0.01F, 100);
+    private Camera camera = new Camera(
+            new Vector3d(0, 0, 100),
+            new Vector3d(0, 0, 0),
+            1.0F, 1, 0.01F, 100);
 
-        //  private Timeline timeline;
+          private Timeline timeline;
 
         @FXML
         private void initialize() {
             anchorPane.setStyle("-fx-base: #D3D3D3;");
             buttonControl();
-//        timeline = new Timeline();
-//        timeline.setCycleCount(Animation.INDEFINITE);
-//
-//        KeyFrame frame = new KeyFrame(Duration.millis(15), event -> {
-//            double width = canvas.getWidth();
-//            double height = canvas.getHeight();
-//
-//            canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
-////            camera.setAspectRatio((float) (width / height));
-//
-//            if (mesh != null) {
-////                RenderEngine.render(canvas.getGraphicsContext2D(), camera, mesh, (int) width, (int) height);
-//            }
-//        });
-//
-//        timeline.getKeyFrames().add(frame);
-//        timeline.play();
+
+        timeline = new Timeline();
+        timeline.setCycleCount(Animation.INDEFINITE);
+
+        KeyFrame frame = new KeyFrame(Duration.millis(15), event -> {
+            double width = canvas.getWidth();
+            double height = canvas.getHeight();
+
+            canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
+//            camera.setAspectRatio((float) (width / height));
+
+            if (mesh != null) {
+//                RenderEngine.render(canvas.getGraphicsContext2D(), camera, mesh, (int) width, (int) height);
+            }
+        });
+
+        timeline.getKeyFrames().add(frame);
+        timeline.play();
         }
         private void hideApplyXYZ(){
             applyScaleButton.setVisible(false);
@@ -574,7 +584,6 @@ import java.util.ArrayList;
             deleteVertexButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-
                 }
             });
             deletePolygonButton.setText("Delete polygon");
@@ -588,7 +597,6 @@ import java.util.ArrayList;
             deletePolygonButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-
                 }
             });
             infoButton.setText("Info");
@@ -608,60 +616,60 @@ import java.util.ArrayList;
         }
     @FXML
     private void onOpenModelMenuItemClick() {
-//        FileChooser fileChooser = new FileChooser();
-//        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
-//        fileChooser.setTitle("Load Model");
-//
-//        File file = fileChooser.showOpenDialog((Stage) canvas.getScene().getWindow());
-//        if (file == null) {
-//            return;
-//        }
-//
-//        Path fileName = Path.of(file.getAbsolutePath());
-//
-//        try {
-//            String fileContent = Files.readString(fileName);
-//            Model initialModel = ObjReader.read(fileContent);
-//            ModelNormalizer.
-//                    triangulateAndRecalculateModelNormals(
-//                            initialModel.getVertices(),
-//                            initialModel.getPolygons(),
-//                            initialModel.getNormals()
-//                    );
-//            mesh = initialModel;
-//            // todo: обработка ошибок
-//        } catch (IOException exception) {
-//
-//        }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
+        fileChooser.setTitle("Load Model");
+
+        File file = fileChooser.showOpenDialog((Stage) canvas.getScene().getWindow());
+        if (file == null) {
+            return;
+        }
+
+        Path fileName = Path.of(file.getAbsolutePath());
+
+        try {
+            ObjReader objReader = new ObjReader(fileName);
+            Model initialModel = objReader.read();
+            ModelNormalizer.
+                    triangulateAndRecalculateModelNormals(
+                            initialModel.getVertices(),
+                            initialModel.getPolygons(),
+                            initialModel.getNormals()
+                    );
+            mesh = initialModel;
+            // todo: обработка ошибок
+        } catch (IOException exception) {
+
+        }
     }
 
-//    @FXML
-//    public void handleCameraForward(ActionEvent actionEvent) {
-//        camera.movePosition(new Vector3f(0, 0, -TRANSLATION));
-//    }
-//
-//    @FXML
-//    public void handleCameraBackward(ActionEvent actionEvent) {
-//        camera.movePosition(new Vector3f(0, 0, TRANSLATION));
-//    }
-//
-//    @FXML
-//    public void handleCameraLeft(ActionEvent actionEvent) {
-//        camera.movePosition(new Vector3f(TRANSLATION, 0, 0));
-//    }
-//
-//    @FXML
-//    public void handleCameraRight(ActionEvent actionEvent) {
-//        camera.movePosition(new Vector3f(-TRANSLATION, 0, 0));
-//    }
-//
-//    @FXML
-//    public void handleCameraUp(ActionEvent actionEvent) {
-//        camera.movePosition(new Vector3f(0, TRANSLATION, 0));
-//    }
-//
-//    @FXML
-//    public void handleCameraDown(ActionEvent actionEvent) {
-//        camera.movePosition(new Vector3f(0, -TRANSLATION, 0));
-//    }
+   @FXML
+    public void handleCameraForward(ActionEvent actionEvent) {
+        camera.movePosition(new Vector3d(0, 0, -TRANSLATION));
+    }
+
+    @FXML
+    public void handleCameraBackward(ActionEvent actionEvent) {
+        camera.movePosition(new Vector3d(0, 0, TRANSLATION));
+    }
+
+    @FXML
+    public void handleCameraLeft(ActionEvent actionEvent) {
+        camera.movePosition(new Vector3d(TRANSLATION, 0, 0));
+    }
+
+    @FXML
+    public void handleCameraRight(ActionEvent actionEvent) {
+        camera.movePosition(new Vector3d(-TRANSLATION, 0, 0));
+    }
+
+    @FXML
+    public void handleCameraUp(ActionEvent actionEvent) {
+        camera.movePosition(new Vector3d(0, TRANSLATION, 0));
+    }
+
+    @FXML
+    public void handleCameraDown(ActionEvent actionEvent) {
+        camera.movePosition(new Vector3d(0, -TRANSLATION, 0));
+    }
 }
