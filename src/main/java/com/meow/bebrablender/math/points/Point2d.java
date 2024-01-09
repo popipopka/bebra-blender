@@ -5,6 +5,12 @@ public class Point2d {
     private double y;
     private double depth;
 
+    public Point2d(double x, double y, double depth) {
+        this.x = x;
+        this.y = y;
+        this.depth = depth;
+    }
+
     public Point2d(double x, double y) {
         this.x = x;
         this.y = y;

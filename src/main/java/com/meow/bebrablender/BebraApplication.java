@@ -15,8 +15,8 @@ public class BebraApplication extends Application {
         AnchorPane viewport = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gui.fxml")));
 
         Scene scene = new Scene(viewport);
-        stage.setMinWidth(1600);
-        stage.setMinHeight(900);
+        stage.setMinWidth(1300);
+        stage.setMinHeight(700);
         viewport.prefWidthProperty().bind(scene.widthProperty());
         viewport.prefHeightProperty().bind(scene.heightProperty());
 

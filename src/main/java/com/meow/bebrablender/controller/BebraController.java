@@ -18,11 +18,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -128,23 +126,24 @@ public class BebraController {
         anchorPane.setStyle("-fx-base: #D3D3D3;");
         buttonControl();
 
-//        timeline = new Timeline();
-//        timeline.setCycleCount(Animation.INDEFINITE);
-//
-//        KeyFrame frame = new KeyFrame(Duration.millis(15), event -> {
-//            double width = canvas.getWidth();
-//            double height = canvas.getHeight();
-//
-//            canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
-////            camera.setAspectRatio((float) (width / height));
-//
-//            if (mesh != null) {
-////                RenderEngine.render(canvas.getGraphicsContext2D(), camera, mesh, (int) width, (int) height);
-//            }
-//        });
-//
-//        timeline.getKeyFrames().add(frame);
-//        timeline.play();
+        timeline = new Timeline();
+        timeline.setCycleCount(Animation.INDEFINITE);
+
+        KeyFrame frame = new KeyFrame(Duration.millis(100), event -> {
+            double width = canvas.getWidth();
+            double height = canvas.getHeight();
+
+            canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
+            camera.setAspectRatio((float) (width / height));
+
+            if (modelContainers.containsKey(currentModel)) {
+                RenderEngine.render(canvas.getGraphicsContext2D(), camera,
+                        modelContainers.get(currentModel), 800, 600);
+            }
+        });
+
+        timeline.getKeyFrames().add(frame);
+        timeline.play();
     }
 
     private void hideApplyXYZ() {
@@ -198,7 +197,7 @@ public class BebraController {
         anchorPane.setStyle(currentThemeS1);
         fileButton.setStyle(currentThemeS2);
         camerasButton.setStyle(currentThemeS2);
-        ;
+
         modelsButton.setStyle(currentThemeS2);
         scaleButton.setStyle(currentThemeS2);
         rotateButton.setStyle(currentThemeS2);
@@ -342,23 +341,18 @@ public class BebraController {
         applyScaleButton.setLayoutY(660);
         applyScaleButton.setDisable(false);
         applyScaleButton.setVisible(false);
-        applyScaleButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                double x = Double.parseDouble(fieldXTF.getText());
-                double y = Double.parseDouble(fieldYTF.getText());
-                double z = Double.parseDouble(fieldZTF.getText());
+        applyScaleButton.setOnAction(actionEvent -> {
+            double x = Double.parseDouble(fieldXTF.getText());
+            double y = Double.parseDouble(fieldYTF.getText());
+            double z = Double.parseDouble(fieldZTF.getText());
 
-                Vector3d scale =  new Vector3d(new double[]{x, y, z});
-                Vector3d rotate = new Vector3d();
-                Vector3d translate = new Vector3d();
+            Vector3d scale = new Vector3d(new double[]{x, y, z});
+            Vector3d rotate = new Vector3d();
+            Vector3d translate = new Vector3d();
 
-                //TODO брать модель из листа на экране и менять ее
-                Model model = new Model();
-                ModelContainer cont = new ModelContainer(model);
-                GraphicConveyor conv = cont.getConveyor();
-                conv.rotateScaleTranslate(rotate, scale, translate);
-            }
+            ModelContainer cont = modelContainers.get(currentModel);
+            GraphicConveyor conv = cont.getConveyor();
+            conv.rotateScaleTranslate(rotate, scale, translate);
         });
 
         applyRotateButton.setText("Apply");
@@ -369,23 +363,18 @@ public class BebraController {
         applyRotateButton.setLayoutY(660);
         applyRotateButton.setDisable(false);
         applyRotateButton.setVisible(false);
-        applyRotateButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                double x = Double.parseDouble(fieldXTF.getText());
-                double y = Double.parseDouble(fieldYTF.getText());
-                double z = Double.parseDouble(fieldZTF.getText());
+        applyRotateButton.setOnAction(actionEvent -> {
+            double x = Double.parseDouble(fieldXTF.getText());
+            double y = Double.parseDouble(fieldYTF.getText());
+            double z = Double.parseDouble(fieldZTF.getText());
 
-                Vector3d scale =  new Vector3d(new double[]{1, 1, 1});
-                Vector3d rotate = new Vector3d(new double[]{x, y, z});
-                Vector3d translate = new Vector3d();
+            Vector3d scale = new Vector3d(new double[]{1, 1, 1});
+            Vector3d rotate = new Vector3d(new double[]{x, y, z});
+            Vector3d translate = new Vector3d();
 
-                //TODO брать модель из листа на экране и менять ее
-                Model model = new Model();
-                ModelContainer cont = new ModelContainer(model);
-                GraphicConveyor conv = cont.getConveyor();
-                conv.rotateScaleTranslate(rotate, scale, translate);
-            }
+            ModelContainer cont = modelContainers.get(currentModel);
+            GraphicConveyor conv = cont.getConveyor();
+            conv.rotateScaleTranslate(rotate, scale, translate);
         });
 
         applyTranslateButton.setText("Apply");
@@ -396,23 +385,18 @@ public class BebraController {
         applyTranslateButton.setLayoutY(660);
         applyTranslateButton.setDisable(false);
         applyTranslateButton.setVisible(false);
-        applyTranslateButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                double x = Double.parseDouble(fieldXTF.getText());
-                double y = Double.parseDouble(fieldYTF.getText());
-                double z = Double.parseDouble(fieldZTF.getText());
+        applyTranslateButton.setOnAction(actionEvent -> {
+            double x = Double.parseDouble(fieldXTF.getText());
+            double y = Double.parseDouble(fieldYTF.getText());
+            double z = Double.parseDouble(fieldZTF.getText());
 
-                Vector3d scale =  new Vector3d(new double[]{1, 1, 1});
-                Vector3d rotate = new Vector3d();
-                Vector3d translate = new Vector3d(new double[]{x, y, z});
+            Vector3d scale = new Vector3d(new double[]{1, 1, 1});
+            Vector3d rotate = new Vector3d();
+            Vector3d translate = new Vector3d(new double[]{x, y, z});
 
-                //TODO брать модель из листа на экране и менять ее
-                Model model = new Model();
-                ModelContainer cont = new ModelContainer(model);
-                GraphicConveyor conv = cont.getConveyor();
-                conv.rotateScaleTranslate(rotate, scale, translate);
-            }
+            ModelContainer cont = modelContainers.get(currentModel);
+            GraphicConveyor conv = cont.getConveyor();
+            conv.rotateScaleTranslate(rotate, scale, translate);
         });
 
         backButton.setText("Back");
@@ -423,12 +407,7 @@ public class BebraController {
         backButton.setLayoutY(740);
         backButton.setDisable(false);
         backButton.setVisible(false);
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                backModelSettings();
-            }
-        });
+        backButton.setOnAction(actionEvent -> backModelSettings());
 
         fileButton.setText("File");
         fileButton.setStyle("-fx-font: 25 arial; -fx-base: #FFFFF0;");
@@ -438,22 +417,19 @@ public class BebraController {
         fileButton.setLayoutY(0);
         fileButton.setDisable(false);
         fileButton.setVisible(true);
-        fileButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if (fileSetting[0]) {
-                    whiteThemeButton.setVisible(false);
-                    darkThemeButton.setVisible(false);
-                    redThemeButton.setVisible(false);
-                    openModelButton.setVisible(false);
-                    fileSetting[0] = false;
-                } else {
-                    whiteThemeButton.setVisible(true);
-                    darkThemeButton.setVisible(true);
-                    redThemeButton.setVisible(true);
-                    openModelButton.setVisible(true);
-                    fileSetting[0] = true;
-                }
+        fileButton.setOnAction(actionEvent -> {
+            if (fileSetting[0]) {
+                whiteThemeButton.setVisible(false);
+                darkThemeButton.setVisible(false);
+                redThemeButton.setVisible(false);
+                openModelButton.setVisible(false);
+                fileSetting[0] = false;
+            } else {
+                whiteThemeButton.setVisible(true);
+                darkThemeButton.setVisible(true);
+                redThemeButton.setVisible(true);
+                openModelButton.setVisible(true);
+                fileSetting[0] = true;
             }
         });
         openModelButton.setText("Open model");
@@ -464,22 +440,18 @@ public class BebraController {
         openModelButton.setLayoutY(0);
         openModelButton.setDisable(false);
         openModelButton.setVisible(false);
-        openModelButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                Stage stage = new Stage();
-                File selectedFile = fileChooser.showOpenDialog(stage);
-                try {
-                    ObjReader objReader = new ObjReader(selectedFile.toPath());
-                    Model model = objReader.read();
-                    ModelNormalizer.triangulateAndRecalculateModelNormals(model.getVertices(),model.getPolygons(),model.getNormals());
-                    ModelContainer modelContainer = new ModelContainer(model);
-                    langs.add(selectedFile.getName());
-                    modelContainers.put(selectedFile.getName(),modelContainer);
-                    RenderEngine.render(canvas.getGraphicsContext2D(),camera,modelContainer,1532,800);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        openModelButton.setOnAction(actionEvent -> {
+            Stage stage = new Stage();
+            File selectedFile = fileChooser.showOpenDialog(stage);
+            try {
+                ObjReader objReader = new ObjReader(selectedFile.toPath());
+                Model model = objReader.read();
+                ModelNormalizer.triangulateAndRecalculateModelNormals(model.getVertices(), model.getPolygons(), model.getNormals());
+                ModelContainer modelContainer = new ModelContainer(model);
+                langs.add(selectedFile.getName());
+                modelContainers.put(selectedFile.getName(), modelContainer);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
         whiteThemeButton.setText("W");
@@ -490,13 +462,10 @@ public class BebraController {
         whiteThemeButton.setLayoutY(0);
         whiteThemeButton.setDisable(false);
         whiteThemeButton.setVisible(false);
-        whiteThemeButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                currentThemeS1 = whiteThemeS1;
-                currentThemeS2 = whiteThemeS2;
-                changeTheme();
-            }
+        whiteThemeButton.setOnAction(actionEvent -> {
+            currentThemeS1 = whiteThemeS1;
+            currentThemeS2 = whiteThemeS2;
+            changeTheme();
         });
         darkThemeButton.setText("D");
         darkThemeButton.setStyle("-fx-font: 25 arial; -fx-base: #A9A9A9;");
@@ -506,13 +475,10 @@ public class BebraController {
         darkThemeButton.setLayoutY(0);
         darkThemeButton.setDisable(false);
         darkThemeButton.setVisible(false);
-        darkThemeButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                currentThemeS1 = darkThemeS1;
-                currentThemeS2 = darkThemeS2;
-                changeTheme();
-            }
+        darkThemeButton.setOnAction(actionEvent -> {
+            currentThemeS1 = darkThemeS1;
+            currentThemeS2 = darkThemeS2;
+            changeTheme();
         });
         redThemeButton.setText("R");
         redThemeButton.setStyle("-fx-font: 25 arial; -fx-base: #A52A2A;");
@@ -522,13 +488,10 @@ public class BebraController {
         redThemeButton.setLayoutY(0);
         redThemeButton.setDisable(false);
         redThemeButton.setVisible(false);
-        redThemeButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                currentThemeS1 = redThemeS1;
-                currentThemeS2 = redThemeS2;
-                changeTheme();
-            }
+        redThemeButton.setOnAction(actionEvent -> {
+            currentThemeS1 = redThemeS1;
+            currentThemeS2 = redThemeS2;
+            changeTheme();
         });
 
         camerasButton.setText("Cameras");
@@ -539,22 +502,19 @@ public class BebraController {
         camerasButton.setLayoutY(60);
         camerasButton.setDisable(false);
         camerasButton.setVisible(true);
-        camerasButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if (cameraSetting[0]) {
-                    addCameraButton.setVisible(false);
-                    nextCameraButton.setVisible(false);
-                    deleteCameraButton.setVisible(false);
-                    cameraListView.setVisible(false);
-                    cameraSetting[0] = false;
-                } else {
-                    addCameraButton.setVisible(true);
-                    nextCameraButton.setVisible(true);
-                    deleteCameraButton.setVisible(true);
-                    cameraListView.setVisible(true);
-                    cameraSetting[0] = true;
-                }
+        camerasButton.setOnAction(actionEvent -> {
+            if (cameraSetting[0]) {
+                addCameraButton.setVisible(false);
+                nextCameraButton.setVisible(false);
+                deleteCameraButton.setVisible(false);
+                cameraListView.setVisible(false);
+                cameraSetting[0] = false;
+            } else {
+                addCameraButton.setVisible(true);
+                nextCameraButton.setVisible(true);
+                deleteCameraButton.setVisible(true);
+                cameraListView.setVisible(true);
+                cameraSetting[0] = true;
             }
         });
         addCameraButton.setText("Add camera");
@@ -565,11 +525,8 @@ public class BebraController {
         addCameraButton.setLayoutY(440);
         addCameraButton.setDisable(false);
         addCameraButton.setVisible(false);
-        addCameraButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
+        addCameraButton.setOnAction(actionEvent -> {
 
-            }
         });
         nextCameraButton.setText("Next camera");
         nextCameraButton.setStyle("-fx-font: 25 arial; -fx-base: #FFFFF0;");
@@ -579,11 +536,8 @@ public class BebraController {
         nextCameraButton.setLayoutY(500);
         nextCameraButton.setDisable(false);
         nextCameraButton.setVisible(false);
-        nextCameraButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
+        nextCameraButton.setOnAction(actionEvent -> {
 
-            }
         });
         deleteCameraButton.setText("Delete camera");
         deleteCameraButton.setStyle("-fx-font: 25 arial; -fx-base: #FFFFF0;");
@@ -593,11 +547,8 @@ public class BebraController {
         deleteCameraButton.setLayoutY(560);
         deleteCameraButton.setDisable(true);
         deleteCameraButton.setVisible(false);
-        deleteCameraButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
+        deleteCameraButton.setOnAction(actionEvent -> {
 
-            }
         });
         modelsButton.setText("Models");
         modelsButton.setStyle("-fx-font: 25 arial; -fx-base: #FFFFF0;");
@@ -607,31 +558,28 @@ public class BebraController {
         modelsButton.setLayoutY(0);
         modelsButton.setDisable(false);
         modelsButton.setVisible(true);
-        modelsButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                if (modelSetting[0]) {
-                    scaleButton.setVisible(false);
-                    translateButton.setVisible(false);
-                    rotateButton.setVisible(false);
-                    saveModelButton.setVisible(false);
-                    deleteVertexButton.setVisible(false);
-                    deletePolygonButton.setVisible(false);
-                    selectColorButton.setVisible(false);
-                    modelListView.setVisible(false);
-                    modelSetting[0] = false;
-                    hideApplyXYZ();
-                } else {
-                    scaleButton.setVisible(true);
-                    translateButton.setVisible(true);
-                    rotateButton.setVisible(true);
-                    saveModelButton.setVisible(true);
-                    deleteVertexButton.setVisible(true);
-                    deletePolygonButton.setVisible(true);
-                    selectColorButton.setVisible(true);
-                    modelListView.setVisible(true);
-                    modelSetting[0] = true;
-                }
+        modelsButton.setOnAction(actionEvent -> {
+            if (modelSetting[0]) {
+                scaleButton.setVisible(false);
+                translateButton.setVisible(false);
+                rotateButton.setVisible(false);
+                saveModelButton.setVisible(false);
+                deleteVertexButton.setVisible(false);
+                deletePolygonButton.setVisible(false);
+                selectColorButton.setVisible(false);
+                modelListView.setVisible(false);
+                modelSetting[0] = false;
+                hideApplyXYZ();
+            } else {
+                scaleButton.setVisible(true);
+                translateButton.setVisible(true);
+                rotateButton.setVisible(true);
+                saveModelButton.setVisible(true);
+                deleteVertexButton.setVisible(true);
+                deletePolygonButton.setVisible(true);
+                selectColorButton.setVisible(true);
+                modelListView.setVisible(true);
+                modelSetting[0] = true;
             }
         });
 
@@ -643,12 +591,9 @@ public class BebraController {
         scaleButton.setLayoutY(380);
         scaleButton.setDisable(true);
         scaleButton.setVisible(false);
-        scaleButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                auxiliaryForFieldsXYZ();
-                applyScaleButton.setVisible(true);
-            }
+        scaleButton.setOnAction(actionEvent -> {
+            auxiliaryForFieldsXYZ();
+            applyScaleButton.setVisible(true);
         });
         rotateButton.setText("Rotate");
         rotateButton.setStyle("-fx-font: 25 arial; -fx-base: #FFFFF0;");
@@ -750,7 +695,7 @@ public class BebraController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
         fileChooser.setTitle("Load Model");
 
-        File file = fileChooser.showOpenDialog((Stage) canvas.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(canvas.getScene().getWindow());
         if (file == null) {
             return;
         }

@@ -67,6 +67,6 @@ public class GraphicConveyor {
     }
 
     public static Point2d vertexToPoint(final Vector3d vertex, final int width, final int height) {
-        return new Point2d(vertex.x() * width + width / 2.0, -vertex.y() * height + height / 2.0);
+        return new Point2d(vertex.x() * width + width / 2.0, -vertex.y() * height + height / 2.0, vertex.z());
     }
 }
