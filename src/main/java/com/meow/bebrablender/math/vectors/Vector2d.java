@@ -1,5 +1,7 @@
 package com.meow.bebrablender.math.vectors;
 
+import java.util.Arrays;
+
 public class Vector2d extends AbstractVector<Vector2d> {
 
     public Vector2d() {
@@ -36,7 +38,7 @@ public class Vector2d extends AbstractVector<Vector2d> {
 
     @Override
     public Vector2d copy() {
-        return new Vector2d(this.coords);
+        return new Vector2d(Arrays.copyOf(this.coords, size));
     }
 
     @Override

@@ -26,7 +26,8 @@ public class RotateX implements AffineApplicable {
 
     @Override
     public Matrix4d apply(Matrix4d m) {
-        return m.mul(transformMatrix);
+        transformMatrix.setData(m.mul(transformMatrix).data());
+        return transformMatrix;
     }
 
     @Override

@@ -9,7 +9,7 @@ public abstract class AbstractSquareMatrix<M extends SquareMatrix, V extends Vec
         implements SquareMatrix<M, V>, Copiable<M> {
 
     protected double[][] data;
-    private final int size;
+    protected final int size;
 
     protected AbstractSquareMatrix(int expectedSize, double[][] data) {
         this.data = data;
@@ -214,5 +214,13 @@ public abstract class AbstractSquareMatrix<M extends SquareMatrix, V extends Vec
             throw new IllegalArgumentException("Размерность массива не соответствует размерности матрицы");
         }
         this.data = data;
+    }
+
+    protected double[][] deepDataCopy() {
+        double[][] newData = new double[size][size];
+        for (int i = 0; i < size; i++) {
+            newData[i] = Arrays.copyOf(data[i], size);
+        }
+        return newData;
     }
 }
