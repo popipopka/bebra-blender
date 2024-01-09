@@ -47,7 +47,7 @@ public class RenderEngine {
                 resultPoints.add(resultPoint);
             }
 
-            mesh.setColor(Color.GREEN);
+//            mesh.setColor(Color.GREEN);
             graphicsContext.setStroke(mesh.getColor());
             for (int vertexInPolygonInd = 1; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
                 graphicsContext.strokeLine(

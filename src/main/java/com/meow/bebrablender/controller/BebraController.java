@@ -114,6 +114,7 @@ public class BebraController {
     private String orangeThemeS2 = "-fx-background-color: #FF4500;-fx-font: 25 arial;";
     private HashMap<String, ModelContainer> modelContainers = new HashMap<>();
     private int flag = 1;
+    private boolean isStartParty = false;
 
 
 
@@ -122,7 +123,7 @@ public class BebraController {
 
     private Model mesh = null;
 
-    private Party party = new Party(100);
+    private Party party;
 
     private Camera camera = new Camera(
             new Vector3d(1000, 800, 100),
@@ -280,6 +281,9 @@ public class BebraController {
                 rotateButton.setDisable(false);
                 scaleButton.setDisable(false);
                 currentModel = newValue;
+                ModelContainer container = modelContainers.get(currentModel);
+                Matrix4d modelMatrix = container.getConveyor().getModelMatrix();
+                party = new Party(modelMatrix, container.getModel());
             }
         });
         modelListView.setVisible(false);
@@ -373,9 +377,13 @@ public class BebraController {
         partyButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ModelContainer container = modelContainers.get(currentModel);
-                Matrix4d modelMatrix = container.getConveyor().getModelMatrix();
-                party.start(modelMatrix);
+                if(isStartParty) {
+                    party.stop();
+                    isStartParty = false;
+                } else {
+                    party.start();
+                    isStartParty = true;
+                }
             }
         });
 
